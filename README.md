@@ -41,21 +41,90 @@
 └── config.yaml
 ```
 
-## Setup(待 Phase 0 完成後補完整步驟)
+## Setup on a new machine
+
+Two scenarios — pick the one that matches your situation.
+
+### Scenario A: new machine has internet (recommended)
 
 ```bash
-# 預備:這個 repo 假設你已 clone 到 wireless-consult/3gpp-rag/
+# 1. Clone repo
+git clone https://github.com/forsmileangel/3GPP-RAG.git wireless-consult/3gpp-rag
 cd wireless-consult/3gpp-rag
 
-# 安裝依賴(uv)
+# 2. Install Python 3.14+ if not present (uv can manage Python versions)
+#    https://www.python.org/downloads/  or  winget install Python.Python.3.14
+
+# 3. Install uv (Windows)
+python -m pip install --user uv
+# add %APPDATA%\Python\Python3XX\Scripts to PATH
+
+# 4. Sync dependencies (creates .venv, installs everything from uv.lock)
 uv sync
 
-# 設定環境變數
+# 5. Restore secrets (NOT in git)
+#    - Create .env from .env.example, fill in HF_TOKEN
+#    - For HF_TOKEN: https://huggingface.co/settings/tokens (create read-only)
 cp .env.example .env
-# 編輯 .env,填入 API key
+# edit .env
 
-# 跑 Phase 0 spike
-python spike/quick_rag.py
+# 6. Restore source PDFs (NOT in git — copyrighted)
+#    Drop your TS 38.521-1 PDF into data/raw/
+mkdir -p data/raw
+# copy ts_138521-01_v17_05_00.pdf to data/raw/
+
+# 7. Initialize the SQLite metadata DB (regenerates instantly)
+uv run python scripts/init_db.py
+
+# 8. Re-run Phase 0 spike to repopulate Chroma vector cache
+#    (BGE-M3 ~2.3 GB downloads on first run; needs HF_TOKEN)
+uv run python spike/quick_rag.py
+```
+
+### Scenario B: new machine has limited / no internet
+
+Bring the whole `3gpp-rag/` folder via USB or cloud sync. Include:
+
+| Item | Path | Size | Why |
+|---|---|---|---|
+| Source code + git history | everything except `.venv/` | small | so you can push back |
+| `.env` | `.env` | tiny | has `HF_TOKEN` (gitignored) |
+| Source PDFs | `data/raw/*.pdf` | MB–GB | gitignored, copyrighted |
+| HuggingFace model cache | `~/.cache/huggingface/` (NOT in project!) | ~4 GB | so BGE-M3 doesn't re-download |
+| Chroma vector DB | `data/db/chroma_spike/` | hundreds of MB | so embeddings don't re-run |
+| Spike outputs | `spike/extracted.json`, `spike/last_run.json` | small | optional, just runtime working files |
+
+What you can skip (regeneratable on the new machine):
+- `.venv/` — `uv sync` rebuilds from `uv.lock`
+- `data/db/metadata.sqlite` — `scripts/init_db.py` recreates it
+- `__pycache__/` directories
+
+After copying:
+```bash
+cd 3gpp-rag
+uv sync                                  # rebuild .venv from uv.lock (still needs internet for first time, OR pre-bundle wheels)
+uv run python scripts/init_db.py
+uv run python spike/quick_rag.py         # should hit all caches, run in seconds
+```
+
+If new machine has zero internet (most extreme case), pre-bundle wheels before unplugging:
+```bash
+# on the source machine while still online
+uv pip download --dest vendor -r <(uv pip freeze)
+# bring vendor/ along; on new machine:
+uv pip install --no-index --find-links ./vendor -r requirements.txt
+```
+
+### Round-tripping
+
+If you want to develop at home and push changes back:
+```bash
+# at home
+git checkout -b home-work
+# ... make changes ...
+git push -u origin home-work
+# back at office:
+git fetch && git checkout home-work
 ```
 
 ## 設計紀律
