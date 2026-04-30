@@ -1,0 +1,876 @@
+{
+  "key": {
+    "pdf_path": "C:\\My-project\\wireless-consult\\3gpp-rag\\data\\raw\\ts_138521-01_v17_05_00.pdf",
+    "pdf_mtime": 1693459034.0,
+    "pdf_size": 9026400,
+    "section": "6.3",
+    "chunk_chars": 800,
+    "chunk_overlap": 150
+  },
+  "chunks": [
+    {
+      "chunk_id": "c0000",
+      "page": 541,
+      "text": "3GPP TS 38.521-1 version 17.5.0 Release 17 \n540 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.2I.4.4 \nTest description \n6.2I.4.4.1 \nInitial conditions \nSame initial conditions as in 6.2.4 with following exception: \n- \nThe test channel bandwidth are specified in TS 38.508-1 [5] subclause 4.3.1 for RedCap. \n6.2I.4.4.2 \nTest procedure \nSame test procedure as clause 6.2.4.4.2. \n6.2I.4.4.3 \nMessage contents \nFFS. \n6.2I.4.5 \nTest requirement \nThe maximum output power measured shall not exceed the values specified in Table 6.2I.4.5-1. \nTable 6.2I.4.5-0: Test Tolerance (Configured transmitted power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test p",
+      "char_offset": 0
+    },
+    {
+      "chunk_id": "c0001",
+      "page": 541,
+      "text": "dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test point 1 \n-10 dBm ± (7+TT) \n-10 dBm +7+TT/-7.2-TT \nMeasured UE output \npower test point 2 \n10 dBm ± (6+TT) \n10 dBm +6+TT/-6.2-TT \nMeasured UE output \npower test point 3 \n15 dBm ± (5+TT) \n15 dBm +5+TT/-5.2-TT \nMeasured UE output \npower test point 4 \nNote 3 \nNote 4 \nNote 1: \nTT for each frequency and channel bandwidth is specified in Table 6.2I.4.5-0. \nNote 2: \nThe maximum output power shall be within the range in Table 6.2I.4.5-2. \nNote 3: \nThe maximum output power shall be within the range in Table 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadba",
+      "char_offset": 650
+    },
+    {
+      "chunk_id": "c0002",
+      "page": 541,
+      "text": "e 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadband output power below the value specified in the test requirement \nwhen the power is set to a minimum value. \n6.3.1.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.1.3 \nMinimum conformance requirements \nThe minimum controlled output power of the UE is defined as the power in the channel bandwidth for all transmit \nbandwidth configurations (resource blocks), when the power is set to a minimum value. \nThe minimum output power is defined as the mean power in at least one sub-frame 1 ms. The minimum output power \nshall not exceed the values specified in Table 6.3.1.3-1. \n\n3GPP TS 38.521-1 version 1",
+      "char_offset": 1300
+    },
+    {
+      "chunk_id": "c0003",
+      "page": 541,
+      "text": "power in at least one sub-frame 1 ms. The minimum output power \nshall not exceed the values specified in Table 6.3.1.3-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n541 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.1.3-1: Minimum output power \nChannel bandwidth \n(MHz) \nMinimum output power \n(dBm) \nMeasurement bandwidth \n(MHz) \n5 \n-40 \n4.515 \n10 \n-40 \n9.375 \n15 \n-40 \n14.235 \n20 \n-40 \n19.095 \n25 \n-39 \n23.955 \n30 \n-38.2 \n28.815 \n40 \n-37 \n38.895 \n45 \n-36.5 \n43.575 \n50 \n-36 \n48.615 \n60 \n-35.2 \n58.35 \n70 \n-34.6 \n68.07 \n80 \n-34 \n78.15 \n90 \n-33.5 \n88.23 \n100 \n-33 \n98.31 \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.1. \n6.3.1.4 \nTest description \n6.3.1.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in",
+      "char_offset": 1950
+    },
+    {
+      "chunk_id": "c0004",
+      "page": 542,
+      "text": "use 6.3.1. \n6.3.1.4 \nTest description \n6.3.1.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of test channel bandwidth and sub-carrier spacing, and are shown in \ntable 6.3.1.4.1-1. The details of the uplink reference measurement channels (RMCs) are specified in Annexes A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \nTable 6.",
+      "char_offset": 2600
+    },
+    {
+      "chunk_id": "c0005",
+      "page": 542,
+      "text": "measurement channels (RMCs) are specified in Annexes A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \nTable 6.3.1.4.1-1: Test Configuration Table \nInitial Conditions \nTest Environment as specified in TS 38.508-1 \n[5] subclause 4.1 \nNormal, TL/VL, TL/VH, TH/VL, TH/VH \nTest Frequencies as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLow range, Mid range, High range (NOTE 2) \nTest Channel Bandwidths as specified in TS \n38.508-1 [5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nHighest \nTest Parameters for Channel Bandwidths \nTest ID \nDownlink Configuration \nUplink Configuration \n \nN/A for minimum output \npower  \nModulation \nRB allocation (NOTE 1) \n1 \ntest case \nDFT-s-OFDM QPSK \nOuter Full \nNOTE 1: The specific configur",
+      "char_offset": 3250
+    },
+    {
+      "chunk_id": "c0006",
+      "page": 542,
+      "text": "ration \n \nN/A for minimum output \npower  \nModulation \nRB allocation (NOTE 1) \n1 \ntest case \nDFT-s-OFDM QPSK \nOuter Full \nNOTE 1: The specific configuration of each RB allocation is defined in Table 6.1-1. \nNOTE 2: For NR band n28, 30MHz test channel bandwidth is tested with Low range and High range test \nfrequencies. \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. The UL Reference Measurement Channel is set according to Table 6.3.1.4.1-1. \n\n3GPP TS 38.",
+      "char_offset": 3900
+    },
+    {
+      "chunk_id": "c0007",
+      "page": 542,
+      "text": "uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. The UL Reference Measurement Channel is set according to Table 6.3.1.4.1-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n542 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n5. Propagation conditions are set according to Annex B.0. \n6. Ensure the UE is in State RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5. Message \ncontents are defined in clause 6.3.1.4.3. \n6.3.1.4.2 \nTest procedure \n1. SS sends uplink scheduling information for each UL HARQ process via PDCCH DCI format 0_1 for C_RNTI to \nschedule the UL RMC according to Table 6.3.1.4.1-1. Since the UE has no payload and no loopback data to send \nthe UE se",
+      "char_offset": 4550
+    },
+    {
+      "chunk_id": "c0008",
+      "page": 543,
+      "text": "DCI format 0_1 for C_RNTI to \nschedule the UL RMC according to Table 6.3.1.4.1-1. Since the UE has no payload and no loopback data to send \nthe UE sends uplink MAC padding bits on the UL RMC. \n2. Send continuously uplink power control \"down\" commands in every uplink scheduling information to the UE; \nallow at least 200ms starting from the first TPC command in this step to ensure that the UE transmits at its \nminimum output power. \n3. Measure the mean power of the UE in the associated measurement channel bandwidth specified in Table 6.3.1.5-\n1 for the specific channel bandwidth under test. The period of measurement shall be at least the continuous \nduration of one active sub-frame (1ms) and in the uplink symbols. For TDD symbols with transient periods are \nnot under test. \n6.3.1.4.3 \nMessa",
+      "char_offset": 5200
+    },
+    {
+      "chunk_id": "c0009",
+      "page": 543,
+      "text": "nuous \nduration of one active sub-frame (1ms) and in the uplink symbols. For TDD symbols with transient periods are \nnot under test. \n6.3.1.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6 with following exception. \nTable 6.3.1.4.3-1: PUSCH-Config \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-118 with condition TRANSFORM_PRECODER_ENABLED \n \n6.3.1.5 \nTest requirement \nThe minimum output power, derived in step 3 shall not exceed the values specified in Table 6.3.1.5-1. \nTable 6.3.1.5-1: Minimum output power \nChannel bandwidth \n(MHz) \nMinimum output power \n(dBm) \nMeasurement bandwidth \n(MHz) \n5 \n-40+TT \n4.515 \n10 \n-40+TT \n9.375 \n15 \n-40+TT \n14.235 \n20 \n-40+TT \n19.095 \n25 \n-39+TT \n23.955 \n30 \n-38.2+TT \n28.815 \n40 \n-37+TT \n38.895 \n45 \n-36.5+TT \n43.575 \n50",
+      "char_offset": 5850
+    },
+    {
+      "chunk_id": "c0010",
+      "page": 543,
+      "text": "15 \n10 \n-40+TT \n9.375 \n15 \n-40+TT \n14.235 \n20 \n-40+TT \n19.095 \n25 \n-39+TT \n23.955 \n30 \n-38.2+TT \n28.815 \n40 \n-37+TT \n38.895 \n45 \n-36.5+TT \n43.575 \n50 \n-36+TT \n48.615 \n60 \n-35.2+TT \n58.35 \n70 \n-34.6+TT \n68.07 \n80 \n-34+TT \n78.15 \n90 \n-33.5+TT \n88.23 \n100 \n-33+TT \n98.31 \nNOTE 1: TT for each frequency and channel bandwidth is specified in Table 6.3.1.5-2 \n \nTable 6.3.1.5-2: Test Tolerance (Minimum output power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n1.0 dB \n1.3 dB \n40MHz < BW ≤ 100MHz \n1.3 dB \n1.3 dB \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n543 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.2 \nTransmit OFF power \n6.3.2.1 \nTest purpose \nTo verify that the UE transmit OFF power is lower than the value specified in the test requirement. \nAn excess Transmit OFF power potentially i",
+      "char_offset": 6500
+    },
+    {
+      "chunk_id": "c0011",
+      "page": 544,
+      "text": "rpose \nTo verify that the UE transmit OFF power is lower than the value specified in the test requirement. \nAn excess Transmit OFF power potentially increases the Rise Over Thermal (RoT) and therefore reduces the cell \ncoverage area for other UEs. \n6.3.2.2 \nTest applicability \nThe requirements of this test apply in test cases 6.3.3 Transmit ON/OFF time mask to all types of NR UE release 15 and \nforward. \n6.3.2.3 \nMinimum conformance requirements \nTransmit OFF power is defined as the mean power in the channel bandwidth when the transmitter is OFF. The \ntransmitter is considered OFF when the UE is not allowed to transmit on any of its ports. \nThe Transmit OFF power is defined as the mean power in a duration of at least one sub-frame (1ms) excluding any \ntransient periods. The Transmit OFF po",
+      "char_offset": 7150
+    },
+    {
+      "chunk_id": "c0012",
+      "page": 544,
+      "text": "he Transmit OFF power is defined as the mean power in a duration of at least one sub-frame (1ms) excluding any \ntransient periods. The Transmit OFF power shall not exceed the values specified in Table 6.3.2.3-1. \nTable 6.3.2.3-1: Transmit OFF power \nChannel \nbandwidth \n(MHz) \n5,10,15,20,25,30,35,40,45,50 \n60,70,80,90,100 \nREF_SCS \n(kHz) \n15 \n30 \nTransmit OFF \npower \n(dBm) \n-50 \nMeasurement \nbandwidth \n(MHz) \nMBW=REF_SCS*(12*NRB+1)/1000 \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.2. \n6.3.2.4 \nTest description \nThis test is covered by clause 6.3.3 Transmit ON/OFF time mask. \n6.3.2.5 \nTest requirement \nThe requirement for the Transmit OFF power shall not exceed the values specified in Table 6.3.2.5-1. \nTable 6.3.2.5-1: Transmit OFF power \nChannel bandwidth \n(",
+      "char_offset": 7800
+    },
+    {
+      "chunk_id": "c0013",
+      "page": 544,
+      "text": "rement for the Transmit OFF power shall not exceed the values specified in Table 6.3.2.5-1. \nTable 6.3.2.5-1: Transmit OFF power \nChannel bandwidth \n(MHz) \nTransmit OFF power \n(dBm) \nMeasurement bandwidth \n(MHz) \n5 \n-50+TT \n4.515 \n10 \n-50+TT \n9.375 \n15 \n-50+TT \n14.235 \n20 \n-50+TT \n19.095 \n25 \n-50+TT \n23.955 \n30 \n-50+TT \n28.815 \n40 \n-50+TT \n38.895 \n45 \n-50+TT \n43.575 \n50 \n-50+TT \n48.615 \n60 \n-50+TT \n58.35 \n70 \n-50+TT \n68.07 \n80 \n-50+TT \n78.15 \n90 \n-50+TT \n88.23 \n100 \n-50+TT \n98.31 \nNOTE 1: TT for each frequency and channel bandwidth is specified in Table 6.3.2.5-2 \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n544 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.2.5-2: Test Tolerance (Transmit OFF power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n1.5 dB \n1.8 dB \n40MHz < BW ≤ 100M",
+      "char_offset": 8450
+    },
+    {
+      "chunk_id": "c0014",
+      "page": 545,
+      "text": "2022-09) \nETSI \nTable 6.3.2.5-2: Test Tolerance (Transmit OFF power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n1.5 dB \n1.8 dB \n40MHz < BW ≤ 100MHz \n1.7 dB \n1.8 dB \n \n6.3.3 \nTransmit ON/OFF time mask \n6.3.3.1 \nGeneral \nThe transmit power time mask defines the transient period(s) allowed \n- \nbetween transmit OFF power as defined in sub-clause 6.3.2 and transmit ON power symbols (transmit \nON/OFF) \n- \nbetween continuous ON-power transmissions with power change or RB hopping is applied. \nWhen a UE signals the transient period capability, the transient period value (tp) can be 2, 4, or 7 μs.  If no capability is \nsignalled, the default transient period value of 10 μs applies. \nIn case of RB hopping, and in following figures where tpstart is specified, the transient period is shared symmet",
+      "char_offset": 9100
+    },
+    {
+      "chunk_id": "c0015",
+      "page": 545,
+      "text": "ient period value of 10 μs applies. \nIn case of RB hopping, and in following figures where tpstart is specified, the transient period is shared symmetrically \nwhen the transient period is 10 μs. If the UE signals a transient period (tp) of 2, 4 or 7 μs, the transient period start \nposition is given by tpstart in Table 6.3.3.1-1.  \nTable 6.3.3.1-1: tpstart  values \ntp (μs) \ntpstart (μs) \n2 \n-0.5 \n4 \n-1 \n7 \n-2.7 \nNOTE 1: Negative values mean that the transient \nperiod starts before the symbol boundary \n \nUnless otherwise stated the minimum requirements in clause 6.5 apply also in transient periods. \nIn the following sub-clauses, following definitions apply: \n- \nA slot or long subslot transmission is a transmission with more than 2 symbols. \n- \nA short subslot transmission is a transmission w",
+      "char_offset": 9750
+    },
+    {
+      "chunk_id": "c0016",
+      "page": 545,
+      "text": "itions apply: \n- \nA slot or long subslot transmission is a transmission with more than 2 symbols. \n- \nA short subslot transmission is a transmission with 1 or 2 symbols. \n6.3.3.2 \nGeneral ON/OFF time mask \n6.3.3.2.1 \nTest purpose \nTo verify that the general ON/OFF time mask meets the requirements given in 6.3.3.2.5. \nThe transmit power time mask for transmit ON/OFF defines the transient period(s) allowed between transmit OFF \npower as defined in sub-clause 6.3.2 and transmit ON power symbols (transmit ON/OFF) \nTransmission of the wrong power increases interference to other channels, or increases transmission errors in the uplink \nchannel. \n6.3.3.2.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.2.3 \nMinimum conformance requirements \nThe ge",
+      "char_offset": 10400
+    },
+    {
+      "chunk_id": "c0017",
+      "page": 545,
+      "text": "3.3.2.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.2.3 \nMinimum conformance requirements \nThe general ON/OFF time mask defines the observation period between transmit OFF and ON power and between \ntransmit ON and OFF power for each SCS. ON/OFF scenarios include: the beginning or end of DTX, measurement gap, \ncontiguous, and non-contiguous transmission, etc. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n545 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nThe OFF power measurement period is defined in a duration of at least one slot excluding any transient periods. The \nON power is defined as the mean power over one slot excluding any transient period. \n \nFigure 6.3.3.2.3-1: General ON/OFF time mask for NR UL transmission in FR1 \n \nThe normat",
+      "char_offset": 11050
+    },
+    {
+      "chunk_id": "c0018",
+      "page": 546,
+      "text": "e mean power over one slot excluding any transient period. \n \nFigure 6.3.3.2.3-1: General ON/OFF time mask for NR UL transmission in FR1 \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.3.2. \n6.3.3.2.4 \nTest description \n6.3.3.2.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of channel bandwidth and sub-carrier spacing, and are shown",
+      "char_offset": 11700
+    },
+    {
+      "chunk_id": "c0019",
+      "page": 546,
+      "text": "hese configurations shall be tested with \napplicable test parameters for each combination of channel bandwidth and sub-carrier spacing, and are shown in table \n6.3.3.2.4.1-1. The details of the uplink reference measurement channels (RMCs) are specified in Annexe A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \nTable 6.3.3.2.4.1-1: Test Configuration Table \nInitial Conditions \nTest Environment as specified in TS 38.508-1 \n[5] subclause 4.1 \nNormal, TL/VL, TL/VH, TH/VL, TH/VH \nTest Frequencies as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLow range, Mid range, High range (NOTE 2) \nTest Channel Bandwidths as specified in TS \n38.508-1 [5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters fo",
+      "char_offset": 12350
+    },
+    {
+      "chunk_id": "c0020",
+      "page": 546,
+      "text": "hs as specified in TS \n38.508-1 [5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters for Channel Bandwidths \nTest ID \nDownlink Configuration \nUplink Configuration \n \nN/A for minimum output \npower  \nModulation \nRB allocation (NOTE 1) \n1 \ntest case \nDFT-s-OFDM QPSK \nInner Full \nNOTE 1: The specific configuration of each RB allocation is defined in Table 6.1-1. \nNOTE 2: For NR band n28, 30MHz test channel bandwidth is tested with Low range and High range test \nfrequencies. \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlin",
+      "char_offset": 13000
+    },
+    {
+      "chunk_id": "c0021",
+      "page": 546,
+      "text": "diagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. The UL Reference Measurement Channel is set according to Table 6.3.3.2.4.1-1. \n5. Propagation conditions are set according to Annex B.0. \nStart slot\nEnd slot\nEnd of OFF power \nrequirement\nStart of OFF power \nrequirement\nStart of ON power \nrequirement\nEnd of ON power \nrequirement\n10µs\nTransient period\n10µs\nTransient period\n*The OFF power requirements does not \napply for DTX and measurement gaps\n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n546 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6. Ensure the UE is in State R",
+      "char_offset": 13650
+    },
+    {
+      "chunk_id": "c0022",
+      "page": 546,
+      "text": "r DTX and measurement gaps\n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n546 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6. Ensure the UE is in State RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5. Message \ncontents are defined in clause 6.3.3.2.4.3. \n6.3.3.2.4.2 \nTest procedure \n1. SS sends uplink scheduling information via PDCCH DCI format 0_1 for C_RNTI to schedule the UL RMC \naccording to Table 6.3.3.2.4.1-1. Since the UE has no payload and no loopback data to send the UE sends uplink \nMAC padding bits on the UL RMC. The UL assignment is  such that the UE transmits on slots 8 for15kHz SCS, \non slots 8 and 18 for 30kHz SCS and on slots 17 and 37 for 60kHz SCS.",
+      "char_offset": 14300
+    },
+    {
+      "chunk_id": "c0023",
+      "page": 547,
+      "text": "MC. The UL assignment is  such that the UE transmits on slots 8 for15kHz SCS, \non slots 8 and 18 for 30kHz SCS and on slots 17 and 37 for 60kHz SCS. \n2. Send continuously uplink power control \"up\" commands in every uplink scheduling information to the UE; \nallow at least 200ms starting from the first TPC command in this step for the UE to reach PUMAX level. \n3. ON power sub test: \n3.1. Measure the output power of the UE PUSCH transmission during one slot. \n4. OFF power sub test: \n4.1. Measure the UE transmission OFF power during the slot prior to the PUSCH transmission, excluding a \ntransient period of 10 µs in the end of the slot. \n4.2. Measure the UE transmission OFF power during the slot following the PUSCH transmission, excluding a \ntransient period of 10 µs at the beginning of the slo",
+      "char_offset": 14950
+    },
+    {
+      "chunk_id": "c0024",
+      "page": 547,
+      "text": "ure the UE transmission OFF power during the slot following the PUSCH transmission, excluding a \ntransient period of 10 µs at the beginning of the slot. \n6.3.3.2.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6 with following exceptions. \nTable 6.3.3.2.4.3-1: PUSCH-ConfigCommon \nDerivation Path: TS 38.508-1[5], Table 4.6.3-119 \nInformation Element \nValue/remark \nComment \nCondition \nPUSCH-ConfigCommon ::= SEQUENCE { \n \n \n \n  p0-NominalWithGrant \n-100 \n \n \n} \n \n \n \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n547 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.2.4.3-2: Void \nTable 6.3.3.2.4.3-3: TDD-UL-DL-Config \nDerivation Path: TS 38.508-1[5], Table 4.6.3-192 \nInformation Element \nValue/remark \nComment \nCondition \nTDD-UL-DL-ConfigCommon ::= S",
+      "char_offset": 15600
+    },
+    {
+      "chunk_id": "c0025",
+      "page": 548,
+      "text": "DD-UL-DL-Config \nDerivation Path: TS 38.508-1[5], Table 4.6.3-192 \nInformation Element \nValue/remark \nComment \nCondition \nTDD-UL-DL-ConfigCommon ::= SEQUENCE { \n \n \n \n  referenceSubcarrierSpacing \nSubcarrierSpacing \n \n \n  pattern1 SEQUENCE { \n \n \n \n    dl-UL-TransmissionPeriodicity \nms5 \n \nFR1 \n \nms10 \n \nFR1_15kHz \n    nrofDownlinkSlots \n6 \n \nFR1_15kHz \n \n6 \n \nFR1_30kHz \n \n14 \n \nFR1_60kHz \n    nrofDownlinkSymbols \n10 \n \nFR1_15kHz \n \n6 \n \nFR1_30kHz \n \n12 \n \nFR1_60kHz \n    nrofUplinkSlots \n3 \n \nFR1_15kHz,\nFR1_30kHz \n \n4 \n \nFR1_60kHz \n    nrofUplinkSymbols \n4 \n \nFR1_30kHz \n \n2 \n \nFR1_15kHz, \n \n8 \n \nFR1_60kHz \n \n \n \n \n  } \n \n \n \n  pattern2 \nNot present \n \n \n} \n \n \n \n \nTable 6.3.3.2.4.3-4: PUSCH-TimeDomainResourceAllocationList \nDerivation Path: TS 38.508-1[5], Table 4.6.3-122 \nInformation Elem",
+      "char_offset": 16250
+    },
+    {
+      "chunk_id": "c0026",
+      "page": 548,
+      "text": "resent \n \n \n} \n \n \n \n \nTable 6.3.3.2.4.3-4: PUSCH-TimeDomainResourceAllocationList \nDerivation Path: TS 38.508-1[5], Table 4.6.3-122 \nInformation Element \nValue/remark \nComment \nCondition \nPUSCH-TimeDomainResourceAllocationList ::= \nSEQUENCE (SIZE(1..maxNrofUL-Allocations)) OF {  \n2 entries \n \n \n  PUSCH-TimeDomainResourceAllocation[1] \nSEQUENCE  { \n \n \n \n    k2 \n4 \n \nFR1_15kHz,\nFR1_30kHz \n6 \n \nFR1_60kHz \n    mappingType \ntypeA \n \n \n  startSymbolAndLength \n27 \nStart \nsymbol(S)=0, \nLength(L)=14 \n \n  } \n \n \n \n  PUSCH-TimeDomainResourceAllocation[2] \nSEQUENCE  { \n \naddressed by \nMsg3 PUSCH \ntime resource \nallocation field of \nthe Random \nAccess Response \nacc. to TS 38.213 \n[22] Table 8.2-1. \n \n    k2 \n2 \nK2+ Δ=4 acc. to \nTS 38.214 [21] \nTable 6.1.2.1.1-5 \n(NOTE 1) \nFR1_15kHz \n6 \nK2+ Δ=9 acc. t",
+      "char_offset": 16900
+    },
+    {
+      "chunk_id": "c0027",
+      "page": 548,
+      "text": "esponse \nacc. to TS 38.213 \n[22] Table 8.2-1. \n \n    k2 \n2 \nK2+ Δ=4 acc. to \nTS 38.214 [21] \nTable 6.1.2.1.1-5 \n(NOTE 1) \nFR1_15kHz \n6 \nK2+ Δ=9 acc. to \nTS 38.214 [21] \nTable 6.1.2.1.1-5 \n(NOTE 1) \nFR1_30kHz \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n548 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n    mappingType \ntypeA \n \n \n    startSymbolAndLength \n27 \nStart \nsymbol(S)=0, \nLength(L)=14 \n \n  } \n \n \n \n} \n \n \n \nNOTE 1: Values are chosen so that first slot of a TDD-UL-DL slot configuration period can be used for the Random \nAccess Response and the last slot (of the same or another period) for the corresponding Msg3. \n \nCondition \nExplanation \nFR1_15kHz \nFR1 is used under the test. SCS is set to 15kHz. \nFR1_30kHz \nFR1 is used under the test. SCS is set to 30kHz. \nFR1_60kHz \nFR1 is used und",
+      "char_offset": 17550
+    },
+    {
+      "chunk_id": "c0028",
+      "page": 549,
+      "text": "FR1_15kHz \nFR1 is used under the test. SCS is set to 15kHz. \nFR1_30kHz \nFR1 is used under the test. SCS is set to 30kHz. \nFR1_60kHz \nFR1 is used under the test. SCS is set to 60kHz. \n \nTable 6.3.3.2.4.3-5: ServingCellConfigCommon \nDerivation Path: 38.508-1[5], Table 4.6.3-168 \nInformation Element \nValue/remark \nComment \nCondition \nServingCellConfigCommon ::= SEQUENCE { \n \n \n \n  ss-PBCH-BlockPower \n18 \n \nSCS_15kHz \n \n21 \n \nSCS_30kHz \n} \n \n \n \n \nCondition \nExplanation \nSCS_15kHz \nSCS=15kHz for SS/PBCH block \nSCS_30kHz \nSCS=30kHz for SS/PBCH block \n \nTable 6.3.3.2.4.3-6: PUSCH-Config \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-118 with condition TRANSFORM_PRECODER_ENABLED \n \nTable 6.3.3.2.4.3-7: P-Max \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-89 \nInformation Element \nValue/remark \nC",
+      "char_offset": 18200
+    },
+    {
+      "chunk_id": "c0029",
+      "page": 549,
+      "text": "ition TRANSFORM_PRECODER_ENABLED \n \nTable 6.3.3.2.4.3-7: P-Max \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-89 \nInformation Element \nValue/remark \nComment \nCondition \nP-Max \n23 \n \n \n \n6.3.3.2.5 \nTest requirement \nThe requirement for the power measured in steps 2, 3 and 4 of the test procedure shall not exceed the values specified in \nTable 6.3.3.2.5-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n549 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.2.5-1: General ON/OFF time mask \n \nChannel bandwidth / minimum output power / measurement bandwidth \n5 \nMH\nz \n10 \nMH\nz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n45 \nMHz \n50 \nMHz \n60 \nMH\nz \n70 \nMH\nz \n80 \nMH\nz \n90 \nMH\nz \n100 \nMH\nz \nTransmit \nOFF \npower \n≤ -50+TT dBm \nTransmiss\nion OFF \nMeasurem\nent \nbandwidth \n4.51\n5 \n9.37\n5 \n14.2\n35",
+      "char_offset": 18850
+    },
+    {
+      "chunk_id": "c0030",
+      "page": 550,
+      "text": "MH\nz \n70 \nMH\nz \n80 \nMH\nz \n90 \nMH\nz \n100 \nMH\nz \nTransmit \nOFF \npower \n≤ -50+TT dBm \nTransmiss\nion OFF \nMeasurem\nent \nbandwidth \n4.51\n5 \n9.37\n5 \n14.2\n35 \n19.0\n95 \n23.9\n55 \n28.8\n15 \n38.8\n95 \n43.5\n75 \n48.6\n15 \n58.3\n5 \n68.0\n7 \n78.1\n5 \n88.2\n3 \n98.3\n1 \nTransmit \nON power \nSame as Table 6.2.1.5-1 \nNOTE 1: TT for each frequency and channel bandwidth is specified in Table 6.3.3.2.5-2 \n \nTable 6.3.3.2.5-2: Test Tolerance for OFF power \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6GHz \nBW ≤ 40MHz \n1.5 dB \n1.8 dB \n40MHz < BW ≤ 100MHz \n1.7 dB \n1.8 dB \n \nTable 6.3.3.2.5-3: Test Tolerance for ON power \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6GHz \nBW ≤ 40MHz \n1.5 dB \n1.8 dB \n40MHz < BW ≤ 100MHz \n1.7 dB \n1.8 dB \n \n6.3.3.3 \nTransmit power time mask for slot and short or subslot boundaries \nNo test case details are specified. Current tes",
+      "char_offset": 19500
+    },
+    {
+      "chunk_id": "c0031",
+      "page": 550,
+      "text": "100MHz \n1.7 dB \n1.8 dB \n \n6.3.3.3 \nTransmit power time mask for slot and short or subslot boundaries \nNo test case details are specified. Current test procedures for time masks are based on power measurement in relatively \nlong period compared with transient period. For time masks between 2 active time slots with different power level, the \ntest procedure can’t provide enough resolution to identify non-conformant UEs. Therefore, the minimum requirement is \nnot testable. \n6.3.3.4 \nPRACH time mask \n6.3.3.4.1 \nTest purpose \nTo verify that the PRACH time mask meets the requirements given in 6.3.3.4.5. \nThe time mask for PRACH time mask defines the transient period(s)allowed between transmit OFF power and transmit \nON power when transmitting the PRACH. \nTransmission of the wrong power increase",
+      "char_offset": 20150
+    },
+    {
+      "chunk_id": "c0032",
+      "page": 550,
+      "text": "he transient period(s)allowed between transmit OFF power and transmit \nON power when transmitting the PRACH. \nTransmission of the wrong power increases interference to other channels, or increases transmission errors in the uplink \nchannel. \n6.3.3.4.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.4.3 \nMinimum conformance requirements \nThe PRACH ON power is specified as the mean power over the PRACH measurement period excluding any transient \nperiods as shown in Figure 6.3.3.4.3-1. The measurement period for different PRACH preamble format is specified in \nTable 6.3.3.4.3-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n550 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.3-1: PRACH ON power measurement period  \nPRACH preamble \nfor",
+      "char_offset": 20800
+    },
+    {
+      "chunk_id": "c0033",
+      "page": 551,
+      "text": "version 17.5.0 Release 17 \n550 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.3-1: PRACH ON power measurement period  \nPRACH preamble \nformat \nSCS (kHz) \nMeasurement period (ms) \n0 \n1.25 \n0.903125 \n1 \n1.25 \n2.284375 \n2 \n1.25 \n3.352604 \n3 \n5 \n0.903125 \nA1 \n15 \n0.142708 \n30 \n0.071354 \nA2 \n15 \n0.285417 \n30 \n0.142708 \nA3 \n15 \n0.428125 \n30 \n0.2140625 \nB1 \n15 \n0.140365 \n30 \n0.070182 \nB4 \n15 \n0.83046875 \n30 \n0.415234375 \nA1/B1 \n15 \n0.142708 ms for first six occasion \n0.140365 ms for the last occasion \n30 \n0.071354 ms for first six occasion \n0.070182 ms for the last occasion \nA2/B2 \n15 \n0.285417 ms for first two occasion \n0.278385 ms for the third occasion \n30 \n0.142708 ms for first two occasion \n0.1391925 ms for the third occasion \nA3/B3 \n15 \n0.428125 ms for the first occasion \n0.4164",
+      "char_offset": 21450
+    },
+    {
+      "chunk_id": "c0034",
+      "page": 551,
+      "text": "the third occasion \n30 \n0.142708 ms for first two occasion \n0.1391925 ms for the third occasion \nA3/B3 \n15 \n0.428125 ms for the first occasion \n0.41640625 ms for the second occasion \n30 \n0.2140625 ms for the first occasion \n0.208203125 ms for the second occasion \nC0 \n15 \n0.10703125 \n30 \n0.053515625 \nC2 \n15 \n0.333333 \n30 \n0.166667 \nNOTE: \nFor PRACH on PRACH occasion start from the beginning of 0.5ms or span the \nboundary of 0.5ms of the subframe, the measurement period will plus 0.032552μs \n \n \nFigure 6.3.3.4.3-1: PRACH ON/OFF time mask \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.3.4. \n6.3.3.4.4 \nTest description \n6.3.3.4.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take",
+      "char_offset": 22100
+    },
+    {
+      "chunk_id": "c0035",
+      "page": 551,
+      "text": "ion \n6.3.3.4.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.2-1. All of these configurations shall be tested with \nPRACH\nEnd of OFF power \nrequirement\nStart of OFF power \nrequirement\nStart of ON power \nrequirement\nEnd of ON power \nrequirement\n10µs\nTransient period\n10µs\nTransient period\n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n551 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \napplicable test parameters for each combination of test channel bandwidth and sub-carrier",
+      "char_offset": 22750
+    },
+    {
+      "chunk_id": "c0036",
+      "page": 552,
+      "text": "Release 17 \n551 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \napplicable test parameters for each combination of test channel bandwidth and sub-carrier spacing, and are shown in \ntable 6.3.3.4.4.1-1. The details of the uplink reference measurement channels (RMCs) are specified in Annexes [TBD]. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \nTable 6.3.3.4.4.1-1: Test Configuration Table \nInitial Conditions \nTest Environment as specified in TS 38.508-1 [5] \nsubclause 4.1 \nNormal, TL/VL, TL/VH, TH/VL, TH/VH \nTest Frequencies as specified in TS 38.508-1 [5] \nsubclause 4.3.1 \nMid range (NOTE 1) \nTest Channel Bandwidths as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nSCS defined in TS 38.211 [8] sub",
+      "char_offset": 23400
+    },
+    {
+      "chunk_id": "c0037",
+      "page": 552,
+      "text": "idths as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nSCS defined in TS 38.211 [8] subclause 6.3.3.2 \ndetermined by PRACH Configuration Index for long \nsequence \nLowest, Highest for short sequence \nPRACH preamble format \n \nPaired Spectrum \nUnpaired Spectrum \nPRACH Configuration Index for test point 1 \n4 (long sequence) \n12 (long sequence) \nPRACH Configuration Index for test point 2 \n160 (short sequence) \n123 (short sequence) \nNOTE 1: For NR band n28, 30MHz test channel bandwidth is tested with Low range test frequencies. \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up acco",
+      "char_offset": 24050
+    },
+    {
+      "chunk_id": "c0038",
+      "page": 552,
+      "text": "in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. Propagation conditions are set according to Annex B.0. \n5. Ensure the UE is in State RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5. Message \ncontents are defined in clause 6.3.3.4.4.3. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n552 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.3.4.4.2 \nTest procedure \n1. The SS shall signal a Rando",
+      "char_offset": 24700
+    },
+    {
+      "chunk_id": "c0039",
+      "page": 553,
+      "text": "GPP TS 38.521-1 version 17.5.0 Release 17 \n552 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.3.4.4.2 \nTest procedure \n1. The SS shall signal a Random Access Preamble ID via a PDCCH order to the UE and initiate a Non-contention \nbased Random Access procedure. \n2. The UE shall send the signalled preamble to the SS. \n3. The SS measure the UE transmission OFF power during the slot preceding the PRACH preamble excluding a \ntransient period of 10 µs according to Figure 6.3.3.4.3-1. \n4. Measure the output power of the transmitted PRACH preamble according to Figure 6.3.3.4.3-1. \n5. Measure the UE transmission OFF power, starting 10 µs after the PRACH preamble ends for a measurement \nperiod. \n6.3.3.4.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6.3 with the",
+      "char_offset": 25350
+    },
+    {
+      "chunk_id": "c0040",
+      "page": 553,
+      "text": "CH preamble ends for a measurement \nperiod. \n6.3.3.4.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6.3 with the following exceptions: \nTable 6.3.3.4.4.3-1: RACH-ConfigCommon: PRACH measurement \nDerivation Path: TS 38.508-1[5], Table 4.6.3-128 \nInformation Element \nValue/remark \nComment \nCondition \nRACH-ConfigCommon::= SEQUENCE { \n \n \n \n  prach-RootSequenceIndex CHOICE { \n \n \n \n    l139 \n Set according to table \n4.4.2-2 for the NR Cell. \n \nPRACH \nFormat A3 \n    l839 \n 0 \nNR Cell 1 \nPRACH \nFormat 0 \n \nTBD \nOther than NR \nCell 1 \nPRACH \nFormat 0 \n  } \n \n \n \n} \n \n \n \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n553 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.4.3-2: RACH-ConfigGeneric: PRACH measurement \nDerivation Path: TS 38.508-1[5], Tab",
+      "char_offset": 26000
+    },
+    {
+      "chunk_id": "c0041",
+      "page": 554,
+      "text": "e 17 \n553 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.4.3-2: RACH-ConfigGeneric: PRACH measurement \nDerivation Path: TS 38.508-1[5], Table 4.6.3-130 \nInformation Element \nValue/remark \nComment \nCondition \nRACH-ConfigGeneric ::= SEQUENCE { \n \n \n \n  prach-ConfigurationIndex \n4 \nPaired Spectrum \nPRACH \nFormat 0 \n \n160 \nPaired Spectrum \nPRACH \nFormat A3 \n \n12 \nUnpaired \nSpectrum \nPRACH \nFormat 0 \n \n123 \nUnpaired \nSpectrum \nPRACH \nFormat A3 \n  msg1-FDM \nfour \n \nFR1 \none \n \nFR1 5MHz \nPRACH \nFormat A3 \nfor SCS 15 \nkHz OR \nFR1 10MHz \nPRACH \nFormat A3 \nfor SCS 30 \nkHz OR \nFR1 10MHz \nPRACH \nFormat A3 \nfor SCS 60 \nkHz \n  preambleReceivedTargetPower \n-118 \n \nPRACH \nFormat 0 \n \n-122 \n \nPRACH \nFormat A3 \nfor SCS 15 \nkHz \n \n-124 \n \nPRACH \nFormat A3 \nfor SCS 30 \nkHz \n \n-128 \n \nPRACH \nFormat",
+      "char_offset": 26650
+    },
+    {
+      "chunk_id": "c0042",
+      "page": 554,
+      "text": "rgetPower \n-118 \n \nPRACH \nFormat 0 \n \n-122 \n \nPRACH \nFormat A3 \nfor SCS 15 \nkHz \n \n-124 \n \nPRACH \nFormat A3 \nfor SCS 30 \nkHz \n \n-128 \n \nPRACH \nFormat A3 \nfor SCS \n60kHz \n  powerRampingStep \ndB0 \n \n \n  ra-ResponseWindow \nsl20 \n \n \n} \n \n \n \n \nTable 6.3.3.4.4.3-3: ServingCellConfigCommonSIB: PRACH measurement \nDerivation Path: TS 38.508-1[5], Table 4.6.3-169 \nInformation Element \nValue/remark \nComment \nCondition \nServingCellConfigCommonSIB ::= SEQUENCE { \n \n \n \n  ss-PBCH-BlockPower \n32 \n \nSCS_15kHz \n35 \n \nSCS_30kHz \n} \n \n \n \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n554 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.4.3-4: PUSCH-TimeDomainResourceAllocationList: PRACH measurement \nDerivation Path: TS 38.508-1[5], Table 4.6.3-122 \nInformation Element \nValue/remark \nComment \nCon",
+      "char_offset": 27300
+    },
+    {
+      "chunk_id": "c0043",
+      "page": 555,
+      "text": "TimeDomainResourceAllocationList: PRACH measurement \nDerivation Path: TS 38.508-1[5], Table 4.6.3-122 \nInformation Element \nValue/remark \nComment \nCondition \nPUSCH-TimeDomainResourceAllocationList ::= \nSEQUENCE (SIZE(1..maxNrofUL-Allocations)) OF \nPUSCH-TimeDomainResourceAllocation { \n2 entries \n \n \n  PUSCH-TimeDomainResourceAllocation[2] \nSEQUENCE { \n \nentry 2 \naddressed by \nMsg3 PUSCH \ntime resource \nallocation field of \nthe Random \nAccess Response \nacc. to TS 38.213 \n[22] Table 8.2-1. \n \n    k2 \n6 \nK2+ Δ=8 acc. to \nTS 38.214 [21] \nTable 6.1.2.1.1-5 \nUnpaired \nSpectrum \nfor \nSCS15kHz \nand PRACH \nFormat 0 \n  } \n \n \n \n} \n \n \n \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n555 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.3.4.5 \nTest requirement \nThe requirement for the power measured in",
+      "char_offset": 27950
+    },
+    {
+      "chunk_id": "c0044",
+      "page": 556,
+      "text": "21-1 version 17.5.0 Release 17 \n555 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.3.4.5 \nTest requirement \nThe requirement for the power measured in steps (3), (4) and (5) of the test procedure shall not exceed the values \nspecified in Table 6.3.3.4.5-1. \nTable 6.3.3.4.5-1: PRACH time mask \n \nChannel bandwidth / minimum output power / measurement bandwidth \n \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n50 \nMHz \n60 \nMHz \n70 \nMHz \n80 \nMHz \n90 \nMHz \n100 \nMHz \nTransmit \nOFF power \n≤ -50+TT dBm \nTransmissi\non OFF \nMeasureme\nnt \nbandwidth \n4.51\n5 \n9.37\n5 \n14.23\n5 \n19.09\n5 \n23.95\n5 \n28.81\n5 \n38.89\n5 \n48.61\n5 \n58.3\n5 \n68.0\n7 \n78.1\n5 \n88.2\n3 \n98.3\n1 \nExpected \nPRACH \nTransmissi\non ON \nMeasured \nPower for \nPRACH \nFormat 0 \nand \nPRACH \nFormat A3 \nfor SCS \n30kHz \n-1 \ndBm \n-1 \ndBm",
+      "char_offset": 28600
+    },
+    {
+      "chunk_id": "c0045",
+      "page": 556,
+      "text": "5 \n88.2\n3 \n98.3\n1 \nExpected \nPRACH \nTransmissi\non ON \nMeasured \nPower for \nPRACH \nFormat 0 \nand \nPRACH \nFormat A3 \nfor SCS \n30kHz \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \n-1 \ndBm \nExpected \nPRACH \nTransmissi\non ON \nMeasured \nPower for \nPRACH \nFormat A3 \nfor SCS \n15kHz and \nSCS 60kHz \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \n-2 \ndBm \nON Power \nTolerance  \n± (9+TT)dB \nNOTE 1: TT for each frequency and channel bandwidth is specified in Table 6.3.3.4.5-2 \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n556 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.5-2: Test Tolerance (Transmit OFF power and PRACH time mask) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW",
+      "char_offset": 29250
+    },
+    {
+      "chunk_id": "c0046",
+      "page": 557,
+      "text": "S 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.4.5-2: Test Tolerance (Transmit OFF power and PRACH time mask) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n1.5 dB \n1.8 dB \n40MHz < BW ≤ 100MHz \n1.7 dB \n1.8 dB \n \n6.3.3.5 \nVoid \n6.3.3.6 \nSRS time mask \n6.3.3.6.1 \nTest purpose \nTo verify that the SRS time mask meets the requirements given in 6.3.3.6.5. \nThe time mask for SRS time mask defines the transient period(s) allowed between transmit OFF power and transmit \nON power when transmitting the SRS. \nTransmission of the wrong power increases interference to other channels, or increases transmission errors in the uplink \nchannel. \n6.3.3.6.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.6.3 \nMinimum conformance requirements \nFor SRS transmis",
+      "char_offset": 29900
+    },
+    {
+      "chunk_id": "c0047",
+      "page": 557,
+      "text": "est applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.6.3 \nMinimum conformance requirements \nFor SRS transmission mapped to one OFDM symbol, the ON power is defined as the mean power over the symbol \nduration excluding any transient period; See Figure 6.3.3.6.3-1 \n \nFigure 6.3.3.6.3-1: Single SRS time mask for NR UL transmission \n \nFor SRS transmission mapped to two or more OFDM symbols the ON power is defined as the mean power for each \nsymbol duration excluding any transient period. For consecutive SRS transmissions without power change, Figure \n6.3.3.6.3-2 applies. \n \nFigure 6.3.3.6.3-2: Consecutive SRS time mask for the case when no power change is required with \nSRS usage other than antenna switching \n \nSRS\nEnd of OFF power \nrequirement\nStart o",
+      "char_offset": 30550
+    },
+    {
+      "chunk_id": "c0048",
+      "page": 557,
+      "text": "SRS time mask for the case when no power change is required with \nSRS usage other than antenna switching \n \nSRS\nEnd of OFF power \nrequirement\nStart of OFF power \nrequirement\nSRS ON power \nrequirement\n10µs\nTransient period\n10µs\nTransient period\nEnd of OFF power \nrequirement\nStart of OFF power \nrequirement\n10µs\nTransient period\n10µs\nTransient period\nSRS \n(Ant. ‘x’, other sets)\nSRS \n(Ant. ‘x’, other sets)\nSRS \n(Ant. ‘x’, other sets)\nSRS \n(Ant. ‘x’, other sets)\nSRS ON power requirement on consecutive NR symbols\n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n557 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nWhen power change between consecutive SRS transmissions is required, then Figure 6.3.3.6.3-3 and Figure 6.3.3.6.3-4 \napply. \ntpstart\ntpstart\ntpstart\n \nFigure 6.3.3.6.3-3: Consecutive SRS time m",
+      "char_offset": 31200
+    },
+    {
+      "chunk_id": "c0049",
+      "page": 558,
+      "text": "ransmissions is required, then Figure 6.3.3.6.3-3 and Figure 6.3.3.6.3-4 \napply. \ntpstart\ntpstart\ntpstart\n \nFigure 6.3.3.6.3-3: Consecutive SRS time mask for the case when power change is required and when \n15kHz and 30kHz SCS is used in FR1 with SRS usage other than antenna switching \n \n \n \nFigure 6.3.3.6.3-4: Consecutive SRS time mask for the case when power change is required and when \n60kHz SCS is used in FR1 \n \n \nFigure 6.3.3.6.3-5: FR1 Time mask for 15 kHz and 30 kHz SCS for the case when consecutive SRS \nswitching usage is between antenna switching & other sets \n \nwhere “other sets” belongs to a “usage set” other than the set for antenna switching. The usage sets for SRS switching \nare defined in section 6.2.1 of TS 38.214 [12]. \nNOTE: \nGuard period of one symbol is defined between",
+      "char_offset": 31850
+    },
+    {
+      "chunk_id": "c0050",
+      "page": 558,
+      "text": "na switching. The usage sets for SRS switching \nare defined in section 6.2.1 of TS 38.214 [12]. \nNOTE: \nGuard period of one symbol is defined between two SRS resources of an SRS resource set for antenna \nswitching for 15kHz, 30kHz and 60kHz SCS in Table 6.2.1.2-1 of TS 38.214 [10]. \nThe above transient period applies to all the transmit CCs in CA with the CC sounding SRS. UE RF requirements do \nnot apply during this transient period. \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.3.6. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n558 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.3.6.4 \nTest description \n6.3.3.6.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE",
+      "char_offset": 32500
+    },
+    {
+      "chunk_id": "c0051",
+      "page": 559,
+      "text": "4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of channel bandwidth and sub-carrier spacing, and are shown in table \n6.3.3.6.4.1-1. The details of the uplink reference measurement channels (RMCs) are specified in Annexe A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n559 \nETSI TS",
+      "char_offset": 33150
+    },
+    {
+      "chunk_id": "c0052",
+      "page": 559,
+      "text": "nexe A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n559 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.6.4.1-1: Test Configuration Table \nInitial Conditions \nTest Environment as specified in TS 38.508-1 \n[5] subclause 4.1 \nNormal, TL/VL, TL/VH, TH/VL, TH/VH \nTest Frequencies as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nMid range (NOTE 1) \nTest Channel Bandwidths as specified in TS \n38.508-1 [5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nSRS configuration \nPaired Spectrum \nUnpaired Spectrum \nc-SRS (SRS bandwidth configuration) \n7 (24 RB for BW 5 MHz) \n14 (52 RB for BW 10 MHz) \n20 (76 RB for BW 15 MHz) \n25 (104 RB for BW 20 \nMHz) \n33 (132 RB",
+      "char_offset": 33800
+    },
+    {
+      "chunk_id": "c0053",
+      "page": 560,
+      "text": "-SRS (SRS bandwidth configuration) \n7 (24 RB for BW 5 MHz) \n14 (52 RB for BW 10 MHz) \n20 (76 RB for BW 15 MHz) \n25 (104 RB for BW 20 \nMHz) \n33 (132 RB for BW 25 \nMHz) \n42 (160 RB for BW 30 \nMHz) \n51 (216 RB for BW 40MHz) \n60 (264 RB for BW 50MHz) \nfor SCS 15 KHz \n7 (for BW 5 MHz) \n13 (for BW 10 MHz) \n19 (for BW 15 MHz) \n25 (for BW 20 MHz) \n30 (for BW 25 MHz) \n40 (for BW 30 MHz) \n51 (for BW 40MHz) \n60 (for BW 50MHz) \nfor SCS 15 KHz \n1 (8 RB for BW 5 MHz) \n7 (24 RB for BW 10 MHz) \n10 (36 RB for BW 15 MHz) \n13 (48 RB for BW 20 MHz) \n17 (64 RB for BW 25 MHz) \n20 (76 RB for BW 30 MHz) \n25 (104 RB for BW 40MHz) \n33 (132 RB for BW 50MHz) \n42 (160 RB for BW 60MHz) \n45 (184 RB for BW 70MHz) \n51 (216 RB for BW 80MHz) \n56 (240 RB for BW 90MHz) \n63 (272 RB for BW \n100MHz) \nfor SCS 30 KHz \n1 (for BW 5",
+      "char_offset": 34450
+    },
+    {
+      "chunk_id": "c0054",
+      "page": 560,
+      "text": "for BW 60MHz) \n45 (184 RB for BW 70MHz) \n51 (216 RB for BW 80MHz) \n56 (240 RB for BW 90MHz) \n63 (272 RB for BW \n100MHz) \nfor SCS 30 KHz \n1 (for BW 5 MHz) \n6 (for BW 10 MHz) \n10 (for BW 15 MHz) \n12 (for BW 20 MHz) \n17 (for BW 25 MHz) \n20 (for BW 30 MHz) \n25 (for BW 40MHz) \n30 (for BW 50MHz) \n40 (for BW 60MHz) \n45 (for BW 70MHz) \n51 (for BW 80MHz) \n53 (for BW 90MHz) \n61 (for BW 100MHz) \nfor SCS 30 KHz \n1 (8 RB for BW 10 MHz) \n4 (16 RB for BW 15 MHz) \n7 (24 RB for BW 20 MHz) \n8 (28 RB for BW 25 MHz) \n10 (36 RBfor BW 30 MHz) \n13 (48 RB for BW 40MHz) \n17 (64 RB for BW 50MHz) \n20 (76 RB for BW 60MHz) \n22 (88 RB for BW 70MHz) \n25 (104 RB for BW 80MHz) \n29 (120 RB for BW 90MHz) \n33 (132 RB for BW \n100MHz) \nfor SCS 60 KHz \n1 (for BW 10 MHz) \n4 (for BW 15 MHz) \n7 (for BW 20, 25 MHz) \n9 (for BW 30 M",
+      "char_offset": 35100
+    },
+    {
+      "chunk_id": "c0055",
+      "page": 560,
+      "text": "Hz) \n29 (120 RB for BW 90MHz) \n33 (132 RB for BW \n100MHz) \nfor SCS 60 KHz \n1 (for BW 10 MHz) \n4 (for BW 15 MHz) \n7 (for BW 20, 25 MHz) \n9 (for BW 30 MHz) \n13 (for BW 40MHz) \n17 (for BW 50MHz) \n19 (for BW 60MHz) \n22 (for BW 70MHz) \n25 (for BW 80MHz) \n27 (for BW 90MHz) \n30 (for BW 100MHz) \nfor SCS 60 KHz \nb-SRS \n0 \n0 \nb-hop \n3 \n0 \nfreqDomainPosition \n0 \n0 \nSRS-PeriodicityAndOffset \nsl10 \nfor SCS 15 KHz \nsl10 \nfor SCS 15 KHz \nsl20 \nfor SCS 30 KHz \nsl20 \nfor SCS 30 KHz \nsl40 \nfor SCS 60 KHz \nsl40 \nfor SCS 60 KHz \ntransmissionComb \nn2 \nn2 \nCombOffset  \n0 \n0 \ncyclicShift \n0 \n0 \nstartPosition \n0 \n0 \nnrofSymbols \nn1 \nn1 \nNOTE 1: For NR band n28, 30MHz test channel bandwidth is tested with Low range test frequencies. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n560 \nETSI TS 138 521-1 V17.5.0 (2022",
+      "char_offset": 35750
+    },
+    {
+      "chunk_id": "c0056",
+      "page": 560,
+      "text": "z test channel bandwidth is tested with Low range test frequencies. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n560 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. Propagation conditions are set according to Annex B.0. \n5. Ensure the UE is in State RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5",
+      "char_offset": 36400
+    },
+    {
+      "chunk_id": "c0057",
+      "page": 561,
+      "text": "D with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5. Message \ncontents are defined in clause 6.3.3.6.4.3. \n6.3.3.6.4.2 \nTest procedure \n1. SS sends uplink scheduling information via PDCCH DCI format 0_1 for C_RNTI to schedule the UL RMC \naccording to Table 6.3.3.2.4.1-1. Since the UE has no payload and no loopback data to send the UE sends uplink \nMAC padding bits on the UL RMC. The UL assignment is such that the UE transmits on slot 4 for15kHz SCS, \non slot 8 for 30kHz SCS and on slot 16 for 60kHz SCS. PUSCH is transmitted in the first half of the frame. \n2. Send continuously uplink power control \"up\" commands in every uplink scheduling information to the UE; \nallow at least 200m",
+      "char_offset": 37050
+    },
+    {
+      "chunk_id": "c0058",
+      "page": 561,
+      "text": "rst half of the frame. \n2. Send continuously uplink power control \"up\" commands in every uplink scheduling information to the UE; \nallow at least 200ms starting from the first TPC command in this step for the UE to reach PUMAX level. \n3. ON power sub test: \n3.1. Measure the output power of the transmitted SRS transmission during 1 OFDM symbol. The SRS transmission \nin the second half of the frame is used for measurement since there is no PUSCH transmission before and after. \n4. OFF power sub test: \n4.1. The SS measure the UE transmission OFF power during the 13 OFDM symbols, preceding the SRS symbol \nexcluding a transient period of 10 μs. \n4.2. Measure the UE transmission OFF power during the slot following the SRS under test, excluding a transient \nperiod of 10 µs \n6.3.3.6.4.3 \nMessage co",
+      "char_offset": 37700
+    },
+    {
+      "chunk_id": "c0059",
+      "page": 561,
+      "text": "2. Measure the UE transmission OFF power during the slot following the SRS under test, excluding a transient \nperiod of 10 µs \n6.3.3.6.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6.3 with the following exceptions: \nTable 6.3.3.6.4.3-0: BWP-UplinkDedicated \nDerivation Path: TS 38.508-1[5], Table 4.6.3-15 \nInformation Element \nValue/remark \nComment \nCondition \nBWP-UplinkDedicated ::= SEQUENCE { \n \n \n \n  srs-Config \nSRS-Config in Table \n6.3.3.6.4.3-1 \n \n \n} \n \n \n \nNote: \nThis message exception is only valid for the initial BWP and not for an additional BWP inside BWP-Uplink. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n561 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.6.4.3-1: SRS-Config: SRS time mask measurement \n\n3GPP TS 38.521-1 versio",
+      "char_offset": 38350
+    },
+    {
+      "chunk_id": "c0060",
+      "page": 562,
+      "text": "7.5.0 Release 17 \n561 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.6.4.3-1: SRS-Config: SRS time mask measurement \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n562 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nDerivation Path: TS 38.508-1[5], Table 4.6.3-182 \nInformation Element \nValue/remark \nComment \nCondition \nSRS-Config ::= SEQUENCE { \n \n \n \n  srs-ResourceSetToAddModList SEQUENCE \n(SIZE(0..maxNrofSRS-ResourceSets)) OF \nSEQUENCE { \n1 entry \n \n \n    resourceType CHOICE { \n \n \n \n      periodic SEQUENCE { \n \n \n \n      } \n \n \n \n    } \n \n \n \n    alpha \nalpha08 \n \n \n    p0 \n0 \n \n \n  } \n \n \n \n  srs-ResourceToAddModList SEQUENCE \n(SIZE(1..maxNrofSRS-Resources)) OF SEQUENCE { \n1 entry \n \n \n    resourceMapping SEQUENCE { \n \n \n \n      startPosition \n0 \n \n \n      nrofSymbols \nn1",
+      "char_offset": 39000
+    },
+    {
+      "chunk_id": "c0061",
+      "page": 563,
+      "text": ".maxNrofSRS-Resources)) OF SEQUENCE { \n1 entry \n \n \n    resourceMapping SEQUENCE { \n \n \n \n      startPosition \n0 \n \n \n      nrofSymbols \nn1 \n \n \n      repetitionFactor \nn1 \n \n \n    } \n \n \n \n    freqHopping SEQUENCE { \n \n \n \n      c-SRS \n \n \n \n \n7 (for BW 5 MHz) \n14 (for BW 10 MHz) \n20 (for BW 15 MHz) \n25 (for BW 20 MHz) \n33 (for BW 25 MHz) \n42 (for BW 30 MHz) \n51 (for BW 40MHz) \n60 (for BW 50MHz) \n \nPaired \nSpectrum \nfor SCS 15 \nKHz \n \n1 (for BW 5 MHz) \n7 (for BW 10 MHz) \n10 (for BW 15 MHz) \n13 (for BW 20 MHz) \n17 (for BW 25 MHz) \n20 (for BW 30 MHz) \n25 (for BW 40MHz) \n33 (for BW 50MHz) \n42 (for BW 60MHz) \n45 (for BW 70MHz) \n51 (for BW 80MHz) \n56 (for BW 90MHz) \n \nPaired \nSpectrum \nfor SCS 30 \nKHz \n \n1 (for BW 10 MHz) \n4 (for BW 15 MHz) \n7 (for BW 20 MHz) \n8 (for BW 25 MHz) \n10 (for BW 30",
+      "char_offset": 39650
+    },
+    {
+      "chunk_id": "c0062",
+      "page": 563,
+      "text": "56 (for BW 90MHz) \n \nPaired \nSpectrum \nfor SCS 30 \nKHz \n \n1 (for BW 10 MHz) \n4 (for BW 15 MHz) \n7 (for BW 20 MHz) \n8 (for BW 25 MHz) \n10 (for BW 30 MHz) \n13 (for BW 40MHz) \n17 (for BW 50MHz) \n20 (for BW 60MHz) \n22 (for BW 70MHz) \n25 (for BW 80MHz) \n29 (for BW 90MHz) \n33 (for BW 100MHz) \n \nPaired \nSpectrum \nfor SCS 60 \nKHz \n \n7 (for BW 5 MHz) \n13 (for BW 10 MHz) \n19 (for BW 15 MHz) \n25 (for BW 20 MHz) \n30 (for BW 25 MHz) \n40 (for BW 30 MHz) \n51 (for BW 40MHz) \n60 (for BW 50MHz) \n \nUnpaired \nSpectrum \nfor SCS 15 \nKHz \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n563 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \n1 (for BW 5 MHz) \n6 (for BW 10 MHz) \n10 (for BW 15 MHz) \n12 (for BW 20 MHz) \n17 (for BW 25 MHz) \n20 (for BW 30 MHz) \n25 (for BW 40MHz) \n30 (for BW 50MHz) \n40 (for BW 60MHz) \n45 (for",
+      "char_offset": 40300
+    },
+    {
+      "chunk_id": "c0063",
+      "page": 564,
+      "text": "MHz) \n10 (for BW 15 MHz) \n12 (for BW 20 MHz) \n17 (for BW 25 MHz) \n20 (for BW 30 MHz) \n25 (for BW 40MHz) \n30 (for BW 50MHz) \n40 (for BW 60MHz) \n45 (for BW 70MHz) \n51 (for BW 80MHz) \n53 (for BW 90MHz) \n61 (for BW 100MHz) \n \nUnpaired \nSpectrum \nfor SCS 30 \nKHz \n \n1 (for BW 10 MHz) \n4 (for BW 15 MHz) \n7 (for BW 20, 25 MHz) \n9 (for BW 30 MHz) \n13 (for BW 40MHz) \n17 (for BW 50MHz) \n19 (for BW 60MHz) \n22 (for BW 70MHz) \n25 (for BW 80MHz) \n27 (for BW 90MHz) \n30 (for BW 100MHz) \n \nUnpaired \nSpectrum \nfor SCS 60 \nKHz \n      b-SRS \n0 \n \n \n      b-hop \n3 \n \nPaired \nSpectrum \n \n0 \n \nUnpaired \nSpectrum \n    } \n \n \n \n    resourceType CHOICE { \n \n \n \n      periodic SEQUENCE { \n \n \n \n        periodicityAndOffset-p CHOICE{ \n \n \n \n          sl10 \n9 \n \nSCS 15 KHz \n          sl20 \n18 \n \nSCS  30KHz \n          s",
+      "char_offset": 40950
+    },
+    {
+      "chunk_id": "c0064",
+      "page": 564,
+      "text": "eriodic SEQUENCE { \n \n \n \n        periodicityAndOffset-p CHOICE{ \n \n \n \n          sl10 \n9 \n \nSCS 15 KHz \n          sl20 \n18 \n \nSCS  30KHz \n          sl40 \n36 \n \nSCS 60 KHz \n        } \n \n \n \n      } \n \n \n \n    } \n \n \n \n  } \n \n \n \n} \n \n \n \n \nTable 6.3.3.6.4.3-2: ServingCellConfigCommon \nDerivation Path: 38.508-1[5], Table 4.6.3-168 \nInformation Element \nValue/remark \nComment \nCondition \nServingCellConfigCommon ::= SEQUENCE { \n \n \n \n  ss-PBCH-BlockPower \n18 \n \nSCS_15kHz \n \n21 \n \nSCS_30kHz \n} \n \n \n \n \nCondition \nExplanation \nSCS_15kHz \nSCS=15kHz for SS/PBCH block \nSCS_30kHz \nSCS=30kHz for SS/PBCH block \n \n6.3.3.6.5 \nTest requirement \nThe requirement for the power measured in steps (1), (2) and (3) of the test procedure shall not exceed the values \nspecified in Table 6.3.3.6.5-1. \n\n3GPP TS 38.5",
+      "char_offset": 41600
+    },
+    {
+      "chunk_id": "c0065",
+      "page": 564,
+      "text": "ent for the power measured in steps (1), (2) and (3) of the test procedure shall not exceed the values \nspecified in Table 6.3.3.6.5-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n564 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.6.5-1: SRS time mask \n \n \nChannel bandwidth / minimum output power / measurement bandwidth \n \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n50 \nMHz \n60 \nMHz \n70 \nMHz \n80 \nMHz \n90 \nMHz \n100 \nMHz \nTransmit \nOFF power \n≤ -50+TT dBm \nTransmissio\nn OFF \nMeasureme\nnt \nbandwidth \n4.51\n5 \n9.37\n5 \n14.23\n5 \n19.09\n5 \n23.95\n5 \n28.81\n5 \n38.89\n5 \n48.61\n5 \n58.3\n5 \n68.0\n7 \n78.1\n5 \n88.2\n3 \n98.3\n1 \nTransmit \nON power \nSame as Table 6.2.1.5-1 \nNOTE 1: TT for each frequency and channel bandwidth is specified in Table 6.3.3.6.5-2 \n \nTable 6.3.3.6.5-2: Test",
+      "char_offset": 42250
+    },
+    {
+      "chunk_id": "c0066",
+      "page": 565,
+      "text": "ON power \nSame as Table 6.2.1.5-1 \nNOTE 1: TT for each frequency and channel bandwidth is specified in Table 6.3.3.6.5-2 \n \nTable 6.3.3.6.5-2: Test Tolerance (Transmit OFF power and SRS time mask) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6GHz \nBW ≤ 40MHz \n1.5 dB \n1.8 dB \n40MHz < BW ≤ 100MHz \n1.7 dB \n1.8 dB \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n565 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.3.7 \nPUSCH-PUCCH and PUSCH-SRS time masks \nNo test case details are specified. Current test procedures for time masks are based on power measurement in relatively \nlong period compared with transient period. For time masks between 2 active time slots with different power level, the \ntest procedure can’t provide enough resolution to identify non-conformant UEs. Therefore the minimum requirement is \nno",
+      "char_offset": 42900
+    },
+    {
+      "chunk_id": "c0067",
+      "page": 566,
+      "text": "th different power level, the \ntest procedure can’t provide enough resolution to identify non-conformant UEs. Therefore the minimum requirement is \nnot testable. \n6.3.3.8 \nTransmit power time mask for consecutive slot or long subslot transmission \nand short subslot transmission boundaries \nNo test case details are specified. Current test procedures for time masks are based on power measurement in relatively \nlong period compared with transient period. For time masks between 2 active time slots with different power level, the \ntest procedure can’t provide enough resolution to identify non-conformant UEs. Therefore the minimum requirement is \nnot testable. \n6.3.3.9 \nTransmit power time mask for consecutive short subslot transmissions \nboundaries \nNo test case details are specified. Current t",
+      "char_offset": 43550
+    },
+    {
+      "chunk_id": "c0068",
+      "page": 566,
+      "text": "ot testable. \n6.3.3.9 \nTransmit power time mask for consecutive short subslot transmissions \nboundaries \nNo test case details are specified. Current test procedures for time masks are based on power measurement in relatively \nlong period compared with transient period. For time masks between 2 active time slots with different power level, the \ntest procedure can’t provide enough resolution to identify non-conformant UEs. Therefore the minimum requirement is \nnot testable. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n566 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.4 \nPower control \n6.3.4.1 \nGeneral \nThe requirements on power control accuracy apply under normal conditions. \n6.3.4.2 \nAbsolute power tolerance \n6.3.4.2.1 \nTest purpose \nTo verify the ability of the UE transmitter to set its",
+      "char_offset": 44200
+    },
+    {
+      "chunk_id": "c0069",
+      "page": 567,
+      "text": "acy apply under normal conditions. \n6.3.4.2 \nAbsolute power tolerance \n6.3.4.2.1 \nTest purpose \nTo verify the ability of the UE transmitter to set its initial output power to a specific value at the start of a contiguous \ntransmission or non-contiguous transmission with a long transmission gap, i.e. transmission gap is larger than 20ms. \n6.3.4.2.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.4.2.3 \nMinimum conformance requirements \nThe absolute power tolerance is the ability of the UE transmitter to set its initial output power to a specific value for the \nfirst sub-frame(1ms) at the start of a contiguous transmission or non-contiguous transmission with a transmission gap \nlarger than 20ms. The tolerance includes the channel estimation erro",
+      "char_offset": 44850
+    },
+    {
+      "chunk_id": "c0070",
+      "page": 567,
+      "text": "a contiguous transmission or non-contiguous transmission with a transmission gap \nlarger than 20ms. The tolerance includes the channel estimation error. \nThe minimum requirement specified in Table 6.3.4.2.3-1 apply in the power range bounded by the minimum output \npower as specified in sub-clause 6.3.1 and the maximum output power as specified in sub-clause 6.2.1. \nTable 6.3.4.2.3-1: Absolute power tolerance \nConditions \nTolerance \nNormal \n± 9.0 dB \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.4.2 \n6.3.4.2.4 \nTest description \n6.3.4.2.4.1 \nInitial conditions \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations co",
+      "char_offset": 45500
+    },
+    {
+      "chunk_id": "c0071",
+      "page": 567,
+      "text": "the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of test channel bandwidth and sub-carrier spacing, and are shown in \ntable 6.3.4.2.4.1-1. The details of the uplink reference measurement channels (RMCs) are specified in Annexes A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n567 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.2.4.1-1: Test Configur",
+      "char_offset": 46150
+    },
+    {
+      "chunk_id": "c0072",
+      "page": 567,
+      "text": "ecified in Annex C.2. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n567 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.2.4.1-1: Test Configuration Table \nInitial Conditions \nTest Environment as specified in TS 38.508-1 [5] \nsubclause 4.1 \nNormal \nTest Frequencies as specified in TS 38.508-1 [5] \nsubclause 4.3.1 \nMid range (NOTE 2) \nTest Channel Bandwidths as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters \nTest ID \nDownlink Configuration \nUplink Configuration \n \nModulation \nRB allocation \nModulation \nRB allocation (NOTE 1) \n1 \nN/A for Absolute power tolerance test \ncase \nCP-OFDM QPSK \nOuter_Full \nNOTE 1: The specific configuration of each RF allocation is defined in Table 6.1-1. \nNOTE 2:",
+      "char_offset": 46800
+    },
+    {
+      "chunk_id": "c0073",
+      "page": 568,
+      "text": "te power tolerance test \ncase \nCP-OFDM QPSK \nOuter_Full \nNOTE 1: The specific configuration of each RF allocation is defined in Table 6.1-1. \nNOTE 2: For NR band n28, 30MHz test channel bandwidth is tested with Low range test frequencies. \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. The UL Reference Measurement Channel is set according to Table 6.3.4.2.4.1-1. \n5. Propagation conditions are set according to Annex B.0. \n6. Ensure the UE is in state RR",
+      "char_offset": 47450
+    },
+    {
+      "chunk_id": "c0074",
+      "page": 568,
+      "text": "asurement Channel is set according to Table 6.3.4.2.4.1-1. \n5. Propagation conditions are set according to Annex B.0. \n6. Ensure the UE is in state RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5. Message \ncontents are defined in clause 6.3.4.2.4.3. Note that PDCCH DCI format 0_1 sent after resetting uplink power \nwith RRC Connection Reconfiguration, should have TPC command 0dB. \n6.3.4.2.4.2 \nTest procedure \n1. SS sends uplink scheduling information for each UL HARQ process via PDCCH DCI format 0_1 with TPC \ncommand 0dB for C_RNTI to schedule the UL RMC according to Table 6.3.4.2.4.1-1. Since the UE has no \npayload and no loopback data to send the UE sends uplink M",
+      "char_offset": 48100
+    },
+    {
+      "chunk_id": "c0075",
+      "page": 568,
+      "text": "dB for C_RNTI to schedule the UL RMC according to Table 6.3.4.2.4.1-1. Since the UE has no \npayload and no loopback data to send the UE sends uplink MAC padding bits on the UL RMC. \n2. Measure the initial output power of the first sub-frame (1ms) of UE PUSCH first transmission. \n3. Repeat for the two test points as indicated in section 6.3.4.2.4.3. The timing of the execution between the two \ntest points shall be larger than 20ms. \n6.3.4.2.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6 with the following exceptions: \nTable 6.3.4.2.4.3-1: UplinkPowerControlCommon: Test point 1 \nDerivation Path: TS 38.508-1 [5] subclause 4.6.3 Table 4.6.3-119 PUSCH-ConfigCommon \nInformation Element \nValue/remark \nComment \nCondition \nPUSCH-ConfigCommon::= SEQUENCE {",
+      "char_offset": 48750
+    },
+    {
+      "chunk_id": "c0076",
+      "page": 568,
+      "text": "-1 [5] subclause 4.6.3 Table 4.6.3-119 PUSCH-ConfigCommon \nInformation Element \nValue/remark \nComment \nCondition \nPUSCH-ConfigCommon::= SEQUENCE { \n \n \n \n  p0-NominalWithGrant \n-114 \nTest point 1 to \nverify a UE \nrelative low initial \npower \ntransmission \n \n} \n \n \n \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n568 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.2.4.3-2: UplinkPowerControlCommon: Test point 2 \nDerivation Path: TS 38.508-1 [5] subclause 4.6.3 Table 4.6.3-119 PUSCH-ConfigCommon \nInformation Element \nValue/remark \nComment \nCondition \nPUSCH-ConfigCommon::= SEQUENCE { \n \n \n \n  p0-NominalWithGrant \n-100 \nTest point 2 to \nverify a UE \nrelative high initial \npower \ntransmission \n \n} \n \n \n \n \nTable 6.3.4.2.4.3-3: Void \n \nTable 6.3.4.2.4.3-4: ServingCellConfigCommon \nDeriva",
+      "char_offset": 49400
+    },
+    {
+      "chunk_id": "c0077",
+      "page": 569,
+      "text": "erify a UE \nrelative high initial \npower \ntransmission \n \n} \n \n \n \n \nTable 6.3.4.2.4.3-3: Void \n \nTable 6.3.4.2.4.3-4: ServingCellConfigCommon \nDerivation Path: 38.508-1[5], Table 4.6.3-168 \nInformation Element \nValue/remark \nComment \nCondition \nServingCellConfigCommon ::= SEQUENCE { \n \n \n \n  ss-PBCH-BlockPower \n18 \n \nSCS_15kHz \n \n21 \n \nSCS_30kHz \n} \n \n \n \n \nCondition \nExplanation \nSCS_15kHz \nSCS=15kHz for SS/PBCH block \nSCS_30kHz \nSCS=30kHz for SS/PBCH block \n \n6.3.4.2.5 \nTest requirement \nThe requirement for the power measured in step (2) of the test procedure is not to exceed the values specified in Table \n6.3.4.2.5-1 and 6.3.4.2.5-2. \nTable 6.3.4.2.5-1: Absolute power tolerance: test point 1 \n \nChannel bandwidth / expected output power (dBm) \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz",
+      "char_offset": 50050
+    },
+    {
+      "chunk_id": "c0078",
+      "page": 569,
+      "text": "le 6.3.4.2.5-1: Absolute power tolerance: test point 1 \n \nChannel bandwidth / expected output power (dBm) \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n50 \nMHz \n60 \nMHz \n70 \nMHz \n80 \nMHz \n90 \nMHz \n100 \nMHz \nExpected \nMeasured \npower  \nSCS15 \n-17.6 \n-14.4 \n-12.6 \n-11.3 \n-10.4 \n-9.6 \n-8.3 \n-7.3 \nN/A \nN/A \nN/A \nN/A \nN/A \nSCS30 \n-18.2 \n-14.8 \n-12.8 \n-11.5 \n-10.5 \n-9.7 \n-8.3 \n-7.4 \n-6.5 \n-5.8 \n-5.2 \n-4.7 \n-4.2 \nSCS60 \n \n-15.2 \n-13.0 \n-11.8 \n-10.7 \n-9.8 \n-8.5 \n-7.5 \n-6.6 \n-5.9 \n-5.3 \n-4.8 \n-4.3 \nPower tolerance \n± (9+TT)dB \nNote 1: \nThe lower power limit shall not exceed the minimum output power requirements defined in sub-clause 6.3.2.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3. \n \nTable 6.3.4.2.5-2: Abs",
+      "char_offset": 50700
+    },
+    {
+      "chunk_id": "c0079",
+      "page": 569,
+      "text": ".3.2.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3. \n \nTable 6.3.4.2.5-2: Absolute power tolerance: test point 2 \n \nChannel bandwidth / expected output power (dBm) \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n50 \nMHz \n60 \nMHz \n70 \nMHz \n80 \nMHz \n90 \nMHz \n100 \nMHz \nExpected \nMeasured \npower  \nSCS15 \n-3.6 \n0.4 \n1.4 \n2.7 \n3.6 \n4.4 \n5.7 \n6.7 \nN/A \nN/A \nN/A \nN/A \nN/A \nSCS30 \n-4.2 \n-0.8 \n1.2 \n2.5 \n3.5 \n4.3 \n5.7 \n6.6 \n7.5 \n8.2 \n8.8 \n9.3 \n9.8 \nSCS60 \nN/A \n-1.2 \n1.0 \n2.2 \n3.3 \n4.2 \n5.5 \n6.5 \n7.4 \n8.1 \n8.7 \n9.2 \n9.7 \nPower tolerance \n± (9+TT)dB \nNote 1: \nThe higher power limit shall not exceed the maximum output power requirements defined in sub-clause 6.2.1.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing,",
+      "char_offset": 51350
+    },
+    {
+      "chunk_id": "c0080",
+      "page": 569,
+      "text": "r power limit shall not exceed the maximum output power requirements defined in sub-clause 6.2.1.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n569 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.2.5-3: Test Tolerance \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ \n4.2GHz \n4.2GHz < f ≤ \n6.0GHz \nBW ≤ 40MHz \n1.0 dB \n1.4 dB \n1.4 dB \n40MHz < BW ≤ 100MHz \n1.4 dB \n1.4 dB \n1.4 dB \n \n6.3.4.3 \nRelative power tolerance \n6.3.4.3.1 \nTest purpose \nTo verify the ability of the UE transmitter to set its output power in a target sub-frame(1ms) relatively to the power of \nthe most recently transmitted reference sub-frame if the transmission gap between these sub-frames is less than or equal \nto 20m",
+      "char_offset": 52000
+    },
+    {
+      "chunk_id": "c0081",
+      "page": 570,
+      "text": "vely to the power of \nthe most recently transmitted reference sub-frame if the transmission gap between these sub-frames is less than or equal \nto 20ms. \n6.3.4.3.2 \nTest applicability \nThis test applies to all types of NR UE release 15 and forward. \n6.3.4.3.3 \nMinimum conformance requirement \nThe UE shall meet the requirements specified in Table 6.3.4.3.3-1. \nThe minimum requirements specified in Table 6.3.4.3.3-1 apply when the power of the target and reference sub-frames \nare within the power range bounded by the minimum output power as defined in sub-clause 6.3.1 and the measured  \nPUMAX as defined in sub-clause 6.2.1. \nTo account for RF Power amplifier mode changes, 2 exceptions are allowed for each of two test patterns. The test \npatterns are a monotonically increasing power sweep and",
+      "char_offset": 52650
+    },
+    {
+      "chunk_id": "c0082",
+      "page": 570,
+      "text": "ower amplifier mode changes, 2 exceptions are allowed for each of two test patterns. The test \npatterns are a monotonically increasing power sweep and a monotonically decreasing power sweep over a range \nbounded by the requirements of minimum power and maximum power specified in subclauses 6.3.1 and 6.2.1, \nrespectively. For those exceptions, the power tolerance limit is a maximum of ± 6.0 dB in Table 6.3.4.3.3-1. \nTable 6.3.4.3.3-1: Relative Power Tolerance \nPower step ΔP \n(Up or down)  \n (dB) \nAll combinations \nof PUSCH and \nPUCCH \ntransitions (dB) \nAll combinations of \nPUSCH/PUCCH and \nSRS transitions \nbetween sub-\nframes (dB) \nPRACH (dB) \nΔP < 2 \n± 2.0 (NOTE) \n± 2.5 \n± 2.0 \n2 ≤ ΔP < 3 \n± 2.5 \n± 3.5 \n± 2.5 \n3 ≤ ΔP < 4 \n± 3.0 \n± 4.5 \n± 3.0 \n4 ≤ ΔP ≤ 10 \n± 3.5 \n± 5.5 \n± 3.5 \n10 ≤ ΔP < 15",
+      "char_offset": 53300
+    },
+    {
+      "chunk_id": "c0083",
+      "page": 570,
+      "text": "ΔP < 2 \n± 2.0 (NOTE) \n± 2.5 \n± 2.0 \n2 ≤ ΔP < 3 \n± 2.5 \n± 3.5 \n± 2.5 \n3 ≤ ΔP < 4 \n± 3.0 \n± 4.5 \n± 3.0 \n4 ≤ ΔP ≤ 10 \n± 3.5 \n± 5.5 \n± 3.5 \n10 ≤ ΔP < 15 \n± 4.0 \n± 7.0 \n± 4.0 \n15 ≤ ΔP \n± 5.0 \n± 8.0 \n± 5.0 \nNOTE: \nFor PUSCH to PUSCH transitions with the allocated resource blocks \nfixed in frequency and no transmission gaps other than those generated \nby downlink subframes, DwPTS fields or Guard Periods: for a power \nstep ΔP ≤ 1 dB, the relative power tolerance for transmission is ± 0.7 dB. \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.4.3. \n6.3.4.3.4 \nTest description \n6.3.4.3.4.1 \nInitial conditions \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement stat",
+      "char_offset": 53950
+    },
+    {
+      "chunk_id": "c0084",
+      "page": 570,
+      "text": "ions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of test channel bandwidth and sub-carrier spacing, and are shown in \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n570 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \ntable 6.3.4.3.4.1-1. The details of the uplink reference measurement channels (RMCs) are specified in Annexes A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.",
+      "char_offset": 54600
+    },
+    {
+      "chunk_id": "c0085",
+      "page": 571,
+      "text": "nk reference measurement channels (RMCs) are specified in Annexes A.2. \nConfigurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \nTable 6.3.4.3.4.1-1: Test Configuration Table \nInitial Conditions \nTest Environment as specified in TS 38.508-1 [5] \nsubclause 4.3.1 \nNormal, TL/VL, TL/VH, TH/VL, TH/VH \nTest Frequencies as specified in TS 38.508-1 [5] \nsubclause 4.3.1 \nLow range \nTest Channel Bandwidths as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in TS 38.508-1 [5] subclause \n4.3.1 \nLowest, Highest \nTest Parameters \nCh BW \nDownlink Configuration \nUplink Configuration \n \nModulation \nRB Allocation \nModulation \nRB allocation (NOTE 1) \n5MHz \nN/A for Relative power tolerance test case \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-1",
+      "char_offset": 55250
+    },
+    {
+      "chunk_id": "c0086",
+      "page": 571,
+      "text": "lation \nRB Allocation \nModulation \nRB allocation (NOTE 1) \n5MHz \nN/A for Relative power tolerance test case \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-1 \nSee Table 6.3.4.3.5-2 \nSee Table 6.3.4.3.5-7 \n10MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n15MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n20MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n25MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n30MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n40MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n50MHz \n \nDFT-s-OFDM \nQPSK \nS",
+      "char_offset": 55900
+    },
+    {
+      "chunk_id": "c0087",
+      "page": 571,
+      "text": "4 \nSee Table 6.3.4.3.5-7 \n40MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n50MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-3 \nSee Table 6.3.4.3.5-4 \nSee Table 6.3.4.3.5-7 \n60MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-5 \nSee Table 6.3.4.3.5-6 \nSee Table 6.3.4.3.5-7 \n70MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-5 \nSee Table 6.3.4.3.5-6 \nSee Table 6.3.4.3.5-7 \n80MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-5 \nSee Table 6.3.4.3.5-6 \nSee Table 6.3.4.3.5-7 \n90MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-5 \nSee Table 6.3.4.3.5-6 \nSee Table 6.3.4.3.5-7 \n100MHz \n \nDFT-s-OFDM \nQPSK \nSee Table 6.3.4.3.5-5 \nSee Table 6.3.4.3.5-6 \nSee Table 6.3.4.3.5-7 \nNote 1: \nThe starting resource block shall be RB# 0 \n \n1. Connect the SS to the UE antenna connectors",
+      "char_offset": 56550
+    },
+    {
+      "chunk_id": "c0088",
+      "page": 571,
+      "text": "5 \nSee Table 6.3.4.3.5-6 \nSee Table 6.3.4.3.5-7 \nNote 1: \nThe starting resource block shall be RB# 0 \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n571 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to Annex \nG.0, G.1, G.2, G.3.0. \n4. The UL Reference Measurement Channel is set according to Table 6.3.4.3.4.1-1. \n5. Propagation conditions are set according to Annex B.0. \n6. Ensure the UE is in state RRC_CONNECTED with generic procedure parameters",
+      "char_offset": 57200
+    },
+    {
+      "chunk_id": "c0089",
+      "page": 572,
+      "text": ".3.4.3.4.1-1. \n5. Propagation conditions are set according to Annex B.0. \n6. Ensure the UE is in state RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5 Message \ncontents are defined in clause 6.3.4.3.4.3. \n6.3.4.3.4.2 \nTest procedure \nThe procedure is separated in various subtests to verify different aspects of relative power control. The power patterns \nof the subtests are described in figure 6.3.4.3.4.2-1 thru figure 6.3.4.3.4.2-5. \n \n \n0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \n 0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nRB change  \nRB change  \nPower pattern A",
+      "char_offset": 57850
+    },
+    {
+      "chunk_id": "c0090",
+      "page": 572,
+      "text": "radio frame \n 0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nRB change  \nRB change  \nPower pattern A \nPower pattern C \n 0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nRB change  \nPower pattern B \n \nFigure 6.3.4.3.4.2-1: FDD ramping up test power patterns \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n572 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \n \n0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nPower pattern A  \nRB change  \n0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nRB change  \n0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nPower pattern B  \nPow",
+      "char_offset": 58500
+    },
+    {
+      "chunk_id": "c0091",
+      "page": 573,
+      "text": "4    radio frame \nRB change  \n0  ..     9       sub-frame#  \n     1 \n      2              3                4    radio frame \nPower pattern B  \nPower pattern C  \nRB change  \n \nFigure 6.3.4.3.4.2-2: FDD ramping down test power patterns \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n573 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \n`\n \n 4     9       sub-frame#  \n     1 \n      2           …                5            6    radio frame \nRB change  \n…  \n                      4      9       sub-frame#  \n      … \n     9             10             11             12     radio frame \nPower pattern B  \nRB change  \n…  \nPower pattern C \n…  \nPower pattern A  \n…  \n…  \n…  \n                      4      9       sub-frame#  \n      … \n      14           15             16             17     radio frame \nR",
+      "char_offset": 59150
+    },
+    {
+      "chunk_id": "c0092",
+      "page": 574,
+      "text": "tern A  \n…  \n…  \n…  \n                      4      9       sub-frame#  \n      … \n      14           15             16             17     radio frame \nRB change  \n \nFigure 6.3.4.3.4.2-3: TDD ramping up test power patterns \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n574 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \n`\n \n \n 4     9       sub-frame#  \n     1 \n      2           …                5            6    radio frame \nRB change  \n…  \n                      4      9       sub-frame#  \n      … \n     9             10             11             12     radio frame \nPower pattern B  \n…  \nPower pattern C \n…  \nPower pattern A  \n…  \n                      4      9       sub-frame#  \n      … \n      14           15             16             17     radio frame \nRB change  \n…  \n…  \nRB change  \n \nFig",
+      "char_offset": 59800
+    },
+    {
+      "chunk_id": "c0093",
+      "page": 575,
+      "text": "4      9       sub-frame#  \n      … \n      14           15             16             17     radio frame \nRB change  \n…  \n…  \nRB change  \n \nFigure 6.3.4.3.4.2-4: TDD ramping down test power patterns \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n575 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \nPower  \nFDD test patterns  \n0  1             …                9 sub-frame#  \nPower  \nTDD test patterns  \n0               4                    9   sub-frame#  \nFigure 6.3.4.3.4.2-5: Alternating Test Power patterns \n \n1. Sub test: ramping up pattern \n1.1. \nSS sends uplink scheduling information for each UL HARQ process via PDCCH DCI format 0_1 for \nC_RNTI to schedule the UL RMC according to Table 6.3.4.3.4.1-1. Since the UE has no payload and no \nloopback data to send the UE sends uplink MAC p",
+      "char_offset": 60450
+    },
+    {
+      "chunk_id": "c0094",
+      "page": 576,
+      "text": "r \nC_RNTI to schedule the UL RMC according to Table 6.3.4.3.4.1-1. Since the UE has no payload and no \nloopback data to send the UE sends uplink MAC padding bits on the UL RMC. Send uplink power control \ncommands to the UE using 1dB power step size to ensure that the UE output power measured by the test \nsystem is within the Uplink power control window, defined as +MU to +(MU + Uplink power control \nwindow size) dB of the target power level -33 dBm, where: \n- \nMU is the test system uplink power measurement uncertainty and is specified in Table F.1.2-1 for the \ncarrier frequency f and the channel bandwidth BW. \n- \nUplink power control window size = 1dB (UE power step size) + 0.7dB (UE power step tolerance) + \n(Test system relative power measurement uncertainty), where, the UE power step tol",
+      "char_offset": 61100
+    },
+    {
+      "chunk_id": "c0095",
+      "page": 576,
+      "text": "ize = 1dB (UE power step size) + 0.7dB (UE power step tolerance) + \n(Test system relative power measurement uncertainty), where, the UE power step tolerance is specified in \nTS 38.101-1 [2], Table 6.3.4.3-1 and is 0.7dB for 1dB power step size, and the Test system relative power \nmeasurement uncertainty is specified in Table F.1.2-1. \n1.2. \nSchedule the UE's PUSCH data transmission as described in Figure 6.3.4.3.4.2-1 (FDD pattern A: \nsub-test is divided in 4 arbitrary radio frames with 10 active uplink sub-frames per radio frame) and Figure \n6.3.4.3.4.2-3 (TDD pattern A: sub-test is divided in 20 arbitrary radio frames with 2 active uplink sub-frames \nper radio frame). Uplink RB allocation as defined in table 6.3.4.3.5-1/6.3.4.3.5-3/ 6.3.4.3.5-5 depending on \nchannel bandwidth. On the PDC",
+      "char_offset": 61750
+    },
+    {
+      "chunk_id": "c0096",
+      "page": 576,
+      "text": "ub-frames \nper radio frame). Uplink RB allocation as defined in table 6.3.4.3.5-1/6.3.4.3.5-3/ 6.3.4.3.5-5 depending on \nchannel bandwidth. On the PDCCH format 0_1 for the scheduling of the PUSCH the SS will transmit a +1dB \nTPC command for every first slot in a sub-frame. Note that the measurement need not be done continuously, \nprovided that interruptions are whole numbers of frames, and TPC commands of 0dB are sent during the \ninterruption. \n1.3. \nMeasure the power of PUSCH transmissions to verify the UE relative power control meet test \nrequirements 6.3.4.3.5. For power transients between sub-frames, transient periods of 20us between sub-\nframes are excluded.  \n1.4. \nRepeat the subtest different pattern B, C to move the RB allocation change at different points in the \npattern as descri",
+      "char_offset": 62400
+    },
+    {
+      "chunk_id": "c0097",
+      "page": 576,
+      "text": "frames are excluded.  \n1.4. \nRepeat the subtest different pattern B, C to move the RB allocation change at different points in the \npattern as described in Table 6.3.4.3.5-1/6.3.4.3.5-3/ 6.3.4.3.5-5 to force bigger UE power steps at various \npoints in the power range. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n576 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nNOTE: \nThe purpose of the Uplink power control window is to ensure that the actual UE output power is no less \nthan the target power level, and as close as possible to the target power level. The relationship between \nthe Uplink power control window, the target power level and the corresponding possible actual UE \nUplink power window is illustrated in Annex F, clause F.4.2. \n2. Sub test: ramping down pattern \n2.1. \nSS sends uplink s",
+      "char_offset": 63050
+    },
+    {
+      "chunk_id": "c0098",
+      "page": 577,
+      "text": "esponding possible actual UE \nUplink power window is illustrated in Annex F, clause F.4.2. \n2. Sub test: ramping down pattern \n2.1. \nSS sends uplink scheduling information for each UL HARQ process via PDCCH DCI format 0_1 for \nC_RNTI to schedule the UL RMC according to Table 6.3.4.3.4.1-1.  Send uplink power control commands to \nthe UE using 1dB power step size to ensure that the UE output power measured by the test system is within \nthe Uplink power control window, defined as -(MU + Uplink power control window size) to -MU dB of the \ntarget power level 20.7 dBm, where: \n- \nMU is the test system uplink power measurement uncertainty and is specified in Table F.1.2-1 for the \ncarrier frequency f and the channel bandwidth BW. \n- \nUplink power control window size is same as defined in step 1.1",
+      "char_offset": 63700
+    },
+    {
+      "chunk_id": "c0099",
+      "page": 577,
+      "text": "cified in Table F.1.2-1 for the \ncarrier frequency f and the channel bandwidth BW. \n- \nUplink power control window size is same as defined in step 1.1. \n2.2. \nSchedule the UE's PUSCH data transmission as described in Figure 6.3.4.3.4.2-2 (FDD pattern A: \nsub-test is divided in 4 arbitrary radio frames with 10 active uplink slots per radio frame) and Figure \n6.3.4.3.4.2-4 (TDD pattern A: sub-test is divided in 20 arbitrary radio frames with 2 active uplink sub-frames \nper radio frame). Uplink RB allocation as defined in table 6.3.4.3.5-2/6.3.4.3.5-4/ 6.3.4.3.5-6 depending on \nchannel bandwidth. On the PDCCH format 0_1 for the scheduling of the PUSCH the SS will transmit a -1dB \nTPC command for every first slot in a sub-frame. Note that the measurement need not be done continuously, \nprovide",
+      "char_offset": 64350
+    },
+    {
+      "chunk_id": "c0100",
+      "page": 577,
+      "text": "PUSCH the SS will transmit a -1dB \nTPC command for every first slot in a sub-frame. Note that the measurement need not be done continuously, \nprovided that interruptions are whole numbers of frames, and TPC commands of 0dB are sent during the \ninterruption. \n2.3. \nMeasure the power of PUSCH transmissions to verify the UE relative power control meet test \nrequirements 6.3.4.4.5. For power transients between sub-frames, transient periods of 20us between sub-\nframes are excluded.  \n2.4. \nRepeat the subtest different pattern B, C to move the RB allocation change at different points in the \npattern as described in Table 6.3.4.3.5-2/6.3.4.3.5-4/ 6.3.4.3.5-6 to force bigger UE power steps at various \npoints in the power range. \nNOTE: \nThe purpose of the Uplink power control window is to ensure t",
+      "char_offset": 65000
+    },
+    {
+      "chunk_id": "c0101",
+      "page": 577,
+      "text": ".3.4.3.5-6 to force bigger UE power steps at various \npoints in the power range. \nNOTE: \nThe purpose of the Uplink power control window is to ensure that the actual UE output power is no \ngreater than the target power level, and as close as possible to the target power level. The relationship \nbetween the Uplink power control window, the target power level and the corresponding possible actual \nUE Uplink power window is illustrated in Annex F, clause F.4.3. \n3. Sub test: alternating pattern \n3.1. \nSS sends uplink scheduling information for each UL HARQ process via PDCCH DCI format 0_1 for \nC_RNTI to schedule the UL RMC according to Table 6.3.4.3.4.1-1. Since the UE has no payload and no \nloopback data to send the UE sends uplink MAC padding bits on the UL RMC.  Send uplink power control \nc",
+      "char_offset": 65650
+    },
+    {
+      "chunk_id": "c0102",
+      "page": 577,
+      "text": "4.3.4.1-1. Since the UE has no payload and no \nloopback data to send the UE sends uplink MAC padding bits on the UL RMC.  Send uplink power control \ncommands for PUSCH to the UE using 1dB power step size to ensure that the UE output power measured by \nthe test system is within the Uplink power control window, defined as – (Uplink power control window size / \n2) dB to + (Uplink power control window size / 2) dB of the target power level -10 dBm, where: \n- \nUplink power control window size is same as defined in step 1.1. \n3.2. \nSchedule the UE's PUSCH data transmission as described in Figure 6.3.5.2.4.2-5 for 10 sub-frames an \nuplink RB allocation alternating pattern as defined in table 6.3.4.3.5-7 while transmitting 0dB TPC command \nfor PUSCH via the PDCCH. \n3.3. \nMeasure the power of PUSCH",
+      "char_offset": 66300
+    },
+    {
+      "chunk_id": "c0103",
+      "page": 577,
+      "text": "ion alternating pattern as defined in table 6.3.4.3.5-7 while transmitting 0dB TPC command \nfor PUSCH via the PDCCH. \n3.3. \nMeasure the power of PUSCH transmissions to verify the UE relative power control meet test \nrequirements specified in clause 6.3.4.3.5. For power transients between sub-frames, transient periods of \n20us between sub-frames are excluded.  \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n577 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nNOTE: \nThe purpose of the Uplink power control window is to ensure that the actual UE output power is as close \nas possible to the target power level. The relationship between the Uplink power control window, the \ntarget power level and the corresponding possible actual UE Uplink power window is illustrated in Annex \nF.4.4. \n6.3.4.3.4.3 \nMess",
+      "char_offset": 66950
+    },
+    {
+      "chunk_id": "c0104",
+      "page": 578,
+      "text": "ontrol window, the \ntarget power level and the corresponding possible actual UE Uplink power window is illustrated in Annex \nF.4.4. \n6.3.4.3.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6 with the following exceptions: \nTable 6.3.4.3.4.3-1: PUSCH-Config \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-118 with condition TRANSFORM_PRECODER_ENABLED \n \n6.3.4.3.5 \nTest requirement \nEach UE power step measured in the test procedure 6.3.4.3.4.2 should satisfy the test requirements specified in Table \n6.3.4.3.5-1 thru 6.3.4.3.5-7. \nTo account for RF Power amplifier mode changes 2 exceptions are allowed for each of ramping up and ramping down \ntest patterns. For these exceptions the power tolerance limit is a maximum of ± (6.0 + TT) dB. If there is an exceptio",
+      "char_offset": 67600
+    },
+    {
+      "chunk_id": "c0105",
+      "page": 578,
+      "text": "of ramping up and ramping down \ntest patterns. For these exceptions the power tolerance limit is a maximum of ± (6.0 + TT) dB. If there is an exception in \nthe power step caused by the RB change for all test patterns (A, B, C) then fail the UE. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n578 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-1: Test Requirements Relative Power Tolerance for Transmission, channel BW 5MHz, \nramp up sub-test \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-frames \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Up) \nPower step size \nrange (Up) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSub-frames \nbefore RB \nchange \nFixed = 1 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n15 \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP <",
+      "char_offset": 68250
+    },
+    {
+      "chunk_id": "c0106",
+      "page": 579,
+      "text": "] \n \n \nSub-frames \nbefore RB \nchange \nFixed = 1 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n15 \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSub-frames \nbefore RB \nchange \nFixed = 1 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n1RB to 15 RBs \nTPC=+1dB \n12.76 \n10dB ≤ ΔP < \n15dB \n12.76 +/- (4 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 15 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSub-frames \nbefore RB \nchange \nFixed = 1 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n \nSub-f",
+      "char_offset": 68900
+    },
+    {
+      "chunk_id": "c0107",
+      "page": 579,
+      "text": "=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n \nSub-frames \nbefore RB \nchange \nFixed = 1 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n1RB to 10 RBs \nTPC=+1dB \n11.00 \n10dB ≤ ΔP < \n15dB \n11.00 +/- (4 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 10 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB change: \nPattern A the position of RB uplink allocation change is after 10 active uplink Sub-frames \nPattern B the position of RB uplink allocation change is after 20 active uplink Sub-frames \nPattern C the position of RB uplink allocation change is after 30 active uplink Sub-frames \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nAppl",
+      "char_offset": 69550
+    },
+    {
+      "chunk_id": "c0108",
+      "page": 579,
+      "text": "uplink allocation change is after 30 active uplink Sub-frames \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n579 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-2: Test Requirements Relative Power Tolerance for Transmission, channel BW 5MHz, \nramp down sub-test \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-frames \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Down) \nPower step size \nrange (Down) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSub-frames \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 +",
+      "char_offset": 70200
+    },
+    {
+      "chunk_id": "c0109",
+      "page": 580,
+      "text": "ore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n15 \n \nSub-frames \nbefore RB \nchange \nFixed = 15 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n15 RBs to 1 RB \nTPC=-1dB \n12.76 \n10dB ≤ ΔP < \n15dB \n12.76 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSub-frames \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n \nSub-frames \nbefore RB",
+      "char_offset": 70850
+    },
+    {
+      "chunk_id": "c0110",
+      "page": 580,
+      "text": "≤ ΔP < 10dB \n7.99 +/- (3.5 + \nTT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n \nSub-frames \nbefore RB \nchange \nFixed = 10 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n10 RBs to 1 RB \nTPC=-1dB \n11.00 \n10dB ≤ ΔP < \n15dB \n11.00 +/- (4 + TT) \n \n \nSub-frames \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB change: \nPattern A the position of RB uplink allocation change is after 10 active uplink Sub-frames \nPattern B the position of RB uplink allocation change is after 20 active uplink Sub-frames \nPattern C the position of RB uplink allocation change is after 30 active uplink Sub-frames \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥",
+      "char_offset": 71500
+    },
+    {
+      "chunk_id": "c0111",
+      "page": 580,
+      "text": "n change is after 30 active uplink Sub-frames \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n580 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-3: Test Requirements Relative Power Tolerance for Transmission, channel BW 10MHz, \n15MHz, 20MHz, 25MHz, 30MHz, 40MHz, 50MHz ramp up sub-test \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n581 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-\nframes \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Up) \nPower step size \nrange (Up) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤",
+      "char_offset": 72150
+    },
+    {
+      "chunk_id": "c0112",
+      "page": 582,
+      "text": "power \nstep size \n(Up) \nPower step size \nrange (Up) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n15 \n2 \nRB change \n1RB to 20 RBs \nTPC=+1dB \n14.01 \n10dB ≤ ΔP < 15dB \n14.01 +/-  (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 20 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n3 \nRB change \n1RB to 50 RBs \nTPC=+1dB \n17.99 \n15dB ≤ ΔP \n17.99 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed =",
+      "char_offset": 72800
+    },
+    {
+      "chunk_id": "c0113",
+      "page": 582,
+      "text": "ΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n3 \nRB change \n1RB to 50 RBs \nTPC=+1dB \n17.99 \n15dB ≤ ΔP \n17.99 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 50 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n2 \nRB change \n1RB to 24 RBs \nTPC=+1dB \n14.80 \n10dB ≤ ΔP < 15dB \n14.80+/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 24 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n1 \nRB change \n1RB to",
+      "char_offset": 73450
+    },
+    {
+      "chunk_id": "c0114",
+      "page": 582,
+      "text": "= 24 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n60 \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n1RB to 10 RBs \nTPC=+1dB \n11.00 \n10dB ≤ ΔP < 15dB \n11.00 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 10 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB change: \nPattern A the position of RB uplink allocation change is after 10 active uplink Subframes. \nPattern B the position of RB uplink allocation change is after 20 active uplink Subframes \nPattern C the position of RB up",
+      "char_offset": 74100
+    },
+    {
+      "chunk_id": "c0115",
+      "page": 582,
+      "text": "0 active uplink Subframes. \nPattern B the position of RB uplink allocation change is after 20 active uplink Subframes \nPattern C the position of RB uplink allocation change is after 30 active uplink Subframes. \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n582 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-4: Test Requirements Relative Power Tolerance for Transmission, channel BW 10MHz, \n15MHz, 20MHz, 25MHz, 30MHz, 40MHz, 50MHz ramp down sub-test \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n583 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-\nframes \nUplink RB \nallocation \nTPC \ncom",
+      "char_offset": 74750
+    },
+    {
+      "chunk_id": "c0116",
+      "page": 584,
+      "text": "Release 17 \n583 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-\nframes \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Down) \nPower step size \nrange (Down) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSubframes \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n5 RBs to 1RBs \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 20 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n15 \n2 \nRB change \n20 RBs to 1 RB \nTPC=-1dB \n14.01 \n10dB ≤ ΔP < 15dB \n14.01 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes",
+      "char_offset": 75400
+    },
+    {
+      "chunk_id": "c0117",
+      "page": 584,
+      "text": "dB \n14.01 \n10dB ≤ ΔP < 15dB \n14.01 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 50 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n3 \nRB change \n50 RBs to 1 RB \nTPC=-1dB \n17.99 \n15dB ≤ ΔP \n17.99 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n \nSubframes \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 24 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n2 \nRB change \n24 RBs to 1 RB \nTPC=-1dB \n14.80 \n10dB ≤ ΔP < 15dB \n14",
+      "char_offset": 76050
+    },
+    {
+      "chunk_id": "c0118",
+      "page": 584,
+      "text": "Subframes \nbefore RB \nchange \nFixed = 24 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n2 \nRB change \n24 RBs to 1 RB \nTPC=-1dB \n14.80 \n10dB ≤ ΔP < 15dB \n14.80 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n60 \n \nSubframes \nbefore RB \nchange \nFixed = 10 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n2 \nRB change \n10 RBs to 1 RB \nTPC=-1dB \n11.00 \n10dB ≤ ΔP < 15dB \n11.00 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB chan",
+      "char_offset": 76700
+    },
+    {
+      "chunk_id": "c0119",
+      "page": 584,
+      "text": "dB ≤ ΔP < 15dB \n11.00 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB change: \nPattern A the position of RB uplink allocation change is after 10 active uplink Subframes. \nPattern B the position of RB uplink allocation change is after 20 active uplink Subframes \nPattern C the position of RB uplink allocation change is after 30 active uplink Subframes. \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n584 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-5: Test Requirements Relative Power Tolerance for Transmission, channel BW 60MHz, \n70MHz, 80MHz, 90MHz, 100",
+      "char_offset": 77350
+    },
+    {
+      "chunk_id": "c0120",
+      "page": 585,
+      "text": "1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-5: Test Requirements Relative Power Tolerance for Transmission, channel BW 60MHz, \n70MHz, 80MHz, 90MHz, 100MHz ramp up sub-test \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-\nframes \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Up) \nPower step size \nrange (Up) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n2 \nRB change \n1RB to 24 RBs \nTPC=+1dB \n14.80 \n10dB ≤ ΔP < 15dB \n14.80 +/- (4 + TT) \n \n \nSubfr",
+      "char_offset": 78000
+    },
+    {
+      "chunk_id": "c0121",
+      "page": 585,
+      "text": "ange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n2 \nRB change \n1RB to 24 RBs \nTPC=+1dB \n14.80 \n10dB ≤ ΔP < 15dB \n14.80 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 24 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n3 \nRB change \n1RB to 81 RBs \nTPC=+1dB \n20.08 \n15dB < ΔP \n20.08 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 81 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n1RB to 5 RBs \nTPC=+1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n60 \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.",
+      "char_offset": 78650
+    },
+    {
+      "chunk_id": "c0122",
+      "page": 585,
+      "text": "mes \nafter RB \nchange \nFixed = 5 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n60 \n \nSubframes \nbefore RB \nchange \n1RB \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n1RB to 75 RBs \nTPC=+1dB \n19.75 \n15dB < ΔP \n19.75 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 75 \nTPC=+1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB change: \nPattern A the position of RB uplink allocation change is after 10 active uplink Subframes. \nPattern B the position of RB uplink allocation change is after 20 active uplink Subframes \nPattern C the position of RB uplink allocation change is after 30 active uplink Subframes. \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.5",
+      "char_offset": 79300
+    },
+    {
+      "chunk_id": "c0123",
+      "page": 585,
+      "text": "ting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n585 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-6: Test Requirements Relative Power Tolerance for Transmission, channel BW 60MHz, \n70MHz, 80MHz, 90MHz, 100MHz ramp down sub-test \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nApplicable \nsub-\nframes \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Down) \nPower step size \nrange (Down) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \nSubframes \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/-0.7 + TT \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1d",
+      "char_offset": 79950
+    },
+    {
+      "chunk_id": "c0124",
+      "page": 586,
+      "text": "+/-0.7 + TT \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 24 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n30 \n2 \nRB change \n24 RBs to 1 RB \nTPC=-1dB \n14.80 \n10dB ≤ ΔP < 15dB \n14.80 +/- (4 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 81 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n3 \nRB change \n81 RBs to 1 RB \nTPC=-1dB \n20.08 \n15dB < ΔP \n20.08 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB cha",
+      "char_offset": 80600
+    },
+    {
+      "chunk_id": "c0125",
+      "page": 586,
+      "text": "ixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n \nSubframes \nbefore RB \nchange \nFixed = 5 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n1 \nRB change \n5 RBs to 1 RB \nTPC=-1dB \n7.99 \n4dB ≤ ΔP < 10dB \n7.99 +/- (3.5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n60 \n \nSubframes \nbefore RB \nchange \nFixed = 75 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \n \n2 \nRB change \n75 RBs to 1 RB \nTPC=-1dB \n19.75 \n15dB < ΔP \n19.75 +/- (5 + TT) \n \n \nSubframes \nafter RB \nchange \nFixed = 1 \nTPC=-1dB \n1 \nΔP ≤ 1 dB \n1 +/- (0.7 + TT) \nNote 1: \nPosition of RB change: \nPattern A the position of RB uplink allocation change is after 10 active uplink Subframes. \nPattern B the position of RB uplink allocation change is after 20 active uplink Subframes \nPattern C the posi",
+      "char_offset": 81250
+    },
+    {
+      "chunk_id": "c0126",
+      "page": 586,
+      "text": "ge is after 10 active uplink Subframes. \nPattern B the position of RB uplink allocation change is after 20 active uplink Subframes \nPattern C the position of RB uplink allocation change is after 30 active uplink Subframes. \nNote 2: \nThe starting resource block shall be RB# 0. \nNote 3: \nTT=0.7dB \nNote 4: \nApplicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n586 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.3.5-7: Test Requirements Relative Power Tolerance for Transmission, alternating sub-test \nBW \nTest \nSCS \n[kHz] \nSub-\ntest \nID \nUplink RB \nallocation \nTPC \ncommand \nExpected \npower \nstep size \n(Up or \nDown) \nPower step \nsize range (Up \nor Down) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \n1 \nAlternating 1 \nand 2 \nTP",
+      "char_offset": 81900
+    },
+    {
+      "chunk_id": "c0127",
+      "page": 587,
+      "text": "ected \npower \nstep size \n(Up or \nDown) \nPower step \nsize range (Up \nor Down) \nPUSCH \n \n \n \n \n \nΔP [dB] \nΔP [dB] \n[dB] \n \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n \n15 \n2 \nAlternating 1 \nand 5 \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n5 \n \n3 \nAlternating 1 \nand 15 \nTPC=0dB \n11.76 \n10dB ≤ ΔP < \n15dB \n11.76 +/- (4 + \nTT) \n \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n \n30 \n2 \nAlternating 1 \nand 10 \nTPC=0dB \n10.00 \n10dB ≤ ΔP < \n15dB \n10.00 +/- (4 + \nTT) \n \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n \n \n2 \nAlternating 1 \nand 5 \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n \n15 \n3 \nAlternating 1 \nand 20 \nTPC=0dB \n13.01 \n10dB ≤ ΔP < \n15dB \n13.01 +/- (4 + \nTT) \n \n \n4 \nAlte",
+      "char_offset": 82550
+    },
+    {
+      "chunk_id": "c0128",
+      "page": 587,
+      "text": "0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n \n15 \n3 \nAlternating 1 \nand 20 \nTPC=0dB \n13.01 \n10dB ≤ ΔP < \n15dB \n13.01 +/- (4 + \nTT) \n \n \n4 \nAlternating 1 \nand 50 \nTPC=0dB \n16.99 \n15dB ≤ ΔP \n16.99 +/- (5 + \nTT) \n \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n10,15,20, \n25,30,40,50 \n30 \n2 \nAlternating 1 \nand 5 \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n \n \n3 \nAlternating 1 \nand 24 \nTPC=0dB \n13.80 \n10dB ≤ ΔP < \n15dB \n13.80 +/- (4 + \nTT) \n \n \n1 \nAlternating 1 \nand 5 \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n \n60 \n2 \nAlternating 1 \nand 10 \nTPC=0dB \n10.00 \n10dB ≤ ΔP < \n15dB \n10.00 +/- (4 + \nTT) \n \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n \n30 \n2 \nAlternating 1 \nand 5 \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n1",
+      "char_offset": 83200
+    },
+    {
+      "chunk_id": "c0129",
+      "page": 587,
+      "text": "(4 + \nTT) \n \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n \n30 \n2 \nAlternating 1 \nand 5 \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n \n \n3 \nAlternating 1 \nand 81 \nTPC=0dB \n19.08 \n15dB < ΔP \n19.08 +/- (5 + \nTT) \n60, \n70,80,90,100 \n \n1 \nAlternating 1 \nand 2 \nTPC=0dB \n3.01 \n3dB ≤ ΔP < 4dB \n3.01 +/- (3 + TT) \n \n60 \n2 \nAlternating 1 \nand 5  \nTPC=0dB \n6.99 \n4dB ≤ ΔP < \n10dB \n6.99 +/- (3.5 + \nTT) \n \n \n3 \nAlternating 1 \nand 75 \nTPC=0dB \n18.75 \n15dB < ΔP \n18.75 +/- (5 + \nTT) \nNote 1: \nThe starting resource block shall be RB# 0. \nNote 2: TT=0.7dB \nNote 3: Applicable if PUMAX ≥ P ≥ Pmin. Pmin as defined in sub-clause 6.3.1. \n \n6.3.4.4 \nAggregate power tolerance \n6.3.4.4.1 \nTest purpose \nTo verify the ability of the UE transmitter to maintain its power durin",
+      "char_offset": 83850
+    },
+    {
+      "chunk_id": "c0130",
+      "page": 587,
+      "text": "-clause 6.3.1. \n \n6.3.4.4 \nAggregate power tolerance \n6.3.4.4.1 \nTest purpose \nTo verify the ability of the UE transmitter to maintain its power during non-contiguous transmissions within 21ms in \nresponse to 0 dB commands with respect to the first UE transmission and all other power control parameters as \nspecified in 38.213 kept constant. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n587 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.4.4.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.4.4.3 \nMinimum conformance requirements \nThe aggregate power control tolerance is the ability of the UE transmitter to maintain its power in a sub-frame(1ms) \nduring non-contiguous transmissions within 21ms  in response to 0 dB commands with respect to the f",
+      "char_offset": 84500
+    },
+    {
+      "chunk_id": "c0131",
+      "page": 588,
+      "text": "smitter to maintain its power in a sub-frame(1ms) \nduring non-contiguous transmissions within 21ms  in response to 0 dB commands with respect to the first UE \ntransmission and all other power control parameters as specified in 38.213 kept constant. \nThe minimum requirement specified in Table 6.3.4.4.3-1 apply in the power range bounded by the minimum output \npower as specified in sub-clause 6.3.1 and the maximum output power as specified in sub-clause 6.2.2. \nTable 6.3.4.4.3-1: Aggregate power tolerance \nTPC command \nUL channel \nAggregate power tolerance \nwithin 21ms \n0 dB \nPUCCH \n± 2.5 dB \n0 dB \nPUSCH \n± 3.5 dB \n \nThe normative reference for this requirement is TS 38.01-1 [2] clause 6.3.4.4 \n6.3.4.4.4 \nTest description \n6.3.4.4.4.1 \nInitial conditions \nInitial conditions are a set of test",
+      "char_offset": 85150
+    },
+    {
+      "chunk_id": "c0132",
+      "page": 588,
+      "text": "this requirement is TS 38.01-1 [2] clause 6.3.4.4 \n6.3.4.4.4 \nTest description \n6.3.4.4.4.1 \nInitial conditions \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of test channel bandwidth and sub-carrier spacing, and are shown in \ntable 6.3.4.4.4.1-1 and table 6.3.4.4.4.1-2. The details of the uplink reference measurement channels (RMCs) are \nspecified in Annexes A.2. Configurations of P",
+      "char_offset": 85800
+    },
+    {
+      "chunk_id": "c0133",
+      "page": 588,
+      "text": ".4.4.4.1-1 and table 6.3.4.4.4.1-2. The details of the uplink reference measurement channels (RMCs) are \nspecified in Annexes A.2. Configurations of PDSCH and PDCCH before measurement are specified in Annex C.2. \nTable 6.3.4.4.4.1-1: Test Configuration Table: PUCCH sub-test \nInitial Conditions \nTest Environment as specified in TS 38.508-1 [5] \nsubclause 4.1 \nNormal \nTest Frequencies as specified in TS 38.508-1 [5] \nsubclause 4.3.1 \nMid range (NOTE 1) \nTest Channel Bandwidths as specified in TS 38.508-1 [5] \nsubclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters for Channel Bandwidths \nTest ID \nDownlink Configuration \nUplink Configuration \n \nN/A for aggregate power tolerance \ntestcase  \nPUCCH format = Format 1 \nLength in OFDM symbols",
+      "char_offset": 86450
+    },
+    {
+      "chunk_id": "c0134",
+      "page": 588,
+      "text": "est ID \nDownlink Configuration \nUplink Configuration \n \nN/A for aggregate power tolerance \ntestcase  \nPUCCH format = Format 1 \nLength in OFDM symbols = 14 \n1 \nNOTE 1: For NR band n28, 30MHz test channel bandwidth is tested with Low range test frequencies. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n588 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.4.4.1-2: Test Configuration Table: PUSCH sub-test \nInitial Conditions \nTest Environment as specified in TS 38.508-1 \n[5] subclause 4.1 \nNormal \nTest Frequencies as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nMid range (NOTE 2) \nTest Channel Bandwidths as specified in TS \n38.508-1 [5] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters for Channel Bandwidths \nTest ID \nDow",
+      "char_offset": 87100
+    },
+    {
+      "chunk_id": "c0135",
+      "page": 589,
+      "text": "] subclause 4.3.1 \nLowest, Mid, Highest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters for Channel Bandwidths \nTest ID \nDownlink Configuration \nUplink Configuration \n \nN/A for aggregate power \ntolerance testcase  \nModulation \nRB allocation (NOTE 1) \n1 \nCP-OFDM QPSK \nOuter_Full \nNOTE 1: The specific configuration of each RF allocation is defined in Table 6.1-1. \nNOTE 2: For NR band n28, 30MHz test channel bandwidth is tested with Low range test frequencies. \n \n1. Connect the SS to the UE antenna connectors as shown in TS 38.508-1 [5] Annex A, Figure A.3.1.1.1 for TE \ndiagram and section A.3.2 for UE diagram. \n2. The parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex",
+      "char_offset": 87750
+    },
+    {
+      "chunk_id": "c0136",
+      "page": 589,
+      "text": "parameter settings for the cell are set up according to TS 38.508-1 [5] subclause 4.4.3. \n3. Downlink signals are initially set up according to Annex C.0, C.1, C.2, and uplink signals according to G.0, G.1, \nG.2, G.3.0. \n4. The UL and DL Reference Measurement channels are set according to Table 6.3.4.4.4.1-1 (PUCCH sub-test) \nand Table 6.3.4.4.4.1-2 (PUSCH sub-test) \n5. Propagation conditions are set according to Annex B.0. \n6. Ensure the UE is in state RRC_CONNECTED with generic procedure parameters Connectivity NR, Connected \nwithout release On, Test Mode On and Test Loop Function On according to TS 38.508-1 [5] clause 4.5. Message \ncontents are defined in clause 6.3.4.4.4.3.  \n6.3.4.4.4.2 \nTest procedure \nThe procedure is separated in two subtests to verify PUCCH and PUSCH aggregate pow",
+      "char_offset": 88400
+    },
+    {
+      "chunk_id": "c0137",
+      "page": 589,
+      "text": "s are defined in clause 6.3.4.4.4.3.  \n6.3.4.4.4.2 \nTest procedure \nThe procedure is separated in two subtests to verify PUCCH and PUSCH aggregate power control tolerance \nrespectively. The uplink transmission patterns are described in figure 6.3.4.4.4.2-1. \n \nTDD SCS 15kHz \ntest patterns  \nFDD test patterns  \n0         5           0           5           0  \nsub-frame#  \n4          9          4           9           4  \nslot#  \nTDD SCS 60kHz test patterns \nP\no\nw\ne\nr \nTDD SCS 30kHz  \ntest patterns  \n8,9   18,19      8,9     18,19       8,9  \nslot#  \n16,17, \n18,19  \nslot#  \nP\no\nw\ne\nr \nP\no\nw\ne\nr \nP\no\nw\ne\nr \n36,37, \n38,39  \n36,37, \n38,39  \n16,17, \n18,19  \n16,17, \n18,19  \n \nFigure 6.3.4.4.4.2-1 Test uplink transmission \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n589 \nETSI TS 138 521-1 V17.5.",
+      "char_offset": 89050
+    },
+    {
+      "chunk_id": "c0138",
+      "page": 589,
+      "text": ", \n18,19  \n16,17, \n18,19  \n \nFigure 6.3.4.4.4.2-1 Test uplink transmission \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n589 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n \n1. PUCCH sub test: \n1.1. \nThe SS transmits PDSCH via PDCCH DCI format 0_1 for C_RNTI to transmit the DL RMC \naccording to Table 6.3.4.4.4.1-1. The SS sends downlink MAC padding bits on the DL RMC. The \ntransmission of PDSCH will make the UE send uplink ACK/NACK using PUCCH. Send uplink power \ncontrol commands for PUCCH to the UE using 1dB power step size to ensure that the UE output power \nmeasured by the test system is within the Uplink power control window, defined as – (Uplink power control \nwindow size / 2) dB to + (Uplink power control window size / 2) dB of the target power level + 0 dBm, \nwhere: \n- \nUplink power co",
+      "char_offset": 89700
+    },
+    {
+      "chunk_id": "c0139",
+      "page": 590,
+      "text": "plink power control \nwindow size / 2) dB to + (Uplink power control window size / 2) dB of the target power level + 0 dBm, \nwhere: \n- \nUplink power control window size = 1dB (UE power step size) + 2.0dB (UE power step tolerance) + \n(Test system relative power measurement uncertainty), where, the UE power step tolerance is specified in \nTS 38.101-1 [2], Table 6.3.4.3-1 and is 2.0dB for PUCCH with 1dB power step size, and the Test system \nrelative power measurement uncertainty is specified in Table F.1.2-1. \n1.2. \nEvery 5 sub-frames (5ms) transmit to the UE downlink PDSCH MAC padding bits as well as 0 dB \nTPC command for PUCCH via the PDCCH to make the UE transmit ACK/NACK on the PUCCH  for 1 sub-\nframe(1ms). The downlink transmission is scheduled in the appropriate slots to make the UE tran",
+      "char_offset": 90350
+    },
+    {
+      "chunk_id": "c0140",
+      "page": 590,
+      "text": "make the UE transmit ACK/NACK on the PUCCH  for 1 sub-\nframe(1ms). The downlink transmission is scheduled in the appropriate slots to make the UE transmit \nPUCCH as described in figure 6.3.4.4.4.2-1 \n1.3. \nMeasure the power of 5 consecutive PUCCH transmissions to verify the UE transmitted PUCCH \npower is maintained within 21ms. \n2. PUSCH sub test: \n2.1. \nThe SS sends uplink scheduling information via PDCCH DCI format 0_1 for C_RNTI to schedule the \nPUSCH. Since the UE has no payload and no loopback data to send the UE sends uplink MAC padding bits \non the UL RMC. Send uplink power control commands for PUSCH to the UE using 1dB power step size to \nensure that the UE output power measured by the test system is within the Uplink power control window, \ndefined as – (Uplink power control window",
+      "char_offset": 91000
+    },
+    {
+      "chunk_id": "c0141",
+      "page": 590,
+      "text": "to \nensure that the UE output power measured by the test system is within the Uplink power control window, \ndefined as – (Uplink power control window size / 2) dB to + (Uplink power control window size / 2) dB of \nthe target power level + 0 dBm, where: \n- \nUplink power control window size = 1dB (UE power step size) + 0.7dB (UE power step tolerance) + \n(Test system relative power measurement uncertainty), where, the UE power step tolerance is specified in \nTS 38.101-1 [2], Table 6.3.4.3-1 and is 0.7dB for PUSCH with 1dB power step size, and the Test system \nrelative power measurement uncertainty is specified in Table F.1.2-1. \nNOTE: \nThe purpose of the Uplink power control window is to ensure that the actual UE output power is as close \nas possible to the target power level. The relationsh",
+      "char_offset": 91650
+    },
+    {
+      "chunk_id": "c0142",
+      "page": 590,
+      "text": "ose of the Uplink power control window is to ensure that the actual UE output power is as close \nas possible to the target power level. The relationship between the Uplink power control window, the \ntarget power level and the corresponding possible actual UE Uplink power window is illustrated in Annex \nF.4.4. \n2.2. \nEvery 5 sub-frames (5ms) schedule the UE's PUSCH data transmission for 1 sub-frame(1ms), and \ntransmit 0 dB TPC command for PUSCH via the PDCCH to make the UE transmit PUSCH. The uplink \ntransmission patterns are described in figure 6.3.4.4.4.2-1, \n2.3. \nMeasure the power of 5 consecutive PUSCH transmissions to verify the UE transmitted PUSCH \npower is maintained within 21ms transmissions. \n6.3.4.4.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclau",
+      "char_offset": 92300
+    },
+    {
+      "chunk_id": "c0143",
+      "page": 590,
+      "text": "mitted PUSCH \npower is maintained within 21ms transmissions. \n6.3.4.4.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6. \n6.3.4.4.5 \nTest requirement \nThe requirement for the power measurements made in step (1.3) and (2.3) of the test procedure shall not exceed the \nvalues specified in Table 6.3.4.4.5-1. The power measurement period shall be 1 sub-frame(1ms).",
+      "char_offset": 92950
+    }
+  ]
+}

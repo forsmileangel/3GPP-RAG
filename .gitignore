@@ -61,3 +61,8 @@ snapshots/
 
 # Streamlit cache
 .streamlit/secrets.toml
+
+# Spike-specific runtime artifacts (versioned _62.json / _63.json snapshots are kept for reference)
+spike/last_stdout.log
+spike/last_run.json
+spike/extracted.json

@@ -1,0 +1,245 @@
+{
+  "embedding_model": "BAAI/bge-m3",
+  "section": "6.3",
+  "chunk_chars": 800,
+  "chunk_overlap": 150,
+  "n_chunks": 144,
+  "top_k": 5,
+  "questions": [
+    {
+      "qid": "q01",
+      "question": "What is the maximum output power tolerance for FR1 PC3 UE?",
+      "expected_section": "6.2.1",
+      "expected_keywords": [
+        "23",
+        "dBm",
+        "tolerance"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0001",
+          "page": 541,
+          "distance": 0.3889673948287964,
+          "text_preview": "dB  1.0 dB    Table 6.2I.4.5-1: PCMAX configured UE output power    Maximum output power     Test ID 1,2  Test ID 3  Measured UE output  power test point 1  -10 dBm ± (7+TT)  -10 dBm +7+TT/-7.2-TT  Measured UE output  power test point 2  10 dBm ± (6+TT)  10 dBm +6+TT/-6.2-TT  Measured UE output  pow",
+          "full_text": "dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test point 1 \n-10 dBm ± (7+TT) \n-10 dBm +7+TT/-7.2-TT \nMeasured UE output \npower test point 2 \n10 dBm ± (6+TT) \n10 dBm +6+TT/-6.2-TT \nMeasured UE output \npower test point 3 \n15 dBm ± (5+TT) \n15 dBm +5+TT/-5.2-TT \nMeasured UE output \npower test point 4 \nNote 3 \nNote 4 \nNote 1: \nTT for each frequency and channel bandwidth is specified in Table 6.2I.4.5-0. \nNote 2: \nThe maximum output power shall be within the range in Table 6.2I.4.5-2. \nNote 3: \nThe maximum output power shall be within the range in Table 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadba"
+        },
+        {
+          "chunk_id": "c0104",
+          "page": 578,
+          "distance": 0.3905980587005615,
+          "text_preview": "ontrol window, the  target power level and the corresponding possible actual UE Uplink power window is illustrated in Annex  F.4.4.  6.3.4.3.4.3  Message contents  Message contents are according to TS 38.508-1 [5] subclause 4.6 with the following exceptions:  Table 6.3.4.3.4.3-1: PUSCH-Config  Deriv",
+          "full_text": "ontrol window, the \ntarget power level and the corresponding possible actual UE Uplink power window is illustrated in Annex \nF.4.4. \n6.3.4.3.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6 with the following exceptions: \nTable 6.3.4.3.4.3-1: PUSCH-Config \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-118 with condition TRANSFORM_PRECODER_ENABLED \n \n6.3.4.3.5 \nTest requirement \nEach UE power step measured in the test procedure 6.3.4.3.4.2 should satisfy the test requirements specified in Table \n6.3.4.3.5-1 thru 6.3.4.3.5-7. \nTo account for RF Power amplifier mode changes 2 exceptions are allowed for each of ramping up and ramping down \ntest patterns. For these exceptions the power tolerance limit is a maximum of ± (6.0 + TT) dB. If there is an exceptio"
+        },
+        {
+          "chunk_id": "c0080",
+          "page": 569,
+          "distance": 0.39350348711013794,
+          "text_preview": "r power limit shall not exceed the maximum output power requirements defined in sub-clause 6.2.1.3  Note 2:  TT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3.     3GPP TS 38.521-1 version 17.5.0 Release 17  569  ETSI TS 138 521-1 V17.5.0 (202",
+          "full_text": "r power limit shall not exceed the maximum output power requirements defined in sub-clause 6.2.1.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n569 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.4.2.5-3: Test Tolerance \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ \n4.2GHz \n4.2GHz < f ≤ \n6.0GHz \nBW ≤ 40MHz \n1.0 dB \n1.4 dB \n1.4 dB \n40MHz < BW ≤ 100MHz \n1.4 dB \n1.4 dB \n1.4 dB \n \n6.3.4.3 \nRelative power tolerance \n6.3.4.3.1 \nTest purpose \nTo verify the ability of the UE transmitter to set its output power in a target sub-frame(1ms) relatively to the power of \nthe most recently transmitted reference sub-frame if the transmission gap between these sub-frames is less than or equal \nto 20m"
+        },
+        {
+          "chunk_id": "c0130",
+          "page": 587,
+          "distance": 0.39382052421569824,
+          "text_preview": "-clause 6.3.1.    6.3.4.4  Aggregate power tolerance  6.3.4.4.1  Test purpose  To verify the ability of the UE transmitter to maintain its power during non-contiguous transmissions within 21ms in  response to 0 dB commands with respect to the first UE transmission and all other power control paramet",
+          "full_text": "-clause 6.3.1. \n \n6.3.4.4 \nAggregate power tolerance \n6.3.4.4.1 \nTest purpose \nTo verify the ability of the UE transmitter to maintain its power during non-contiguous transmissions within 21ms in \nresponse to 0 dB commands with respect to the first UE transmission and all other power control parameters as \nspecified in 38.213 kept constant. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n587 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.3.4.4.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.4.4.3 \nMinimum conformance requirements \nThe aggregate power control tolerance is the ability of the UE transmitter to maintain its power in a sub-frame(1ms) \nduring non-contiguous transmissions within 21ms  in response to 0 dB commands with respect to the f"
+        },
+        {
+          "chunk_id": "c0069",
+          "page": 567,
+          "distance": 0.41201210021972656,
+          "text_preview": "acy apply under normal conditions.  6.3.4.2  Absolute power tolerance  6.3.4.2.1  Test purpose  To verify the ability of the UE transmitter to set its initial output power to a specific value at the start of a contiguous  transmission or non-contiguous transmission with a long transmission gap, i.e.",
+          "full_text": "acy apply under normal conditions. \n6.3.4.2 \nAbsolute power tolerance \n6.3.4.2.1 \nTest purpose \nTo verify the ability of the UE transmitter to set its initial output power to a specific value at the start of a contiguous \ntransmission or non-contiguous transmission with a long transmission gap, i.e. transmission gap is larger than 20ms. \n6.3.4.2.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.4.2.3 \nMinimum conformance requirements \nThe absolute power tolerance is the ability of the UE transmitter to set its initial output power to a specific value for the \nfirst sub-frame(1ms) at the start of a contiguous transmission or non-contiguous transmission with a transmission gap \nlarger than 20ms. The tolerance includes the channel estimation erro"
+        }
+      ]
+    },
+    {
+      "qid": "q02",
+      "question": "How is the test procedure defined for UE maximum output power across power classes?",
+      "expected_section": "6.2.1",
+      "expected_keywords": [
+        "Tx power",
+        "test procedure",
+        "PC2",
+        "PC3"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0141",
+          "page": 590,
+          "distance": 0.3408336639404297,
+          "text_preview": "to  ensure that the UE output power measured by the test system is within the Uplink power control window,  defined as – (Uplink power control window size / 2) dB to + (Uplink power control window size / 2) dB of  the target power level + 0 dBm, where:  -  Uplink power control window size = 1dB (UE ",
+          "full_text": "to \nensure that the UE output power measured by the test system is within the Uplink power control window, \ndefined as – (Uplink power control window size / 2) dB to + (Uplink power control window size / 2) dB of \nthe target power level + 0 dBm, where: \n- \nUplink power control window size = 1dB (UE power step size) + 0.7dB (UE power step tolerance) + \n(Test system relative power measurement uncertainty), where, the UE power step tolerance is specified in \nTS 38.101-1 [2], Table 6.3.4.3-1 and is 0.7dB for PUSCH with 1dB power step size, and the Test system \nrelative power measurement uncertainty is specified in Table F.1.2-1. \nNOTE: \nThe purpose of the Uplink power control window is to ensure that the actual UE output power is as close \nas possible to the target power level. The relationsh"
+        },
+        {
+          "chunk_id": "c0001",
+          "page": 541,
+          "distance": 0.34244322776794434,
+          "text_preview": "dB  1.0 dB    Table 6.2I.4.5-1: PCMAX configured UE output power    Maximum output power     Test ID 1,2  Test ID 3  Measured UE output  power test point 1  -10 dBm ± (7+TT)  -10 dBm +7+TT/-7.2-TT  Measured UE output  power test point 2  10 dBm ± (6+TT)  10 dBm +6+TT/-6.2-TT  Measured UE output  pow",
+          "full_text": "dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test point 1 \n-10 dBm ± (7+TT) \n-10 dBm +7+TT/-7.2-TT \nMeasured UE output \npower test point 2 \n10 dBm ± (6+TT) \n10 dBm +6+TT/-6.2-TT \nMeasured UE output \npower test point 3 \n15 dBm ± (5+TT) \n15 dBm +5+TT/-5.2-TT \nMeasured UE output \npower test point 4 \nNote 3 \nNote 4 \nNote 1: \nTT for each frequency and channel bandwidth is specified in Table 6.2I.4.5-0. \nNote 2: \nThe maximum output power shall be within the range in Table 6.2I.4.5-2. \nNote 3: \nThe maximum output power shall be within the range in Table 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadba"
+        },
+        {
+          "chunk_id": "c0104",
+          "page": 578,
+          "distance": 0.35441672801971436,
+          "text_preview": "ontrol window, the  target power level and the corresponding possible actual UE Uplink power window is illustrated in Annex  F.4.4.  6.3.4.3.4.3  Message contents  Message contents are according to TS 38.508-1 [5] subclause 4.6 with the following exceptions:  Table 6.3.4.3.4.3-1: PUSCH-Config  Deriv",
+          "full_text": "ontrol window, the \ntarget power level and the corresponding possible actual UE Uplink power window is illustrated in Annex \nF.4.4. \n6.3.4.3.4.3 \nMessage contents \nMessage contents are according to TS 38.508-1 [5] subclause 4.6 with the following exceptions: \nTable 6.3.4.3.4.3-1: PUSCH-Config \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-118 with condition TRANSFORM_PRECODER_ENABLED \n \n6.3.4.3.5 \nTest requirement \nEach UE power step measured in the test procedure 6.3.4.3.4.2 should satisfy the test requirements specified in Table \n6.3.4.3.5-1 thru 6.3.4.3.5-7. \nTo account for RF Power amplifier mode changes 2 exceptions are allowed for each of ramping up and ramping down \ntest patterns. For these exceptions the power tolerance limit is a maximum of ± (6.0 + TT) dB. If there is an exceptio"
+        },
+        {
+          "chunk_id": "c0002",
+          "page": 541,
+          "distance": 0.3632025122642517,
+          "text_preview": "e 6.2I.4.5-3.    6.3  Output power dynamics  6.3.1  Minimum output power  6.3.1.1  Test purpose  To verify the UE's ability to transmit with a broadband output power below the value specified in the test requirement  when the power is set to a minimum value.  6.3.1.2  Test applicability  This test c",
+          "full_text": "e 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadband output power below the value specified in the test requirement \nwhen the power is set to a minimum value. \n6.3.1.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.1.3 \nMinimum conformance requirements \nThe minimum controlled output power of the UE is defined as the power in the channel bandwidth for all transmit \nbandwidth configurations (resource blocks), when the power is set to a minimum value. \nThe minimum output power is defined as the mean power in at least one sub-frame 1 ms. The minimum output power \nshall not exceed the values specified in Table 6.3.1.3-1. \n\n3GPP TS 38.521-1 version 1"
+        },
+        {
+          "chunk_id": "c0000",
+          "page": 541,
+          "distance": 0.3733938932418823,
+          "text_preview": "3GPP TS 38.521-1 version 17.5.0 Release 17  540  ETSI TS 138 521-1 V17.5.0 (2022-09)  ETSI  6.2I.4.4  Test description  6.2I.4.4.1  Initial conditions  Same initial conditions as in 6.2.4 with following exception:  -  The test channel bandwidth are specified in TS 38.508-1 [5] subclause 4.3.1 for Re",
+          "full_text": "3GPP TS 38.521-1 version 17.5.0 Release 17 \n540 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.2I.4.4 \nTest description \n6.2I.4.4.1 \nInitial conditions \nSame initial conditions as in 6.2.4 with following exception: \n- \nThe test channel bandwidth are specified in TS 38.508-1 [5] subclause 4.3.1 for RedCap. \n6.2I.4.4.2 \nTest procedure \nSame test procedure as clause 6.2.4.4.2. \n6.2I.4.4.3 \nMessage contents \nFFS. \n6.2I.4.5 \nTest requirement \nThe maximum output power measured shall not exceed the values specified in Table 6.2I.4.5-1. \nTable 6.2I.4.5-0: Test Tolerance (Configured transmitted power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test p"
+        }
+      ]
+    },
+    {
+      "qid": "q03",
+      "question": "What are the test conditions and channel bandwidth for inner / outer maximum output power?",
+      "expected_section": "6.2.1.3",
+      "expected_keywords": [
+        "channel bandwidth",
+        "inner",
+        "outer"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0003",
+          "page": 541,
+          "distance": 0.319965660572052,
+          "text_preview": "power in at least one sub-frame 1 ms. The minimum output power  shall not exceed the values specified in Table 6.3.1.3-1.   3GPP TS 38.521-1 version 17.5.0 Release 17  541  ETSI TS 138 521-1 V17.5.0 (2022-09)  ETSI  Table 6.3.1.3-1: Minimum output power  Channel bandwidth  (MHz)  Minimum output powe",
+          "full_text": "power in at least one sub-frame 1 ms. The minimum output power \nshall not exceed the values specified in Table 6.3.1.3-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n541 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.1.3-1: Minimum output power \nChannel bandwidth \n(MHz) \nMinimum output power \n(dBm) \nMeasurement bandwidth \n(MHz) \n5 \n-40 \n4.515 \n10 \n-40 \n9.375 \n15 \n-40 \n14.235 \n20 \n-40 \n19.095 \n25 \n-39 \n23.955 \n30 \n-38.2 \n28.815 \n40 \n-37 \n38.895 \n45 \n-36.5 \n43.575 \n50 \n-36 \n48.615 \n60 \n-35.2 \n58.35 \n70 \n-34.6 \n68.07 \n80 \n-34 \n78.15 \n90 \n-33.5 \n88.23 \n100 \n-33 \n98.31 \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.1. \n6.3.1.4 \nTest description \n6.3.1.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in"
+        },
+        {
+          "chunk_id": "c0029",
+          "page": 549,
+          "distance": 0.33534568548202515,
+          "text_preview": "ition TRANSFORM_PRECODER_ENABLED    Table 6.3.3.2.4.3-7: P-Max  Derivation Path: TS 38.508-1 [5], Table 4.6.3-89  Information Element  Value/remark  Comment  Condition  P-Max  23        6.3.3.2.5  Test requirement  The requirement for the power measured in steps 2, 3 and 4 of the test procedure shal",
+          "full_text": "ition TRANSFORM_PRECODER_ENABLED \n \nTable 6.3.3.2.4.3-7: P-Max \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-89 \nInformation Element \nValue/remark \nComment \nCondition \nP-Max \n23 \n \n \n \n6.3.3.2.5 \nTest requirement \nThe requirement for the power measured in steps 2, 3 and 4 of the test procedure shall not exceed the values specified in \nTable 6.3.3.2.5-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n549 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.3.2.5-1: General ON/OFF time mask \n \nChannel bandwidth / minimum output power / measurement bandwidth \n5 \nMH\nz \n10 \nMH\nz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n45 \nMHz \n50 \nMHz \n60 \nMH\nz \n70 \nMH\nz \n80 \nMH\nz \n90 \nMH\nz \n100 \nMH\nz \nTransmit \nOFF \npower \n≤ -50+TT dBm \nTransmiss\nion OFF \nMeasurem\nent \nbandwidth \n4.51\n5 \n9.37\n5 \n14.2\n35"
+        },
+        {
+          "chunk_id": "c0079",
+          "page": 569,
+          "distance": 0.33670639991760254,
+          "text_preview": ".3.2.3  Note 2:  TT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3.    Table 6.3.4.2.5-2: Absolute power tolerance: test point 2    Channel bandwidth / expected output power (dBm)  5  MHz  10  MHz  15  MHz  20  MHz  25  MHz  30  MHz  40  MHz  ",
+          "full_text": ".3.2.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3. \n \nTable 6.3.4.2.5-2: Absolute power tolerance: test point 2 \n \nChannel bandwidth / expected output power (dBm) \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n50 \nMHz \n60 \nMHz \n70 \nMHz \n80 \nMHz \n90 \nMHz \n100 \nMHz \nExpected \nMeasured \npower  \nSCS15 \n-3.6 \n0.4 \n1.4 \n2.7 \n3.6 \n4.4 \n5.7 \n6.7 \nN/A \nN/A \nN/A \nN/A \nN/A \nSCS30 \n-4.2 \n-0.8 \n1.2 \n2.5 \n3.5 \n4.3 \n5.7 \n6.6 \n7.5 \n8.2 \n8.8 \n9.3 \n9.8 \nSCS60 \nN/A \n-1.2 \n1.0 \n2.2 \n3.3 \n4.2 \n5.5 \n6.5 \n7.4 \n8.1 \n8.7 \n9.2 \n9.7 \nPower tolerance \n± (9+TT)dB \nNote 1: \nThe higher power limit shall not exceed the maximum output power requirements defined in sub-clause 6.2.1.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing,"
+        },
+        {
+          "chunk_id": "c0078",
+          "page": 569,
+          "distance": 0.34035754203796387,
+          "text_preview": "le 6.3.4.2.5-1: Absolute power tolerance: test point 1    Channel bandwidth / expected output power (dBm)  5  MHz  10  MHz  15  MHz  20  MHz  25  MHz  30  MHz  40  MHz  50  MHz  60  MHz  70  MHz  80  MHz  90  MHz  100  MHz  Expected  Measured  power   SCS15  -17.6  -14.4  -12.6  -11.3  -10.4  -9.6  ",
+          "full_text": "le 6.3.4.2.5-1: Absolute power tolerance: test point 1 \n \nChannel bandwidth / expected output power (dBm) \n5 \nMHz \n10 \nMHz \n15 \nMHz \n20 \nMHz \n25 \nMHz \n30 \nMHz \n40 \nMHz \n50 \nMHz \n60 \nMHz \n70 \nMHz \n80 \nMHz \n90 \nMHz \n100 \nMHz \nExpected \nMeasured \npower  \nSCS15 \n-17.6 \n-14.4 \n-12.6 \n-11.3 \n-10.4 \n-9.6 \n-8.3 \n-7.3 \nN/A \nN/A \nN/A \nN/A \nN/A \nSCS30 \n-18.2 \n-14.8 \n-12.8 \n-11.5 \n-10.5 \n-9.7 \n-8.3 \n-7.4 \n-6.5 \n-5.8 \n-5.2 \n-4.7 \n-4.2 \nSCS60 \n \n-15.2 \n-13.0 \n-11.8 \n-10.7 \n-9.8 \n-8.5 \n-7.5 \n-6.6 \n-5.9 \n-5.3 \n-4.8 \n-4.3 \nPower tolerance \n± (9+TT)dB \nNote 1: \nThe lower power limit shall not exceed the minimum output power requirements defined in sub-clause 6.3.2.3 \nNote 2: \nTT for each duplex, Sub-Carrier Spacing, frequency and channel bandwidth is specified in Table 6.3.4.2.5-3. \n \nTable 6.3.4.2.5-2: Abs"
+        },
+        {
+          "chunk_id": "c0000",
+          "page": 541,
+          "distance": 0.34591543674468994,
+          "text_preview": "3GPP TS 38.521-1 version 17.5.0 Release 17  540  ETSI TS 138 521-1 V17.5.0 (2022-09)  ETSI  6.2I.4.4  Test description  6.2I.4.4.1  Initial conditions  Same initial conditions as in 6.2.4 with following exception:  -  The test channel bandwidth are specified in TS 38.508-1 [5] subclause 4.3.1 for Re",
+          "full_text": "3GPP TS 38.521-1 version 17.5.0 Release 17 \n540 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.2I.4.4 \nTest description \n6.2I.4.4.1 \nInitial conditions \nSame initial conditions as in 6.2.4 with following exception: \n- \nThe test channel bandwidth are specified in TS 38.508-1 [5] subclause 4.3.1 for RedCap. \n6.2I.4.4.2 \nTest procedure \nSame test procedure as clause 6.2.4.4.2. \n6.2I.4.4.3 \nMessage contents \nFFS. \n6.2I.4.5 \nTest requirement \nThe maximum output power measured shall not exceed the values specified in Table 6.2I.4.5-1. \nTable 6.2I.4.5-0: Test Tolerance (Configured transmitted power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test p"
+        }
+      ]
+    },
+    {
+      "qid": "q04",
+      "question": "Define UE output power dynamics — minimum output power requirement.",
+      "expected_section": "6.2.4",
+      "expected_keywords": [
+        "minimum output power",
+        "-40",
+        "dBm"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0002",
+          "page": 541,
+          "distance": 0.25208568572998047,
+          "text_preview": "e 6.2I.4.5-3.    6.3  Output power dynamics  6.3.1  Minimum output power  6.3.1.1  Test purpose  To verify the UE's ability to transmit with a broadband output power below the value specified in the test requirement  when the power is set to a minimum value.  6.3.1.2  Test applicability  This test c",
+          "full_text": "e 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadband output power below the value specified in the test requirement \nwhen the power is set to a minimum value. \n6.3.1.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.1.3 \nMinimum conformance requirements \nThe minimum controlled output power of the UE is defined as the power in the channel bandwidth for all transmit \nbandwidth configurations (resource blocks), when the power is set to a minimum value. \nThe minimum output power is defined as the mean power in at least one sub-frame 1 ms. The minimum output power \nshall not exceed the values specified in Table 6.3.1.3-1. \n\n3GPP TS 38.521-1 version 1"
+        },
+        {
+          "chunk_id": "c0141",
+          "page": 590,
+          "distance": 0.3437143564224243,
+          "text_preview": "to  ensure that the UE output power measured by the test system is within the Uplink power control window,  defined as – (Uplink power control window size / 2) dB to + (Uplink power control window size / 2) dB of  the target power level + 0 dBm, where:  -  Uplink power control window size = 1dB (UE ",
+          "full_text": "to \nensure that the UE output power measured by the test system is within the Uplink power control window, \ndefined as – (Uplink power control window size / 2) dB to + (Uplink power control window size / 2) dB of \nthe target power level + 0 dBm, where: \n- \nUplink power control window size = 1dB (UE power step size) + 0.7dB (UE power step tolerance) + \n(Test system relative power measurement uncertainty), where, the UE power step tolerance is specified in \nTS 38.101-1 [2], Table 6.3.4.3-1 and is 0.7dB for PUSCH with 1dB power step size, and the Test system \nrelative power measurement uncertainty is specified in Table F.1.2-1. \nNOTE: \nThe purpose of the Uplink power control window is to ensure that the actual UE output power is as close \nas possible to the target power level. The relationsh"
+        },
+        {
+          "chunk_id": "c0003",
+          "page": 541,
+          "distance": 0.3474910259246826,
+          "text_preview": "power in at least one sub-frame 1 ms. The minimum output power  shall not exceed the values specified in Table 6.3.1.3-1.   3GPP TS 38.521-1 version 17.5.0 Release 17  541  ETSI TS 138 521-1 V17.5.0 (2022-09)  ETSI  Table 6.3.1.3-1: Minimum output power  Channel bandwidth  (MHz)  Minimum output powe",
+          "full_text": "power in at least one sub-frame 1 ms. The minimum output power \nshall not exceed the values specified in Table 6.3.1.3-1. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n541 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.3.1.3-1: Minimum output power \nChannel bandwidth \n(MHz) \nMinimum output power \n(dBm) \nMeasurement bandwidth \n(MHz) \n5 \n-40 \n4.515 \n10 \n-40 \n9.375 \n15 \n-40 \n14.235 \n20 \n-40 \n19.095 \n25 \n-39 \n23.955 \n30 \n-38.2 \n28.815 \n40 \n-37 \n38.895 \n45 \n-36.5 \n43.575 \n50 \n-36 \n48.615 \n60 \n-35.2 \n58.35 \n70 \n-34.6 \n68.07 \n80 \n-34 \n78.15 \n90 \n-33.5 \n88.23 \n100 \n-33 \n98.31 \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.1. \n6.3.1.4 \nTest description \n6.3.1.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in"
+        },
+        {
+          "chunk_id": "c0001",
+          "page": 541,
+          "distance": 0.36131322383880615,
+          "text_preview": "dB  1.0 dB    Table 6.2I.4.5-1: PCMAX configured UE output power    Maximum output power     Test ID 1,2  Test ID 3  Measured UE output  power test point 1  -10 dBm ± (7+TT)  -10 dBm +7+TT/-7.2-TT  Measured UE output  power test point 2  10 dBm ± (6+TT)  10 dBm +6+TT/-6.2-TT  Measured UE output  pow",
+          "full_text": "dB \n1.0 dB \n \nTable 6.2I.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test point 1 \n-10 dBm ± (7+TT) \n-10 dBm +7+TT/-7.2-TT \nMeasured UE output \npower test point 2 \n10 dBm ± (6+TT) \n10 dBm +6+TT/-6.2-TT \nMeasured UE output \npower test point 3 \n15 dBm ± (5+TT) \n15 dBm +5+TT/-5.2-TT \nMeasured UE output \npower test point 4 \nNote 3 \nNote 4 \nNote 1: \nTT for each frequency and channel bandwidth is specified in Table 6.2I.4.5-0. \nNote 2: \nThe maximum output power shall be within the range in Table 6.2I.4.5-2. \nNote 3: \nThe maximum output power shall be within the range in Table 6.2I.4.5-3. \n \n6.3 \nOutput power dynamics \n6.3.1 \nMinimum output power \n6.3.1.1 \nTest purpose \nTo verify the UE's ability to transmit with a broadba"
+        },
+        {
+          "chunk_id": "c0011",
+          "page": 544,
+          "distance": 0.3688424229621887,
+          "text_preview": "rpose  To verify that the UE transmit OFF power is lower than the value specified in the test requirement.  An excess Transmit OFF power potentially increases the Rise Over Thermal (RoT) and therefore reduces the cell  coverage area for other UEs.  6.3.2.2  Test applicability  The requirements of th",
+          "full_text": "rpose \nTo verify that the UE transmit OFF power is lower than the value specified in the test requirement. \nAn excess Transmit OFF power potentially increases the Rise Over Thermal (RoT) and therefore reduces the cell \ncoverage area for other UEs. \n6.3.2.2 \nTest applicability \nThe requirements of this test apply in test cases 6.3.3 Transmit ON/OFF time mask to all types of NR UE release 15 and \nforward. \n6.3.2.3 \nMinimum conformance requirements \nTransmit OFF power is defined as the mean power in the channel bandwidth when the transmitter is OFF. The \ntransmitter is considered OFF when the UE is not allowed to transmit on any of its ports. \nThe Transmit OFF power is defined as the mean power in a duration of at least one sub-frame (1ms) excluding any \ntransient periods. The Transmit OFF po"
+        }
+      ]
+    },
+    {
+      "qid": "q05",
+      "question": "What is the transmit OFF power requirement for NR FR1 UE?",
+      "expected_section": "6.2.5",
+      "expected_keywords": [
+        "transmit OFF",
+        "OFF power"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0018",
+          "page": 546,
+          "distance": 0.31987547874450684,
+          "text_preview": "e mean power over one slot excluding any transient period.    Figure 6.3.3.2.3-1: General ON/OFF time mask for NR UL transmission in FR1    The normative reference for this requirement is TS 38.101-1 [2] clause 6.3.3.2.  6.3.3.2.4  Test description  6.3.3.2.4.1  Initial condition  Initial conditions",
+          "full_text": "e mean power over one slot excluding any transient period. \n \nFigure 6.3.3.2.3-1: General ON/OFF time mask for NR UL transmission in FR1 \n \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.3.3.2. \n6.3.3.2.4 \nTest description \n6.3.3.2.4.1 \nInitial condition \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measurement state. \nThe initial test configurations consist of environmental conditions, test frequencies, test channel bandwidths and sub-\ncarrier spacing based on NR operating bands specified in table 5.3.5-1. All of these configurations shall be tested with \napplicable test parameters for each combination of channel bandwidth and sub-carrier spacing, and are shown"
+        },
+        {
+          "chunk_id": "c0011",
+          "page": 544,
+          "distance": 0.35428404808044434,
+          "text_preview": "rpose  To verify that the UE transmit OFF power is lower than the value specified in the test requirement.  An excess Transmit OFF power potentially increases the Rise Over Thermal (RoT) and therefore reduces the cell  coverage area for other UEs.  6.3.2.2  Test applicability  The requirements of th",
+          "full_text": "rpose \nTo verify that the UE transmit OFF power is lower than the value specified in the test requirement. \nAn excess Transmit OFF power potentially increases the Rise Over Thermal (RoT) and therefore reduces the cell \ncoverage area for other UEs. \n6.3.2.2 \nTest applicability \nThe requirements of this test apply in test cases 6.3.3 Transmit ON/OFF time mask to all types of NR UE release 15 and \nforward. \n6.3.2.3 \nMinimum conformance requirements \nTransmit OFF power is defined as the mean power in the channel bandwidth when the transmitter is OFF. The \ntransmitter is considered OFF when the UE is not allowed to transmit on any of its ports. \nThe Transmit OFF power is defined as the mean power in a duration of at least one sub-frame (1ms) excluding any \ntransient periods. The Transmit OFF po"
+        },
+        {
+          "chunk_id": "c0081",
+          "page": 570,
+          "distance": 0.3785320520401001,
+          "text_preview": "vely to the power of  the most recently transmitted reference sub-frame if the transmission gap between these sub-frames is less than or equal  to 20ms.  6.3.4.3.2  Test applicability  This test applies to all types of NR UE release 15 and forward.  6.3.4.3.3  Minimum conformance requirement  The UE",
+          "full_text": "vely to the power of \nthe most recently transmitted reference sub-frame if the transmission gap between these sub-frames is less than or equal \nto 20ms. \n6.3.4.3.2 \nTest applicability \nThis test applies to all types of NR UE release 15 and forward. \n6.3.4.3.3 \nMinimum conformance requirement \nThe UE shall meet the requirements specified in Table 6.3.4.3.3-1. \nThe minimum requirements specified in Table 6.3.4.3.3-1 apply when the power of the target and reference sub-frames \nare within the power range bounded by the minimum output power as defined in sub-clause 6.3.1 and the measured  \nPUMAX as defined in sub-clause 6.2.1. \nTo account for RF Power amplifier mode changes, 2 exceptions are allowed for each of two test patterns. The test \npatterns are a monotonically increasing power sweep and"
+        },
+        {
+          "chunk_id": "c0017",
+          "page": 545,
+          "distance": 0.3879965543746948,
+          "text_preview": "3.3.2.2  Test applicability  This test case applies to all types of NR UE release 15 and forward.  6.3.3.2.3  Minimum conformance requirements  The general ON/OFF time mask defines the observation period between transmit OFF and ON power and between  transmit ON and OFF power for each SCS. ON/OFF sc",
+          "full_text": "3.3.2.2 \nTest applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.2.3 \nMinimum conformance requirements \nThe general ON/OFF time mask defines the observation period between transmit OFF and ON power and between \ntransmit ON and OFF power for each SCS. ON/OFF scenarios include: the beginning or end of DTX, measurement gap, \ncontiguous, and non-contiguous transmission, etc. \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n545 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nThe OFF power measurement period is defined in a duration of at least one slot excluding any transient periods. The \nON power is defined as the mean power over one slot excluding any transient period. \n \nFigure 6.3.3.2.3-1: General ON/OFF time mask for NR UL transmission in FR1 \n \nThe normat"
+        },
+        {
+          "chunk_id": "c0047",
+          "page": 557,
+          "distance": 0.38887953758239746,
+          "text_preview": "est applicability  This test case applies to all types of NR UE release 15 and forward.  6.3.3.6.3  Minimum conformance requirements  For SRS transmission mapped to one OFDM symbol, the ON power is defined as the mean power over the symbol  duration excluding any transient period; See Figure 6.3.3.6",
+          "full_text": "est applicability \nThis test case applies to all types of NR UE release 15 and forward. \n6.3.3.6.3 \nMinimum conformance requirements \nFor SRS transmission mapped to one OFDM symbol, the ON power is defined as the mean power over the symbol \nduration excluding any transient period; See Figure 6.3.3.6.3-1 \n \nFigure 6.3.3.6.3-1: Single SRS time mask for NR UL transmission \n \nFor SRS transmission mapped to two or more OFDM symbols the ON power is defined as the mean power for each \nsymbol duration excluding any transient period. For consecutive SRS transmissions without power change, Figure \n6.3.3.6.3-2 applies. \n \nFigure 6.3.3.6.3-2: Consecutive SRS time mask for the case when no power change is required with \nSRS usage other than antenna switching \n \nSRS\nEnd of OFF power \nrequirement\nStart o"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "embedding_model": "BAAI/bge-m3",
+  "section": "6.2",
+  "chunk_chars": 800,
+  "chunk_overlap": 150,
+  "n_chunks": 661,
+  "top_k": 5,
+  "questions": [
+    {
+      "qid": "q01",
+      "question": "What is the maximum output power tolerance for FR1 PC3 UE?",
+      "expected_section": "6.2.1",
+      "expected_keywords": [
+        "23",
+        "dBm",
+        "tolerance"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0442",
+          "page": 222,
+          "distance": 0.33273452520370483,
+          "text_preview": "ble 6.2.1.3-1 apply.  Table 6.2.3.5-0: Test Tolerance (UE additional maximum output power reduction)    f ≤ 3.0GHz  3.0GHz < f ≤ 4.2GHz  4.2GHz < f ≤ 6.0GHz  BW ≤ 40MHz  0.7 dB  1.0 dB  1.0 dB  40MHz < BW ≤ 100MHz  1.0 dB  1.0 dB  1.0 dB     3GPP TS 38.521-1 version 17.5.0 Release 17  222  ETSI TS 1",
+          "full_text": "ble 6.2.1.3-1 apply. \nTable 6.2.3.5-0: Test Tolerance (UE additional maximum output power reduction) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 4.2GHz \n4.2GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n1.0 dB \n40MHz < BW ≤ 100MHz \n1.0 dB \n1.0 dB \n1.0 dB \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n222 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.2.3.5-1: UE Power Class 3 test requirements (NS_35) for band n71 \nTest \nID \nPPowerClass \n(dBm) \nMPR \n(dB) \nA-MPR \n(dB) \nΔTC,c \n(dB) \nPCMAX,c \n(dBm) \nT(PCMAX_L,c) \n(dB) \nTL,c \n(dB) \nUpper limit \n(dBm) \nLower limit \n(dBm) \n1 \n23 \n0.5 \n0 \n0 \n22.5 \n2 \n2.5 \n25+TT \n20-TT \n2 \n23 \n0.5 \n0 \n0 \n22.5 \n2 \n2.5 \n25+TT \n20-TT \n3 \n23 \n0.5 \n0 \n0 \n22.5 \n2 \n2.5 \n25+TT \n20-TT \n4 \n23 \n1 \n0 \n0 \n22 \n2 \n2.5 \n25+TT \n19.5-TT \n5 \n23 \n1 \n0 \n0 \n22 \n2 \n2.5 \n25+TT \n19.5-TT \n6 \n23 \n1 \n0"
+        },
+        {
+          "chunk_id": "c0441",
+          "page": 222,
+          "distance": 0.33995431661605835,
+          "text_preview": "Emission: Additional spurious emissions test requirement  for \"NS_56\"  Derivation Path: TS 38.508-1 [5], Table 4.6.3-1  Information Element  Value/remark  Comment  Condition  additionalSpectrumEmission  1 (NS_56)        6.2.3.5  Test requirement  The maximum output power, derived in step 3 shall be ",
+          "full_text": "Emission: Additional spurious emissions test requirement \nfor \"NS_56\" \nDerivation Path: TS 38.508-1 [5], Table 4.6.3-1 \nInformation Element \nValue/remark \nComment \nCondition \nadditionalSpectrumEmission \n1 (NS_56) \n \n \n \n6.2.3.5 \nTest requirement \nThe maximum output power, derived in step 3 shall be within the range prescribed by the nominal maximum output \npower and tolerance in the applicable table from table 6.2.3.5-1. The allowed A-MPR values specified in table 6.2.3.3-1 \nare in addition to the allowed MPR requirements specified in clause 6.2.2. For the UE maximum output power modified \nby MPR and/or A-MPR, the power limits specified in table 6.2.1.3-1 apply. \nTable 6.2.3.5-0: Test Tolerance (UE additional maximum output power reduction) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 4.2GHz \n4.2GHz < f ≤"
+        },
+        {
+          "chunk_id": "c0018",
+          "page": 97,
+          "distance": 0.339993953704834,
+          "text_preview": "NR  band  Class 1  (dBm)  Tolerance  (dB)  Class 2  (dBm)  Tolerance  (dB)  Class 3  (dBm)  Tolerance  (dB)  n14  31  +2+TT/-3- TT          NOTE 1: PPowerClass is the maximum UE power specified without taking into account the  tolerance   NOTE 2: Power class 3 is default power class unless otherwise",
+          "full_text": "NR \nband \nClass 1 \n(dBm) \nTolerance \n(dB) \nClass 2 \n(dBm) \nTolerance \n(dB) \nClass 3 \n(dBm) \nTolerance \n(dB) \nn14 \n31 \n+2+TT/-3-\nTT \n \n \n \n \nNOTE 1: PPowerClass is the maximum UE power specified without taking into account the \ntolerance  \nNOTE 2: Power class 3 is default power class unless otherwise stated \nNOTE 3: Refers to the transmission bandwidths confined within FUL_low and FUL_low + 4 \nMHz or FUL_high – 4 MHz and FUL_high, the maximum output power requirement \nis relaxed by reducing the lower tolerance limit by 1.5 dB \nNOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3 \n \nTable 6.2.1.5-2b: Void \nTable 6.2.1.5-3: Test Tolerance (UE maximum output power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 4.2GHz \n4.2GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n1.0 dB \n40MHz"
+        },
+        {
+          "chunk_id": "c0003",
+          "page": 93,
+          "distance": 0.34594011306762695,
+          "text_preview": "9      26  +2/-3  23  +2/-3  n80          23  ± 2  n81          23  ± 2  n82          23  ± 2  n83          23  + 2/-2.5  n84          23  ± 2  n86          23  ± 2  n95          23  ±2  n97          23  ±2  n99          23  +2/-33  NOTE 1: PPowerClass is the maximum UE power specified without takin",
+          "full_text": "9 \n \n \n26 \n+2/-3 \n23 \n+2/-3 \nn80 \n \n \n \n \n23 \n± 2 \nn81 \n \n \n \n \n23 \n± 2 \nn82 \n \n \n \n \n23 \n± 2 \nn83 \n \n \n \n \n23 \n+ 2/-2.5 \nn84 \n \n \n \n \n23 \n± 2 \nn86 \n \n \n \n \n23 \n± 2 \nn95 \n \n \n \n \n23 \n±2 \nn97 \n \n \n \n \n23 \n±2 \nn99 \n \n \n \n \n23 \n+2/-33 \nNOTE 1: PPowerClass is the maximum UE power specified without taking into account the \ntolerance. \nNOTE 2: Power class 3 is default power class unless otherwise stated. \nNOTE 3: Refers to the transmission bandwidths confined within FUL_low and FUL_low + 4 MHz \nor FUL_high – 4 MHz and FUL_high, the maximum output power requirement is relaxed \nby reducing the lower tolerance limit by 1.5 dB. \nNOTE 4: FFS \nNOTE 5: FFS \nNOTE 6: Generally, PC1 UE for Band n14 is not targeted for smartphone form factor. The \nUE power class 1. Requirements for Band n14 are applicable"
+        },
+        {
+          "chunk_id": "c0633",
+          "page": 273,
+          "distance": 0.34951555728912354,
+          "text_preview": "operating bands.  6.2.4  Configured transmitted power  6.2.4.1  Test purpose  To verify the measured UE configured maximum output power PUMAX,f,c is within the specified bounds.  6.2.4.2  Test applicability  This test case applies to all types of NR Power Class 2 and 3 UE release 15 and forward and ",
+          "full_text": "operating bands. \n6.2.4 \nConfigured transmitted power \n6.2.4.1 \nTest purpose \nTo verify the measured UE configured maximum output power PUMAX,f,c is within the specified bounds. \n6.2.4.2 \nTest applicability \nThis test case applies to all types of NR Power Class 2 and 3 UE release 15 and forward and NR Power Class 1 UE \nrelease 15 and forward in NR Band n14. \n6.2.4.3 \nMinimum conformance requirements \nThe UE is allowed to set its configured maximum output power PCMAX,f,c for carrier f of serving cell c in each slot. The \nconfigured maximum output power PCMAX,f,c is set within the following bounds: \nPCMAX_L,f,c ≤ PCMAX,f,c ≤ PCMAX_H,f,c with \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n273 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nPCMAX_L,f,c = MIN {PEMAX,c– ∆TC,c, (PPowerClass – ΔPPowerC"
+        }
+      ]
+    },
+    {
+      "qid": "q02",
+      "question": "How is the test procedure defined for UE maximum output power across power classes?",
+      "expected_section": "6.2.1",
+      "expected_keywords": [
+        "Tx power",
+        "test procedure",
+        "PC2",
+        "PC3"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0006",
+          "page": 94,
+          "distance": 0.2931755781173706,
+          "text_preview": "4;  - else if the UE does not support a power class with higher maximum output power than PC2; or  -  if the IE P-Max as defined in TS 38.331 [6] is provided and set to the maximum output power of the power class  2 or lower;  -  shall apply all requirements for power class 2 to the supported power ",
+          "full_text": "4; \n- else if the UE does not support a power class with higher maximum output power than PC2; or \n- \nif the IE P-Max as defined in TS 38.331 [6] is provided and set to the maximum output power of the power class \n2 or lower; \n- \nshall apply all requirements for power class 2 to the supported power class and set the configured transmitted \npower as specified in clause 6.2.4; \n- \nelse shall apply all requirements for the supported power class and set the configured transmitted power class as \nspecified in sub-clause 6.2.4; \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.2.1. \n6.2.1.4 \nTest description \n6.2.1.4.1 \nInitial conditions \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reac"
+        },
+        {
+          "chunk_id": "c0000",
+          "page": 92,
+          "distance": 0.3086566925048828,
+          "text_preview": "3GPP TS 38.521-1 version 17.5.0 Release 17  91  ETSI TS 138 521-1 V17.5.0 (2022-09)  ETSI  6.2  Transmitter power  6.2.1  UE maximum output power  6.2.1.1  Test purpose  To verify that the error of the UE maximum output power does not exceed the range prescribed by the specified  nominal maximum out",
+          "full_text": "3GPP TS 38.521-1 version 17.5.0 Release 17 \n91 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.2 \nTransmitter power \n6.2.1 \nUE maximum output power \n6.2.1.1 \nTest purpose \nTo verify that the error of the UE maximum output power does not exceed the range prescribed by the specified \nnominal maximum output power and tolerance. \nAn excess maximum output power has the possibility to interfere to other channels or other systems. A small maximum \noutput power decreases the coverage area. \n6.2.1.2 \nTest applicability \nThis test case applies to all types of NR Power Class 1 and 3 UE release 15 and forward. \nThis test case applies to all types of NR Power Class 2 UE not supporting txDiversity-r16 release 15 and forward. \n6.2.1.3 \nMinimum conformance requirements \nThe following UE Power Classes define"
+        },
+        {
+          "chunk_id": "c0633",
+          "page": 273,
+          "distance": 0.3188600540161133,
+          "text_preview": "operating bands.  6.2.4  Configured transmitted power  6.2.4.1  Test purpose  To verify the measured UE configured maximum output power PUMAX,f,c is within the specified bounds.  6.2.4.2  Test applicability  This test case applies to all types of NR Power Class 2 and 3 UE release 15 and forward and ",
+          "full_text": "operating bands. \n6.2.4 \nConfigured transmitted power \n6.2.4.1 \nTest purpose \nTo verify the measured UE configured maximum output power PUMAX,f,c is within the specified bounds. \n6.2.4.2 \nTest applicability \nThis test case applies to all types of NR Power Class 2 and 3 UE release 15 and forward and NR Power Class 1 UE \nrelease 15 and forward in NR Band n14. \n6.2.4.3 \nMinimum conformance requirements \nThe UE is allowed to set its configured maximum output power PCMAX,f,c for carrier f of serving cell c in each slot. The \nconfigured maximum output power PCMAX,f,c is set within the following bounds: \nPCMAX_L,f,c ≤ PCMAX,f,c ≤ PCMAX_H,f,c with \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n273 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nPCMAX_L,f,c = MIN {PEMAX,c– ∆TC,c, (PPowerClass – ΔPPowerC"
+        },
+        {
+          "chunk_id": "c0656",
+          "page": 278,
+          "distance": 0.3199504613876343,
+          "text_preview": "Element  Value/remark  Comment  Condition  ServingCellConfig ::= SEQUENCE {          uplinkConfig SEQUENCE {            powerBoostPi2BPSK  0    Test ID 1, 2        1    Test ID 3    }        }          6.2.4.5  Test requirement  The maximum output power measured shall not exceed the values specified",
+          "full_text": "Element \nValue/remark \nComment \nCondition \nServingCellConfig ::= SEQUENCE { \n \n \n \n  uplinkConfig SEQUENCE { \n \n \n \n    powerBoostPi2BPSK \n0 \n \nTest ID 1, 2 \n     \n1 \n \nTest ID 3 \n  } \n \n \n \n} \n \n \n \n \n6.2.4.5 \nTest requirement \nThe maximum output power measured shall not exceed the values specified in Table 6.2.4.5-1. \nTable 6.2.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test point 1 \n-10 dBm ± (7+TT) \n-10 dBm +7+TT/-7.2-TT \nMeasured UE output \npower test point 2 \n10 dBm ± (6+TT) \n10 dBm +6+TT/-6.2-TT \nMeasured UE output \npower test point 3 \n15 dBm ± (5+TT) \n15 dBm +5+TT/-5.2-TT \nMeasured UE output \npower test point 4 \nNote 3 \nNote 4 \nNote 1: \nTT for each frequency and channel bandwidth is specified in Table 6.2.4."
+        },
+        {
+          "chunk_id": "c0543",
+          "page": 248,
+          "distance": 0.32721370458602905,
+          "text_preview": "16.5  5.0  2  25+TT  11.5-TT  24  23  0  6.5  11  0  12  6.0  2  25+TT  6-TT  NOTE 1: PPowerClass is the maximum UE power specified without taking into account the tolerance.  NOTE 2: TT for each frequency and channel bandwidth is specified in Table 6.2.3.5-0.     3GPP TS 38.521-1 version 17.5.0 Rel",
+          "full_text": "16.5 \n5.0 \n2 \n25+TT \n11.5-TT \n24 \n23 \n0 \n6.5 \n11 \n0 \n12 \n6.0 \n2 \n25+TT \n6-TT \nNOTE 1: PPowerClass is the maximum UE power specified without taking into account the tolerance. \nNOTE 2: TT for each frequency and channel bandwidth is specified in Table 6.2.3.5-0. \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n248 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.2.3.5-20: UE Power Class 3 test requirements (NS_41) \nTest ID \nPPowerClass \n(dBm) \nΔPPowerClass \n(dB) \nMPR \n(dB) \nA-MPR \n(dB) \nΔTC,c \n(dB) \nPCMAX_L,c \n(dBm) \nT(PCMAX_L,c) \n(dB) \nTL,c \n(dB) \nUpper \nlimit \n(dBm) \nLower \nlimit \n(dBm) \n1 \n23 \n0 \n0.5 \n9 \n0 \n14 \n5.0 \n2 \n25+TT \n9-TT \n2 \n23 \n0 \n0.5 \n9 \n0 \n14 \n5.0 \n2 \n25+TT \n9-TT \n3 \n23 \n0 \n0.5 \n11 \n0 \n12 \n6.0 \n2 \n25+TT \n6-TT \n4 \n23 \n0 \n0.5 \n11 \n0 \n12 \n6 \n2 \n25+TT \n6-TT \n5 \n23 \n0 \n0.5 \n12"
+        }
+      ]
+    },
+    {
+      "qid": "q03",
+      "question": "What are the test conditions and channel bandwidth for inner / outer maximum output power?",
+      "expected_section": "6.2.1.3",
+      "expected_keywords": [
+        "channel bandwidth",
+        "inner",
+        "outer"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0016",
+          "page": 96,
+          "distance": 0.3297223448753357,
+          "text_preview": "smission bandwidths confined within FUL_low and FUL_low +  4 MHz or FUL_high – 4 MHz and FUL_high, the maximum output power  requirement is relaxed by reducing the lower tolerance limit by 1.5 dB   NOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3     3GPP TS 38.521",
+          "full_text": "smission bandwidths confined within FUL_low and FUL_low + \n4 MHz or FUL_high – 4 MHz and FUL_high, the maximum output power \nrequirement is relaxed by reducing the lower tolerance limit by 1.5 dB  \nNOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3 \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n96 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.2.1.5-2: Maximum Output Power test requirement for Power Class 2 \nNR \nband \nClass 1 \n(dBm) \nTolerance \n(dB) \nClass 2 \n(dBm) \nTolerance \n(dB) \nClass 3 \n(dBm) \nTolerance \n(dB) \nn34 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn39 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn41 \n \n \n26 \n+2+TT/-\n33-TT \n \n \nn77 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn78 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn79 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nNOTE 1: PPowerClass is the maximum UE power specified"
+        },
+        {
+          "chunk_id": "c0045",
+          "page": 104,
+          "distance": 0.33338463306427,
+          "text_preview": "guration Table for power class 2&3 (almost contiguous allocation)  Initial Conditions  Test Environment as specified in TS 38.508-1  [5] subclause 4.1  Normal, TL/VL, TL/VH, TH/VL, TH/VH  Test Frequencies as specified in TS 38.508-1  [5] subclause 4.3.1  Low range, High range  Test Channel Bandwidth",
+          "full_text": "guration Table for power class 2&3 (almost contiguous allocation) \nInitial Conditions \nTest Environment as specified in TS 38.508-1 \n[5] subclause 4.1 \nNormal, TL/VL, TL/VH, TH/VL, TH/VH \nTest Frequencies as specified in TS 38.508-1 \n[5] subclause 4.3.1 \nLow range, High range \nTest Channel Bandwidths as specified in TS \n38.508-1 [5] subclause 4.3.1 \nHighest \nTest SCS as specified in Table 5.3.5-1 \nLowest, Highest \nTest Parameters for Channel Bandwidths \nTest \nID \nFreq \nDownlink Configuration \nUplink Configuration \n \n \nN/A for Maximum Power  \nModulation \nRB allocation (NOTE 1) \n1 \nDefault \n \nCP-OFDM QPSK \nInner Full \n2 \nDefault \n \nCP-OFDM QPSK \nOuter Full \n3 \nDefault \n \nCP-OFDM 16 QAM \nInner Full \n4 \nDefault \n \nCP-OFDM 16 QAM \nOuter Full \n5 \nDefault \n \nCP-OFDM 64 QAM \nOuter Full \n6 \nDefault"
+        },
+        {
+          "chunk_id": "c0019",
+          "page": 97,
+          "distance": 0.34279298782348633,
+          "text_preview": "6.2.1.5-3: Test Tolerance (UE maximum output power)    f ≤ 3.0GHz  3.0GHz < f ≤ 4.2GHz  4.2GHz < f ≤ 6.0GHz  BW ≤ 40MHz  0.7 dB  1.0 dB  1.0 dB  40MHz < BW ≤ 100MHz  1.0 dB  1.0 dB  1.0 dB    For the UE which supports inter-band NR CA configuration, inter-band NR-DC configuration, SUL configuration ",
+          "full_text": "6.2.1.5-3: Test Tolerance (UE maximum output power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 4.2GHz \n4.2GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n1.0 dB \n40MHz < BW ≤ 100MHz \n1.0 dB \n1.0 dB \n1.0 dB \n \nFor the UE which supports inter-band NR CA configuration, inter-band NR-DC configuration, SUL configuration or \ninter-band EN-DC configuration, ΔTIB,c as specified in 6.2A.4.0.2 for NR CA, 6.2B.4.0.2 for NR-DC, clause 6.2C.2 for \nSUL, or TS 38.521-3 [14] clause 6.2B.4.2 for EN-DC applies. Unless otherwise stated, ΔTIB,c is set to zero. In case the \nUE supports more than one of band combinations for CA, NR-DC, SUL or DC, and an operating band belongs to more \nthan one band combinations then \na) When the operating band frequency range is ≤ 1 GHz, the applicable additional ΔTIB,c shall be the average val"
+        },
+        {
+          "chunk_id": "c0632",
+          "page": 273,
+          "distance": 0.34586334228515625,
+          "text_preview": "use 6.2A.4.0.2, 6.2B.4.0.2, 6.2C.2 in this specification and 6.2B.4.2 in  TS 38.521-3 [14], truncated to one decimal place that apply for that operating band among the supported band  combinations. In case there is a harmonic relation between low band UL and high band DL, then the maximum  ΔTIB,c am",
+          "full_text": "use 6.2A.4.0.2, 6.2B.4.0.2, 6.2C.2 in this specification and 6.2B.4.2 in \nTS 38.521-3 [14], truncated to one decimal place that apply for that operating band among the supported band \ncombinations. In case there is a harmonic relation between low band UL and high band DL, then the maximum \nΔTIB,c among the different supported band combinations involving such band shall be applied \nb) When the operating band frequency range is > 1 GHz, the applicable additional ΔTIB,c shall be the maximum \nvalue for all band combinations defined in clause 6.2A.4.0.2, 6.2B.4.0.2, 6.2C.2 in this specification and \n6.2B.4.2 in TS 38.521-3 [14] for the applicable operating bands. \n6.2.4 \nConfigured transmitted power \n6.2.4.1 \nTest purpose \nTo verify the measured UE configured maximum output power PUMAX,f,c is w"
+        },
+        {
+          "chunk_id": "c0633",
+          "page": 273,
+          "distance": 0.34806352853775024,
+          "text_preview": "operating bands.  6.2.4  Configured transmitted power  6.2.4.1  Test purpose  To verify the measured UE configured maximum output power PUMAX,f,c is within the specified bounds.  6.2.4.2  Test applicability  This test case applies to all types of NR Power Class 2 and 3 UE release 15 and forward and ",
+          "full_text": "operating bands. \n6.2.4 \nConfigured transmitted power \n6.2.4.1 \nTest purpose \nTo verify the measured UE configured maximum output power PUMAX,f,c is within the specified bounds. \n6.2.4.2 \nTest applicability \nThis test case applies to all types of NR Power Class 2 and 3 UE release 15 and forward and NR Power Class 1 UE \nrelease 15 and forward in NR Band n14. \n6.2.4.3 \nMinimum conformance requirements \nThe UE is allowed to set its configured maximum output power PCMAX,f,c for carrier f of serving cell c in each slot. The \nconfigured maximum output power PCMAX,f,c is set within the following bounds: \nPCMAX_L,f,c ≤ PCMAX,f,c ≤ PCMAX_H,f,c with \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n273 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nPCMAX_L,f,c = MIN {PEMAX,c– ∆TC,c, (PPowerClass – ΔPPowerC"
+        }
+      ]
+    },
+    {
+      "qid": "q04",
+      "question": "Define UE output power dynamics — minimum output power requirement.",
+      "expected_section": "6.2.4",
+      "expected_keywords": [
+        "minimum output power",
+        "-40",
+        "dBm"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0000",
+          "page": 92,
+          "distance": 0.36833274364471436,
+          "text_preview": "3GPP TS 38.521-1 version 17.5.0 Release 17  91  ETSI TS 138 521-1 V17.5.0 (2022-09)  ETSI  6.2  Transmitter power  6.2.1  UE maximum output power  6.2.1.1  Test purpose  To verify that the error of the UE maximum output power does not exceed the range prescribed by the specified  nominal maximum out",
+          "full_text": "3GPP TS 38.521-1 version 17.5.0 Release 17 \n91 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \n6.2 \nTransmitter power \n6.2.1 \nUE maximum output power \n6.2.1.1 \nTest purpose \nTo verify that the error of the UE maximum output power does not exceed the range prescribed by the specified \nnominal maximum output power and tolerance. \nAn excess maximum output power has the possibility to interfere to other channels or other systems. A small maximum \noutput power decreases the coverage area. \n6.2.1.2 \nTest applicability \nThis test case applies to all types of NR Power Class 1 and 3 UE release 15 and forward. \nThis test case applies to all types of NR Power Class 2 UE not supporting txDiversity-r16 release 15 and forward. \n6.2.1.3 \nMinimum conformance requirements \nThe following UE Power Classes define"
+        },
+        {
+          "chunk_id": "c0656",
+          "page": 278,
+          "distance": 0.3713458776473999,
+          "text_preview": "Element  Value/remark  Comment  Condition  ServingCellConfig ::= SEQUENCE {          uplinkConfig SEQUENCE {            powerBoostPi2BPSK  0    Test ID 1, 2        1    Test ID 3    }        }          6.2.4.5  Test requirement  The maximum output power measured shall not exceed the values specified",
+          "full_text": "Element \nValue/remark \nComment \nCondition \nServingCellConfig ::= SEQUENCE { \n \n \n \n  uplinkConfig SEQUENCE { \n \n \n \n    powerBoostPi2BPSK \n0 \n \nTest ID 1, 2 \n     \n1 \n \nTest ID 3 \n  } \n \n \n \n} \n \n \n \n \n6.2.4.5 \nTest requirement \nThe maximum output power measured shall not exceed the values specified in Table 6.2.4.5-1. \nTable 6.2.4.5-1: PCMAX configured UE output power \n \nMaximum output power  \n \nTest ID 1,2 \nTest ID 3 \nMeasured UE output \npower test point 1 \n-10 dBm ± (7+TT) \n-10 dBm +7+TT/-7.2-TT \nMeasured UE output \npower test point 2 \n10 dBm ± (6+TT) \n10 dBm +6+TT/-6.2-TT \nMeasured UE output \npower test point 3 \n15 dBm ± (5+TT) \n15 dBm +5+TT/-5.2-TT \nMeasured UE output \npower test point 4 \nNote 3 \nNote 4 \nNote 1: \nTT for each frequency and channel bandwidth is specified in Table 6.2.4."
+        },
+        {
+          "chunk_id": "c0006",
+          "page": 94,
+          "distance": 0.37259143590927124,
+          "text_preview": "4;  - else if the UE does not support a power class with higher maximum output power than PC2; or  -  if the IE P-Max as defined in TS 38.331 [6] is provided and set to the maximum output power of the power class  2 or lower;  -  shall apply all requirements for power class 2 to the supported power ",
+          "full_text": "4; \n- else if the UE does not support a power class with higher maximum output power than PC2; or \n- \nif the IE P-Max as defined in TS 38.331 [6] is provided and set to the maximum output power of the power class \n2 or lower; \n- \nshall apply all requirements for power class 2 to the supported power class and set the configured transmitted \npower as specified in clause 6.2.4; \n- \nelse shall apply all requirements for the supported power class and set the configured transmitted power class as \nspecified in sub-clause 6.2.4; \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.2.1. \n6.2.1.4 \nTest description \n6.2.1.4.1 \nInitial conditions \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reac"
+        },
+        {
+          "chunk_id": "c0030",
+          "page": 100,
+          "distance": 0.3873424530029297,
+          "text_preview": "Table 6.2.2.3-1 are increased by  CEIL{ 10 log10(1 + NRB_gap / NRB_alloc), 0.5 } dB,  where CEIL{x,0.5} means x rounding upwards to closest 0.5dB. The parameters of RBStart,Low and RBStart,High to specify  valid RB allocation ranges for Outer and Inner RB allocations are defined as following:  RBSta",
+          "full_text": "Table 6.2.2.3-1 are increased by \nCEIL{ 10 log10(1 + NRB_gap / NRB_alloc), 0.5 } dB, \nwhere CEIL{x,0.5} means x rounding upwards to closest 0.5dB. The parameters of RBStart,Low and RBStart,High to specify \nvalid RB allocation ranges for Outer and Inner RB allocations are defined as following: \nRBStart,Low = max(1, floor((NRB_alloc + NRB_gap)/2)) \nRBStart,High = NRB – RBStart,Low – NRB_alloc –NRB_gap \nFor the UE maximum output power modified by MPR, the power limits specified in subclause 6.2.4 apply. \nThe normative reference for this requirement is TS 38.101-1 [2] clause 6.2.2. \n6.2.2.4 \nTest description \n6.2.2.4.1 \nInitial conditions \nInitial conditions are a set of test configurations the UE needs to be tested in and the steps for the SS to take with the UE \nto reach the correct measure"
+        },
+        {
+          "chunk_id": "c0109",
+          "page": 123,
+          "distance": 0.3970000743865967,
+          "text_preview": "n NS value refers to the corresponding indication of an NR  frequency band number of the applicable operating band, the IE field freqBandIndicatorNR and an associated value of  additionalSpectrumEmission in the relevant RRC information elements [6].  To meet the additional requirements, additional m",
+          "full_text": "n NS value refers to the corresponding indication of an NR \nfrequency band number of the applicable operating band, the IE field freqBandIndicatorNR and an associated value of \nadditionalSpectrumEmission in the relevant RRC information elements [6]. \nTo meet the additional requirements, additional maximum power reduction (A-MPR) is allowed for the maximum \noutput power as specified in Table 6.2.1.3-1. Unless stated otherwise, the total reduction to UE maximum output power \nis max(MPR, A-MPR) where MPR is defined in clause 6.2.2. Outer and inner allocation notation used in clause 6.2.3 is \ndefined in clause 6.2.2. Unless stated otherwise, Edge RB allocations get the same A-MPR as Outer RB allocations. In \nabsence of modulation and waveform types the A-MPR applies to all modulation and wavef"
+        }
+      ]
+    },
+    {
+      "qid": "q05",
+      "question": "What is the transmit OFF power requirement for NR FR1 UE?",
+      "expected_section": "6.2.5",
+      "expected_keywords": [
+        "transmit OFF",
+        "OFF power"
+      ],
+      "hits": [
+        {
+          "chunk_id": "c0018",
+          "page": 97,
+          "distance": 0.35681992769241333,
+          "text_preview": "NR  band  Class 1  (dBm)  Tolerance  (dB)  Class 2  (dBm)  Tolerance  (dB)  Class 3  (dBm)  Tolerance  (dB)  n14  31  +2+TT/-3- TT          NOTE 1: PPowerClass is the maximum UE power specified without taking into account the  tolerance   NOTE 2: Power class 3 is default power class unless otherwise",
+          "full_text": "NR \nband \nClass 1 \n(dBm) \nTolerance \n(dB) \nClass 2 \n(dBm) \nTolerance \n(dB) \nClass 3 \n(dBm) \nTolerance \n(dB) \nn14 \n31 \n+2+TT/-3-\nTT \n \n \n \n \nNOTE 1: PPowerClass is the maximum UE power specified without taking into account the \ntolerance  \nNOTE 2: Power class 3 is default power class unless otherwise stated \nNOTE 3: Refers to the transmission bandwidths confined within FUL_low and FUL_low + 4 \nMHz or FUL_high – 4 MHz and FUL_high, the maximum output power requirement \nis relaxed by reducing the lower tolerance limit by 1.5 dB \nNOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3 \n \nTable 6.2.1.5-2b: Void \nTable 6.2.1.5-3: Test Tolerance (UE maximum output power) \n \nf ≤ 3.0GHz \n3.0GHz < f ≤ 4.2GHz \n4.2GHz < f ≤ 6.0GHz \nBW ≤ 40MHz \n0.7 dB \n1.0 dB \n1.0 dB \n40MHz"
+        },
+        {
+          "chunk_id": "c0108",
+          "page": 123,
+          "distance": 0.37950098514556885,
+          "text_preview": "tional Spurious Emissions for network signalling  values NS_44, NS_46, NS_47, NS_48, and NS_49 to all types of NR Power Class 2 and 3 UE release 16  forward, and UE release 15 if the corresponding channel bandwidths are supported.  6.2.3.1  Test purpose  Additional emission requirements can be signa",
+          "full_text": "tional Spurious Emissions for network signalling \nvalues NS_44, NS_46, NS_47, NS_48, and NS_49 to all types of NR Power Class 2 and 3 UE release 16 \nforward, and UE release 15 if the corresponding channel bandwidths are supported. \n6.2.3.1 \nTest purpose \nAdditional emission requirements can be signalled by the network. Each additional emission requirement is associated \nwith a unique network signalling (NS) value indicated in RRC signalling by an NR frequency band number of the \napplicable operating band and an associated value in the field additionalSpectrumEmission. Throughout this \nspecification, the notion of indication or signalling of an NS value refers to the corresponding indication of an NR \nfrequency band number of the applicable operating band, the IE field freqBandIndicatorNR a"
+        },
+        {
+          "chunk_id": "c0017",
+          "page": 97,
+          "distance": 0.38380199670791626,
+          "text_preview": "n77      26  +2+TT/-3- TT      n78      26  +2+TT/-3- TT      n79      26  +2+TT/-3- TT      NOTE 1: PPowerClass is the maximum UE power specified without taking into account the  tolerance   NOTE 2: Power class 3 is default power class unless otherwise stated  NOTE 3: Refers to the transmission ban",
+          "full_text": "n77 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn78 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn79 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nNOTE 1: PPowerClass is the maximum UE power specified without taking into account the \ntolerance  \nNOTE 2: Power class 3 is default power class unless otherwise stated \nNOTE 3: Refers to the transmission bandwidths confined within FUL_low and FUL_low + 4 \nMHz or FUL_high – 4 MHz and FUL_high, the maximum output power requirement \nis relaxed by reducing the lower tolerance limit by 1.5 dB \nNOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3 \n \nTable 6.2.1.5-2a: Maximum Output Power test requirement for Power Class 1 \nNR \nband \nClass 1 \n(dBm) \nTolerance \n(dB) \nClass 2 \n(dBm) \nTolerance \n(dB) \nClass 3 \n(dBm) \nTolerance \n(dB) \nn14 \n31 \n+2+TT/-3-\nTT \n \n \n \n \nNOTE 1: P"
+        },
+        {
+          "chunk_id": "c0016",
+          "page": 96,
+          "distance": 0.38817155361175537,
+          "text_preview": "smission bandwidths confined within FUL_low and FUL_low +  4 MHz or FUL_high – 4 MHz and FUL_high, the maximum output power  requirement is relaxed by reducing the lower tolerance limit by 1.5 dB   NOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3     3GPP TS 38.521",
+          "full_text": "smission bandwidths confined within FUL_low and FUL_low + \n4 MHz or FUL_high – 4 MHz and FUL_high, the maximum output power \nrequirement is relaxed by reducing the lower tolerance limit by 1.5 dB  \nNOTE 4: TT for each frequency and channel bandwidth is specified in Table 6.2.1.5-3 \n \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n96 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.2.1.5-2: Maximum Output Power test requirement for Power Class 2 \nNR \nband \nClass 1 \n(dBm) \nTolerance \n(dB) \nClass 2 \n(dBm) \nTolerance \n(dB) \nClass 3 \n(dBm) \nTolerance \n(dB) \nn34 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn39 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn41 \n \n \n26 \n+2+TT/-\n33-TT \n \n \nn77 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn78 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nn79 \n \n \n26 \n+2+TT/-3-\nTT \n \n \nNOTE 1: PPowerClass is the maximum UE power specified"
+        },
+        {
+          "chunk_id": "c0001",
+          "page": 92,
+          "distance": 0.3913719654083252,
+          "text_preview": "er Class 2 UE not supporting txDiversity-r16 release 15 and forward.  6.2.1.3  Minimum conformance requirements  The following UE Power Classes define the maximum output power for any transmission bandwidth within the channel  bandwidth of NR carrier unless otherwise stated. The period of measuremen",
+          "full_text": "er Class 2 UE not supporting txDiversity-r16 release 15 and forward. \n6.2.1.3 \nMinimum conformance requirements \nThe following UE Power Classes define the maximum output power for any transmission bandwidth within the channel \nbandwidth of NR carrier unless otherwise stated. The period of measurement shall be at least one sub frame (1ms). \n\n3GPP TS 38.521-1 version 17.5.0 Release 17 \n92 \nETSI TS 138 521-1 V17.5.0 (2022-09) \nETSI \nTable 6.2.1.3-1: UE Power Class \nNR \nband \nClass 1 \n(dBm) \nTolerance \n(dB) \nClass 2 \n(dBm) \nTolerance \n(dB) \nClass 3 \n(dBm) \nTolerance \n(dB) \nn1 \n \n \n \n \n23 \n± 2 \nn2 \n \n \n \n \n23 \n± 23 \nn3 \n \n \n \n \n23 \n± 23 \nn5 \n \n \n \n \n23 \n± 2 \nn7 \n \n \n \n \n23 \n± 23 \nn8 \n \n \n \n \n23 \n± 23 \nn12 \n \n \n \n \n23 \n± 23 \nn14 \n316 \n+2/-3 \n \n \n23 \n± 2 \nn20 \n \n \n \n \n23 \n± 23 \nn24 \n \n \n \n \n23 \n+"
+        }
+      ]
+    }
+  ]
+}

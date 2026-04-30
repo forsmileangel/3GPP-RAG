@@ -1,0 +1,35 @@
+# Phase 0 spike test questions for TS 38.521-1 §6.2 (UE Tx power).
+# Edit freely — these are starter questions; please replace with real ones
+# you "know the answer to" so retrieval quality can be judged honestly.
+#
+# Schema:
+#   qid:               unique short id
+#   question:          natural-language question
+#   expected_section:  the §x.y.z you believe holds the answer (free-form)
+#   expected_keywords: list of substrings whose presence in a chunk
+#                      indicates the chunk is likely the right one
+
+- qid: q01
+  question: "What is the maximum output power tolerance for FR1 PC3 UE?"
+  expected_section: "6.2.1"
+  expected_keywords: ["23", "dBm", "tolerance"]
+
+- qid: q02
+  question: "How is the test procedure defined for UE maximum output power across power classes?"
+  expected_section: "6.2.1"
+  expected_keywords: ["Tx power", "test procedure", "PC2", "PC3"]
+
+- qid: q03
+  question: "What are the test conditions and channel bandwidth for inner / outer maximum output power?"
+  expected_section: "6.2.1.3"
+  expected_keywords: ["channel bandwidth", "inner", "outer"]
+
+- qid: q04
+  question: "Define UE output power dynamics — minimum output power requirement."
+  expected_section: "6.2.4"
+  expected_keywords: ["minimum output power", "-40", "dBm"]
+
+- qid: q05
+  question: "What is the transmit OFF power requirement for NR FR1 UE?"
+  expected_section: "6.2.5"
+  expected_keywords: ["transmit OFF", "OFF power"]
