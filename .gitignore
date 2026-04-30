@@ -1,0 +1,63 @@
+# --- Secrets ---
+.env
+.env.local
+.env.*.local
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Virtual envs ---
+.venv/
+venv/
+env/
+
+# --- uv / pip ---
+# keep uv.lock and pyproject.toml in repo
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- RAG project specific ---
+# Vector DB / SQLite — local data, do not commit
+data/db/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Raw spec sources — copyrighted, large, do not commit
+data/raw/*.pdf
+data/raw/*.docx
+data/raw/*.doc
+data/raw/*.zip
+
+# Processed cache (regeneratable)
+data/processed/
+
+# Snapshots / backups
+snapshots/
+*.tar.gz
+*.zip
+
+# Streamlit cache
+.streamlit/secrets.toml
