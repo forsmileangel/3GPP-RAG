@@ -1,10 +1,14 @@
 """SQLAlchemy 2.0 schema for the 3GPP RAG project.
 
-Six tables, mirroring the original plan with refinements from Phase 0:
+Seven tables, mirroring the original plan with refinements from Phase 0
+and the v2.1 precision upgrade (2026-05-01):
   - specs            — one row per ingested spec (PDF / docx)
   - sections         — TOC tree per spec (parent_id self-reference, supports
                        3GPP's §X.YA / §X.YB / §X.YC siblings)
-  - chunks           — text chunks; metadata.vector_id mirrors Chroma id
+  - chunks           — text chunks with table-awareness (table_id, row_index,
+                       parent_section_id); metadata.vector_id mirrors Chroma id
+  - facts            — structured facts extracted from tables/paragraphs; the
+                       fact layer that numeric questions hit before chunks
   - personal_notes   — user notes with confidence + extensible metadata JSON
   - cross_gen_mapping — generic from/to section relation (LTE↔NR, NR↔future)
   - share_profiles   — visibility filter sets (for future shared deployments)
@@ -129,6 +133,7 @@ class Section(Base):
         back_populates="section",
         cascade="all, delete-orphan",
         order_by="Chunk.char_offset",
+        foreign_keys="Chunk.section_id",
     )
 
     __table_args__ = (
@@ -140,6 +145,14 @@ class Section(Base):
 # chunks
 # --------------------------------------------------------------------------
 
+class ChunkType(enum.StrEnum):
+    PROSE = "prose"          # narrative paragraphs
+    TABLE = "table"          # entire table as one chunk
+    TABLE_ROW = "table_row"  # single row from a table
+    HEADING = "heading"      # section/subsection heading
+    LIST = "list"            # bullet/numbered list
+
+
 class Chunk(Base):
     __tablename__ = "chunks"
 
@@ -147,10 +160,26 @@ class Chunk(Base):
     section_id: Mapped[int] = mapped_column(
         ForeignKey("sections.section_id", ondelete="CASCADE"), nullable=False
     )
+    # Denormalized parent for hybrid queries that filter by parent (e.g. all
+    # chunks in §6.2.x). Populated by ingestion from sections.parent_id.
+    parent_section_id: Mapped[int | None] = mapped_column(
+        ForeignKey("sections.section_id", ondelete="SET NULL")
+    )
     text: Mapped[str] = mapped_column(Text, nullable=False)
     page: Mapped[int] = mapped_column(Integer, nullable=False)
     char_offset: Mapped[int] = mapped_column(Integer, nullable=False)
     token_count: Mapped[int | None] = mapped_column(Integer)
+
+    # Table-awareness (v2.1): for chunks that come from a 3GPP table, capture
+    # the table identifier and row index so retrieval can keep tables intact
+    # and the fact layer can cite "Table 6.2.1.5-1, row 3".
+    chunk_type: Mapped[ChunkType] = mapped_column(
+        Enum(ChunkType, native_enum=False, length=16),
+        default=ChunkType.PROSE,
+        nullable=False,
+    )
+    table_id: Mapped[str | None] = mapped_column(String(64))   # e.g. "Table 6.2.1.5-1"
+    row_index: Mapped[int | None] = mapped_column(Integer)     # NULL for table=whole-table chunks
 
     # Mirrors Chroma collection ID (often == "c{chunk_id:06d}"); kept as a
     # nullable string so we can populate after Chroma write completes.
@@ -159,7 +188,60 @@ class Chunk(Base):
 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
 
-    section: Mapped[Section] = relationship(back_populates="chunks")
+    section: Mapped[Section] = relationship(
+        back_populates="chunks", foreign_keys=[section_id]
+    )
+    parent_section: Mapped[Section | None] = relationship(
+        foreign_keys=[parent_section_id]
+    )
+
+
+# --------------------------------------------------------------------------
+# facts (v2.1 — structured fact layer)
+# --------------------------------------------------------------------------
+
+class FactType(enum.StrEnum):
+    NUMERIC = "numeric"          # "PC3 max power = 23 dBm ±2"
+    PROCEDURE = "procedure"      # ordered test steps
+    REFERENCE = "reference"      # cross-spec / cross-section pointer
+    DEFINITION = "definition"    # term → meaning
+    REQUIREMENT = "requirement"  # MUST/SHOULD-style normative text
+    CATEGORICAL = "categorical"  # enum-like (e.g. modulation schemes for a band)
+
+
+class Fact(Base):
+    __tablename__ = "facts"
+
+    fact_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    spec_id: Mapped[int] = mapped_column(
+        ForeignKey("specs.spec_id", ondelete="CASCADE"), nullable=False
+    )
+    section_id: Mapped[int] = mapped_column(
+        ForeignKey("sections.section_id", ondelete="CASCADE"), nullable=False
+    )
+    source_chunk_id: Mapped[int | None] = mapped_column(
+        ForeignKey("chunks.chunk_id", ondelete="SET NULL")
+    )
+    fact_type: Mapped[FactType] = mapped_column(
+        Enum(FactType, native_enum=False, length=16), nullable=False
+    )
+
+    # Free-form structured payload. Schema varies by fact_type; validated at
+    # the app layer (e.g. NUMERIC requires {parameter, value, unit}).
+    fact_data: Mapped[dict] = mapped_column(JSON, nullable=False)
+
+    # Page + table_id duplicated from chunks for fast citation lookup.
+    page: Mapped[int | None] = mapped_column(Integer)
+    table_id: Mapped[str | None] = mapped_column(String(64))
+
+    extracted_by: Mapped[str | None] = mapped_column(String(128))  # e.g. "claude-haiku-4.5/extract-v1"
+    confidence: Mapped[Confidence] = mapped_column(
+        Enum(Confidence, native_enum=False, length=24),
+        default=Confidence.LIKELY,
+        nullable=False,
+    )
+
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
 
 
 # --------------------------------------------------------------------------

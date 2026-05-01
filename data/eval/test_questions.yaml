@@ -1,0 +1,111 @@
+# Phase A test bank — TS 38.521-1 (NR FR1 UE conformance)
+# Sourced from spike/questions.yaml + Phase 0 reality_check.md lessons.
+# Every question must scope-validate: expected_keywords must appear in the
+# expected_section's page range. tests/test_question_bank.py enforces this.
+#
+# Phase 0 lessons baked in:
+#   - q04 / q05 expected_section corrected from §6.2.4 / §6.2.5 to §6.3.1 /
+#     §6.3.2 (the Phase 0 spike found their answers live in §6.3, not §6.2 —
+#     see reality_check.md "Mistake 3: scope misjudgement").
+#   - Each question carries question_type matching the v2.1 query router
+#     taxonomy (numeric / procedure / table_lookup / section_summary /
+#     comparison / out_of_scope).
+#
+# Schema:
+#   qid:                 unique short id
+#   question:            natural-language question
+#   spec:                spec_name (e.g. "38.521-1")
+#   expected_section:    section_number where the answer should live
+#   expected_keywords:   list of substrings — at least one must appear in
+#                        the expected_section's page text for the question
+#                        to pass scope-validation
+#   question_type:       one of {numeric, procedure, table_lookup,
+#                        section_summary, comparison, out_of_scope}
+#   difficulty:          easy | medium | hard
+#   notes:               (optional) why this question is in the bank
+
+- qid: q01
+  question: "What is the maximum output power tolerance for FR1 PC3 UE?"
+  spec: "38.521-1"
+  expected_section: "6.2.1"
+  expected_keywords: ["23", "dBm", "tolerance"]
+  question_type: numeric
+  difficulty: easy
+
+- qid: q02
+  question: "How is the test procedure defined for UE maximum output power across power classes?"
+  spec: "38.521-1"
+  expected_section: "6.2.1"
+  expected_keywords: ["test procedure", "PC2", "PC3"]
+  question_type: procedure
+  difficulty: medium
+
+- qid: q03
+  question: "What are the test conditions and channel bandwidth for inner / outer maximum output power?"
+  spec: "38.521-1"
+  expected_section: "6.2.1"
+  expected_keywords: ["channel bandwidth", "inner", "outer"]
+  question_type: table_lookup
+  difficulty: medium
+  notes: "Phase 0 win — BGE-M3 surfaced Inner/Outer table that MiniLM missed"
+
+- qid: q04
+  question: "Define UE output power dynamics — minimum output power requirement."
+  spec: "38.521-1"
+  expected_section: "6.3.1"
+  expected_keywords: ["minimum output power"]
+  question_type: numeric
+  difficulty: easy
+  notes: "Phase 0 fix — was incorrectly tagged §6.2.4; real location is §6.3.1"
+
+- qid: q05
+  question: "What is the transmit OFF power requirement for NR FR1 UE?"
+  spec: "38.521-1"
+  expected_section: "6.3.2"
+  expected_keywords: ["transmit OFF", "OFF power"]
+  question_type: numeric
+  difficulty: easy
+  notes: "Phase 0 fix — was §6.2.5; real location is §6.3.2"
+
+- qid: q06
+  question: "What are the absolute and relative power tolerance requirements?"
+  spec: "38.521-1"
+  expected_section: "6.3.4"
+  expected_keywords: ["absolute power tolerance", "relative power tolerance"]
+  question_type: section_summary
+  difficulty: medium
+  notes: "Both subclauses are sibling subsections under §6.3.4"
+
+- qid: q07
+  question: "What is the configured transmitted power for UE in NR?"
+  spec: "38.521-1"
+  expected_section: "6.2.4"
+  expected_keywords: ["configured transmitted power"]
+  question_type: section_summary
+  difficulty: medium
+
+- qid: q08
+  question: "How are additional MPR (A-MPR) requirements defined for NR FR1?"
+  spec: "38.521-1"
+  expected_section: "6.2.3"
+  expected_keywords: ["A-MPR", "additional MPR"]
+  question_type: procedure
+  difficulty: medium
+
+- qid: q09
+  question: "What is the test purpose for the minimum output power conformance test?"
+  spec: "38.521-1"
+  expected_section: "6.3.1"
+  expected_keywords: ["test purpose", "minimum"]
+  question_type: section_summary
+  difficulty: easy
+  notes: "Phase 0 strong hit. Note: PDF bookmarks stop at L3 — §6.3.1.1 lives within §6.3.1's page range"
+
+- qid: q10
+  question: "Why does excess Transmit OFF power matter for cell coverage?"
+  spec: "38.521-1"
+  expected_section: "6.3.2"
+  expected_keywords: ["Rise Over Thermal", "RoT", "coverage"]
+  question_type: section_summary
+  difficulty: hard
+  notes: "Tests whether retrieval surfaces rationale text, not just numeric tables"

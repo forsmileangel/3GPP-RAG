@@ -16,3 +16,8 @@ dependencies = [
 dev = [
     "ruff>=0.15.12",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "e2e: end-to-end tests that touch the real PDF (deselect with -m 'not e2e')",
+]
