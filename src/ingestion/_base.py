@@ -14,11 +14,9 @@ produce these in-memory snapshots, then `emit` translates them into ORM
 inserts. Keeping the parsing layer ORM-free makes it easy to unit-test
 without a database.
 
-STATUS (2026-05-06): scaffold only. Concrete `MarkdownAdapter.emit()` is
-NOT implemented yet — it requires `chunks.source_format` and
-`specs.source_format` columns to be added to the schema first (cleanup
-task before Day 2 of task B). Trying to call emit() on this scaffold
-will hit a `NotImplementedError` until that schema migration lands.
+STATUS (2026-05-15): scaffold only. The `source_format` schema blocker is
+resolved; concrete `MarkdownAdapter.emit()` is still NOT implemented and
+will be filled in by the Day 2 parser/persistence work.
 """
 
 from __future__ import annotations
@@ -29,17 +27,7 @@ from pathlib import Path
 
 from sqlalchemy.orm import Session
 
-
-# Allowed source_format string values. Adapters set this on InputUnit; emit
-# writes it onto Spec / Chunk rows. Centralised here so a misspelt literal
-# anywhere fails an InputUnit construction check (see __post_init__ below).
-SOURCE_FORMAT_TSPEC_MD = "tspec_md"
-SOURCE_FORMAT_PDF_PYMUPDF = "pdf_pymupdf"
-
-VALID_SOURCE_FORMATS = frozenset({
-    SOURCE_FORMAT_TSPEC_MD,
-    SOURCE_FORMAT_PDF_PYMUPDF,
-})
+from src.source_formats import VALID_SOURCE_FORMATS
 
 
 @dataclass(frozen=True)
@@ -176,9 +164,7 @@ class IngestionAdapter(ABC):
         Implementations are expected to commit at end (or let the caller
         commit; document the choice clearly).
 
-        NOTE (2026-05-06): concrete implementations are blocked until the
-        cleanup task adds `chunks.source_format` and `specs.source_format`
-        columns. Without those columns, emit() cannot distinguish Tier 1
-        (tspec_md) from Tier 2 (pdf_pymupdf) data — required for the
-        retrieval A/B in Day 4 acceptance.
+        NOTE (2026-05-15): `source_format` columns now exist, so concrete
+        implementations can distinguish Tier 1 (tspec_md) from Tier 2
+        (pdf_pymupdf) data for the retrieval A/B in Day 4 acceptance.
         """

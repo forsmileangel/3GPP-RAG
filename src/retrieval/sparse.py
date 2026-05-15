@@ -22,6 +22,8 @@ from dataclasses import dataclass
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from src.source_formats import validate_source_format
+
 
 @dataclass(frozen=True)
 class SparseHit:
@@ -81,15 +83,27 @@ def search_sparse(
     *,
     top_k: int = 5,
     spec_id: int | None = None,
+    source_format: str | None = None,
 ) -> list[SparseHit]:
     """Run FTS5 BM25 search; return top_k hits ordered by relevance.
 
-    `spec_id` filter is plumbed through but not yet wired (multi-spec
-    retrieval is Week 3+ — for now leave None and rely on a single-spec DB).
+    Optional filters let mixed corpora (PDF vs TSpec markdown, multi-spec DBs)
+    avoid cross-source contamination.
     """
     match_expr = _build_match_expr(query)
     if not match_expr:
         return []
+    if source_format is not None:
+        source_format = validate_source_format(source_format)
+
+    where_parts = ["chunks_fts MATCH :q"]
+    params: dict[str, object] = {"q": match_expr, "k": top_k}
+    if spec_id is not None:
+        where_parts.append("sec.spec_id = :spec_id")
+        params["spec_id"] = spec_id
+    if source_format is not None:
+        where_parts.append("c.source_format = :source_format")
+        params["source_format"] = source_format
 
     sql = """
         SELECT
@@ -102,11 +116,11 @@ def search_sparse(
         FROM chunks_fts
         JOIN chunks c ON c.chunk_id = chunks_fts.rowid
         JOIN sections sec ON sec.section_id = c.section_id
-        WHERE chunks_fts MATCH :q
+        WHERE {where_clause}
         ORDER BY score
         LIMIT :k
-    """
-    rows = session.execute(text(sql), {"q": match_expr, "k": top_k}).fetchall()
+    """.format(where_clause=" AND ".join(where_parts))
+    rows = session.execute(text(sql), params).fetchall()
     hits: list[SparseHit] = []
     for r in rows:
         cid, sec_num, table_id, page, score, body = r

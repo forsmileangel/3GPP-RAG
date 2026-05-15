@@ -39,6 +39,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF
+
 
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
@@ -80,6 +82,12 @@ class Spec(Base):
     release: Mapped[str | None] = mapped_column(String(16))
     generation: Mapped[str | None] = mapped_column(String(8))
     source_file: Mapped[str] = mapped_column(String, nullable=False)
+    source_format: Mapped[str] = mapped_column(
+        String(16),
+        default=SOURCE_FORMAT_PDF_PYMUPDF,
+        server_default=SOURCE_FORMAT_PDF_PYMUPDF,
+        nullable=False,
+    )
     page_count: Mapped[int | None] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, nullable=False)
 
@@ -166,6 +174,12 @@ class Chunk(Base):
         ForeignKey("sections.section_id", ondelete="SET NULL")
     )
     text: Mapped[str] = mapped_column(Text, nullable=False)
+    source_format: Mapped[str] = mapped_column(
+        String(16),
+        default=SOURCE_FORMAT_PDF_PYMUPDF,
+        server_default=SOURCE_FORMAT_PDF_PYMUPDF,
+        nullable=False,
+    )
     page: Mapped[int] = mapped_column(Integer, nullable=False)
     char_offset: Mapped[int] = mapped_column(Integer, nullable=False)
     token_count: Mapped[int | None] = mapped_column(Integer)

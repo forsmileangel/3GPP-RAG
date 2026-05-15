@@ -39,6 +39,7 @@ from src.ingestion import (
     extract_sections,
 )
 from src.models import Section, Spec
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF
 
 
 # Best-effort spec name + version inference from common 3GPP filename
@@ -100,6 +101,7 @@ def _ensure_spec(
             release=release,
             generation=generation,
             source_file=str(pdf_path.resolve()),
+            source_format=SOURCE_FORMAT_PDF_PYMUPDF,
             page_count=page_count,
         )
         session.add(spec)

@@ -12,8 +12,11 @@ from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session
 
 from src.config import settings
-from src.models import Chunk
+from src.models import Base, Chunk, ChunkType, Section, Spec
 from src.retrieval.sparse import _build_match_expr, _escape_phrase, search_sparse
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF, SOURCE_FORMAT_TSPEC_MD
+
+from scripts.init_db import FTS_DDL
 
 
 # --------------------------------------------------------------------------
@@ -77,6 +80,70 @@ def session():
         yield s
 
 
+@pytest.fixture
+def filtered_session(tmp_path):
+    """Small DB with two specs and two source formats for filter tests."""
+    engine = create_engine(f"sqlite:///{(tmp_path / 'filter.sqlite').as_posix()}", future=True)
+    Base.metadata.create_all(engine)
+    with engine.begin() as conn:
+        for ddl in FTS_DDL:
+            conn.exec_driver_sql(ddl.strip())
+
+    with Session(engine) as s:
+        pdf_spec = Spec(
+            name="38.521-1",
+            version="17.5.0",
+            source_file="pdf.pdf",
+            source_format=SOURCE_FORMAT_PDF_PYMUPDF,
+        )
+        md_spec = Spec(
+            name="36.521-1",
+            version="i20",
+            source_file="md.md",
+            source_format=SOURCE_FORMAT_TSPEC_MD,
+        )
+        s.add_all([pdf_spec, md_spec])
+        s.flush()
+        pdf_sec = Section(
+            spec_id=pdf_spec.spec_id,
+            section_number="6.2.1",
+            title="PDF section",
+            level=3,
+            page_start=1,
+            page_end=1,
+        )
+        md_sec = Section(
+            spec_id=md_spec.spec_id,
+            section_number="6.2.1",
+            title="Markdown section",
+            level=3,
+            page_start=1,
+            page_end=1,
+        )
+        s.add_all([pdf_sec, md_sec])
+        s.flush()
+        s.add_all([
+            Chunk(
+                section_id=pdf_sec.section_id,
+                text="sharedtoken pdf-only PC3 dBm",
+                source_format=SOURCE_FORMAT_PDF_PYMUPDF,
+                page=1,
+                char_offset=0,
+                chunk_type=ChunkType.PROSE,
+            ),
+            Chunk(
+                section_id=md_sec.section_id,
+                text="sharedtoken md-only PC3 dBm",
+                source_format=SOURCE_FORMAT_TSPEC_MD,
+                page=1,
+                char_offset=0,
+                chunk_type=ChunkType.PROSE,
+            ),
+        ])
+        s.commit()
+        yield s, pdf_spec.spec_id, md_spec.spec_id
+
+
 @pytest.mark.parametrize(
     "query,must_appear_in_text",
     [
@@ -128,3 +195,43 @@ def test_sparse_returns_table_chunks_for_table_query(session):
     assert hits
     table_hits = [h for h in hits if h.table_id is not None]
     assert table_hits, f"no TABLE chunks surfaced: {hits}"
+
+
+def test_sparse_spec_id_filter(filtered_session):
+    s, pdf_spec_id, md_spec_id = filtered_session
+    pdf_hits = search_sparse(s, "sharedtoken PC3", top_k=10, spec_id=pdf_spec_id)
+    md_hits = search_sparse(s, "sharedtoken PC3", top_k=10, spec_id=md_spec_id)
+
+    assert pdf_hits
+    assert md_hits
+    assert all("pdf-only" in h.text_preview for h in pdf_hits)
+    assert all("md-only" in h.text_preview for h in md_hits)
+
+
+def test_sparse_source_format_filter(filtered_session):
+    s, _pdf_spec_id, _md_spec_id = filtered_session
+    pdf_hits = search_sparse(
+        s,
+        "sharedtoken PC3",
+        top_k=10,
+        source_format=SOURCE_FORMAT_PDF_PYMUPDF,
+    )
+    md_hits = search_sparse(
+        s,
+        "sharedtoken PC3",
+        top_k=10,
+        source_format=SOURCE_FORMAT_TSPEC_MD,
+    )
+
+    assert pdf_hits
+    assert md_hits
+    assert all("pdf-only" in h.text_preview for h in pdf_hits)
+    assert all("md-only" in h.text_preview for h in md_hits)
+
+
+def test_sparse_no_filter_keeps_compatible_behavior(filtered_session):
+    s, _pdf_spec_id, _md_spec_id = filtered_session
+    hits = search_sparse(s, "sharedtoken PC3", top_k=10)
+    previews = " ".join(h.text_preview for h in hits)
+    assert "pdf-only" in previews
+    assert "md-only" in previews

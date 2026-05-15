@@ -20,6 +20,8 @@ import pytest
 from sqlalchemy import create_engine, func, select, text
 from sqlalchemy.orm import Session
 
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF
+
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PDF_PATH = REPO_ROOT / "data" / "raw" / "ts_138521-01_v17_05_00.pdf"
@@ -87,11 +89,99 @@ def test_init_db_creates_all_tables_and_fts(initialized_db):
                 text("SELECT name FROM sqlite_master WHERE type='table'")
             )
         }
+        spec_cols = {
+            row[1] for row in conn.execute(text("PRAGMA table_info(specs)"))
+        }
+        chunk_cols = {
+            row[1] for row in conn.execute(text("PRAGMA table_info(chunks)"))
+        }
     assert {
         "specs", "sections", "chunks", "facts",
         "personal_notes", "cross_gen_mapping", "share_profiles",
         "chunks_fts",
     }.issubset(tables)
+    assert "source_format" in spec_cols
+    assert "source_format" in chunk_cols
+
+
+def test_init_db_migrates_legacy_db_adds_source_format(tmp_db):
+    """A DB created before Cleanup B should be ALTERed in place and old
+    rows should read back as pdf_pymupdf via SQLite's DEFAULT backfill."""
+    engine = create_engine(f"sqlite:///{tmp_db.as_posix()}", future=True)
+    with engine.begin() as conn:
+        conn.execute(text("""
+            CREATE TABLE specs (
+                spec_id INTEGER PRIMARY KEY,
+                name VARCHAR(64) NOT NULL,
+                version VARCHAR(32) NOT NULL,
+                release VARCHAR(16),
+                generation VARCHAR(8),
+                source_file VARCHAR NOT NULL,
+                page_count INTEGER,
+                created_at DATETIME NOT NULL
+            )
+        """))
+        conn.execute(text("""
+            CREATE TABLE sections (
+                section_id INTEGER PRIMARY KEY,
+                spec_id INTEGER NOT NULL,
+                parent_id INTEGER,
+                section_number VARCHAR(32) NOT NULL,
+                title VARCHAR NOT NULL,
+                level INTEGER NOT NULL,
+                page_start INTEGER NOT NULL,
+                page_end INTEGER,
+                importance_tag VARCHAR(16) NOT NULL,
+                is_indexed BOOLEAN NOT NULL
+            )
+        """))
+        conn.execute(text("""
+            CREATE TABLE chunks (
+                chunk_id INTEGER PRIMARY KEY,
+                section_id INTEGER NOT NULL,
+                parent_section_id INTEGER,
+                text TEXT NOT NULL,
+                page INTEGER NOT NULL,
+                char_offset INTEGER NOT NULL,
+                token_count INTEGER,
+                chunk_type VARCHAR(16) NOT NULL,
+                table_id VARCHAR(64),
+                row_index INTEGER,
+                vector_id VARCHAR(64),
+                embedding_model VARCHAR(128),
+                created_at DATETIME NOT NULL
+            )
+        """))
+        conn.execute(text("""
+            INSERT INTO specs
+                (spec_id, name, version, source_file, page_count, created_at)
+            VALUES
+                (1, '38.521-1', '17.5.0', 'legacy.pdf', 1, '2026-05-01')
+        """))
+        conn.execute(text("""
+            INSERT INTO sections
+                (section_id, spec_id, section_number, title, level, page_start,
+                 page_end, importance_tag, is_indexed)
+            VALUES
+                (1, 1, '6.2.1', 'Legacy section', 3, 1, 1, 'SUPPLEMENTARY', 0)
+        """))
+        conn.execute(text("""
+            INSERT INTO chunks
+                (chunk_id, section_id, text, page, char_offset, chunk_type, created_at)
+            VALUES
+                (1, 1, 'legacy text', 1, 0, 'PROSE', '2026-05-01')
+        """))
+
+    result = _run("init_db.py")
+    assert result.returncode == 0, (
+        f"init_db.py migration failed:\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+    )
+
+    with engine.connect() as conn:
+        spec_format = conn.execute(text("SELECT source_format FROM specs")).scalar_one()
+        chunk_format = conn.execute(text("SELECT source_format FROM chunks")).scalar_one()
+    assert spec_format == SOURCE_FORMAT_PDF_PYMUPDF
+    assert chunk_format == SOURCE_FORMAT_PDF_PYMUPDF
 
 
 def test_ingest_writes_expected_invariants(ingested_db):
@@ -105,6 +195,7 @@ def test_ingest_writes_expected_invariants(ingested_db):
         assert spec.name == "38.521-1"
         assert spec.version == "17.5.0"
         assert spec.generation == "5G"
+        assert spec.source_format == SOURCE_FORMAT_PDF_PYMUPDF
 
         sec_count = s.execute(select(func.count(Section.section_id))).scalar()
         assert sec_count == 23, f"expected 23 sections, got {sec_count}"
@@ -150,6 +241,7 @@ def test_fts5_triggers_stay_in_sync(ingested_db):
         c1 = Chunk(
             section_id=sec.section_id,
             text="FR1 PC3 UE maximum output power 23 dBm with tolerance",
+            source_format=SOURCE_FORMAT_PDF_PYMUPDF,
             page=93,
             char_offset=0,
             chunk_type=ChunkType.TABLE_ROW,

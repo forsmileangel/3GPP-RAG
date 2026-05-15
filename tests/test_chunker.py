@@ -16,6 +16,7 @@ from src.ingestion.chunker import (
     _chunk_prose,
 )
 from src.models import ChunkType
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF, SOURCE_FORMAT_TSPEC_MD
 
 
 def _page_offsets_for(text: str, pages: list[str]) -> list[int]:
@@ -100,6 +101,22 @@ def test_short_prose_single_window():
     windows = _chunk_prose(text, base_offset=0, page_offsets=[0], page_start_1idx=1)
     assert len(windows) == 1
     assert windows[0][0] == text
+
+
+def test_chunkspec_carries_source_format():
+    from src.ingestion.chunker import ChunkSpec
+
+    spec = ChunkSpec(
+        section_id=1,
+        parent_section_id=None,
+        text="body",
+        source_format=SOURCE_FORMAT_TSPEC_MD,
+        page=1,
+        char_offset=0,
+        chunk_type=ChunkType.PROSE,
+    )
+    assert spec.source_format == SOURCE_FORMAT_TSPEC_MD
+    assert SOURCE_FORMAT_PDF_PYMUPDF == "pdf_pymupdf"
 
 
 def test_prose_window_page_mapping_uses_offsets():

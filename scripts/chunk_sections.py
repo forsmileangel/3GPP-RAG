@@ -144,7 +144,13 @@ def main() -> int:
             print(f"[refresh] Removed {len(existing)} prior chunks; reset is_indexed")
 
         print(f"[chunker] Processing {len(sections)} sections from {spec.name} v{spec.version}")
-        counts = chunk_spec_pdf(session, args.pdf, sections, skip_already_indexed=not args.refresh)
+        counts = chunk_spec_pdf(
+            session,
+            args.pdf,
+            sections,
+            source_format=spec.source_format,
+            skip_already_indexed=not args.refresh,
+        )
 
     total = sum(counts.values())
     indexed = sum(1 for n in counts.values() if n > 0)

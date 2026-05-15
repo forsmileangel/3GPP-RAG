@@ -35,6 +35,7 @@ from sqlalchemy.orm import Session
 
 from src.ingestion.toc_extractor import extract_pages_text
 from src.models import Chunk, ChunkType, Section
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF, validate_source_format
 
 
 # Heuristic: a "Table X.Y.Z-N" caption marks the start of a table block.
@@ -59,6 +60,7 @@ class ChunkSpec:
     section_id: int
     parent_section_id: int | None
     text: str
+    source_format: str
     page: int
     char_offset: int
     chunk_type: ChunkType
@@ -202,9 +204,12 @@ def _chunk_prose(
 def chunk_section(
     doc: fitz.Document,
     section: Section,
+    *,
+    source_format: str = SOURCE_FORMAT_PDF_PYMUPDF,
 ) -> list[ChunkSpec]:
     """Produce ChunkSpec list for one section. Whole-table blocks become
     one TABLE chunk each; prose blocks are split into overlapping windows."""
+    source_format = validate_source_format(source_format)
     if section.page_start is None or section.page_end is None:
         return []
 
@@ -223,6 +228,7 @@ def chunk_section(
                 section_id=section.section_id,
                 parent_section_id=section.parent_id,
                 text=block_text,
+                source_format=source_format,
                 page=page,
                 char_offset=char_offset,
                 chunk_type=ChunkType.TABLE,
@@ -237,6 +243,7 @@ def chunk_section(
                     section_id=section.section_id,
                     parent_section_id=section.parent_id,
                     text=body,
+                    source_format=source_format,
                     page=p,
                     char_offset=abs_off,
                     chunk_type=ChunkType.PROSE,
@@ -251,6 +258,7 @@ def persist_chunks(session: Session, specs: list[ChunkSpec]) -> int:
             section_id=s.section_id,
             parent_section_id=s.parent_section_id,
             text=s.text,
+            source_format=s.source_format,
             page=s.page,
             char_offset=s.char_offset,
             chunk_type=s.chunk_type,
@@ -269,18 +277,20 @@ def chunk_spec_pdf(
     pdf_path: Path,
     sections: list[Section],
     *,
+    source_format: str = SOURCE_FORMAT_PDF_PYMUPDF,
     skip_already_indexed: bool = True,
 ) -> dict[int, int]:
     """Chunk every section in `sections` and persist. Returns
     {section_id: chunk_count}. Marks each section's is_indexed=True
     after successful chunk write."""
+    source_format = validate_source_format(source_format)
     counts: dict[int, int] = {}
     with fitz.open(pdf_path) as doc:
         for sec in sections:
             if skip_already_indexed and sec.is_indexed:
                 counts[sec.section_id] = 0
                 continue
-            specs = chunk_section(doc, sec)
+            specs = chunk_section(doc, sec, source_format=source_format)
             n = persist_chunks(session, specs)
             sec.is_indexed = True
             counts[sec.section_id] = n

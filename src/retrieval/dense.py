@@ -19,6 +19,7 @@ from sqlalchemy.orm import Session
 from src.config import settings
 from src.ingestion.embedder import DEFAULT_COLLECTION, DEFAULT_MODEL
 from src.models import Chunk, Section
+from src.source_formats import validate_source_format
 
 
 @dataclass(frozen=True)
@@ -61,14 +62,25 @@ def search_dense(
     top_k: int = 5,
     model_name: str = DEFAULT_MODEL,
     collection_name: str = DEFAULT_COLLECTION,
+    spec_id: int | None = None,
+    source_format: str | None = None,
 ) -> list[DenseHit]:
     """Encode `query` with BGE-M3, query Chroma, JOIN back to chunks +
-    sections to populate metadata for each hit."""
+    sections to populate metadata for each hit.
+
+    When filters are active, over-fetch from Chroma before SQL filtering so
+    another spec/source cannot occupy all initial top-K slots.
+    """
+    if source_format is not None:
+        source_format = validate_source_format(source_format)
+
     model = _get_model(model_name)
     coll = _get_collection(str(settings.chroma_path), collection_name)
+    has_filter = spec_id is not None or source_format is not None
+    candidate_k = max(top_k * 5, top_k) if has_filter else top_k
 
     qvec = model.encode([query], show_progress_bar=False).tolist()
-    raw = coll.query(query_embeddings=qvec, n_results=top_k)
+    raw = coll.query(query_embeddings=qvec, n_results=candidate_k)
     if not raw["ids"] or not raw["ids"][0]:
         return []
 
@@ -79,13 +91,23 @@ def search_dense(
     # Pull chunk_id + section_number from SQL in one shot; metadatas in
     # Chroma are a bit denormalized, but section_number lives only in
     # SQL so we JOIN here.
-    chunk_id_lookup = {f"c{0:06d}": 0}  # noqa: F841 — placeholder so we keep types tidy
-    rows = session.execute(
-        select(Chunk.chunk_id, Chunk.vector_id, Chunk.table_id, Chunk.page,
-               Section.section_number)
+    stmt = (
+        select(
+            Chunk.chunk_id,
+            Chunk.vector_id,
+            Chunk.table_id,
+            Chunk.page,
+            Section.section_number,
+        )
         .join(Section, Chunk.section_id == Section.section_id)
         .where(Chunk.vector_id.in_(ids))
-    ).all()
+    )
+    if spec_id is not None:
+        stmt = stmt.where(Section.spec_id == spec_id)
+    if source_format is not None:
+        stmt = stmt.where(Chunk.source_format == source_format)
+
+    rows = session.execute(stmt).all()
     by_vid = {
         r.vector_id: (r.chunk_id, r.section_number, r.table_id, r.page)
         for r in rows
@@ -105,4 +127,6 @@ def search_dense(
             distance=float(dist),
             text_preview=(doc or "")[:240].replace("\n", " "),
         ))
+        if len(hits) >= top_k:
+            break
     return hits

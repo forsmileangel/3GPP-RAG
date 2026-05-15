@@ -25,6 +25,7 @@ from sqlalchemy import create_engine, inspect, text
 
 from src.config import settings
 from src.models import Base
+from src.source_formats import SOURCE_FORMAT_PDF_PYMUPDF
 
 
 # FTS5 virtual table — non-contentless so we can store denormalized columns
@@ -74,6 +75,32 @@ FTS_DDL = [
 ]
 
 
+def _has_column(conn, table_name: str, column_name: str) -> bool:
+    rows = conn.exec_driver_sql(f"PRAGMA table_info({table_name})").fetchall()
+    return any(row[1] == column_name for row in rows)
+
+
+def _migrate_add_source_format(engine) -> None:
+    """Forward migration for DBs created before source_format existed.
+
+    SQLite does not support ADD COLUMN IF NOT EXISTS on all deployed
+    versions, so inspect first and then ALTER only when needed.
+    """
+    with engine.begin() as conn:
+        for table_name in ("specs", "chunks"):
+            if _has_column(conn, table_name, "source_format"):
+                continue
+            print(
+                f"Migrating {table_name}: add source_format "
+                f"DEFAULT {SOURCE_FORMAT_PDF_PYMUPDF!r}"
+            )
+            conn.exec_driver_sql(
+                f"ALTER TABLE {table_name} "
+                "ADD COLUMN source_format VARCHAR(16) "
+                f"NOT NULL DEFAULT '{SOURCE_FORMAT_PDF_PYMUPDF}'"
+            )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--drop", action="store_true", help="Drop all tables before creating")
@@ -97,6 +124,9 @@ def main() -> int:
 
     print("Creating tables...")
     Base.metadata.create_all(engine)
+
+    print("Applying forward migrations...")
+    _migrate_add_source_format(engine)
 
     print("Creating FTS5 virtual table + sync triggers...")
     with engine.begin() as conn:
