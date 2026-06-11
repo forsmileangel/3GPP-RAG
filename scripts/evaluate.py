@@ -3,6 +3,7 @@
 For every question in data/eval/test_questions.yaml:
   - run sparse (FTS5) retrieval
   - run dense (BGE-M3 → Chroma) retrieval
+  - run hybrid (RRF fusion of sparse + dense, k=60)
   - retrieve ONCE at k = max(10, --top-k), then score by slicing that single
     ranked list:
       hit@1 / hit@3 / hit@5 — does any chunk in the first k live in
@@ -43,7 +44,7 @@ from sqlalchemy.orm import Session
 
 from src.config import settings
 from src.models import Section
-from src.retrieval import search_dense, search_sparse
+from src.retrieval import search_dense, search_hybrid, search_sparse
 
 
 # Scoring window: hit@1/3/5 slices and the RR cap all live inside the first
@@ -68,6 +69,17 @@ class QuestionMetrics:
     top1_page: int | None
     top1_table_id: str | None
     top_chunk_summaries: list[str]
+
+
+def _hit_score(hit) -> float:
+    """Score for the report's detail rows. Backends use different attribute
+    names AND sign conventions (rrf_score: larger = better; distance /
+    bm25_score: smaller = better) — this only labels rows, never ranks."""
+    for attr in ("rrf_score", "distance", "bm25_score"):
+        value = getattr(hit, attr, None)
+        if value is not None:
+            return float(value)
+    return 0.0
 
 
 def hit_at_k(ranked_sections: list[str], expected: set[str], k: int) -> bool:
@@ -159,7 +171,7 @@ def _evaluate_question(
 
     summaries = [
         f"#{i + 1} sec={h.section_number} page={h.page} table={h.table_id or '-'} "
-        f"score={(getattr(h, 'distance', None) or getattr(h, 'bm25_score', 0)):.3f}"
+        f"score={_hit_score(h):.3f}"
         for i, h in enumerate(hits)
     ]
 
@@ -272,8 +284,8 @@ def main() -> int:
     )
     parser.add_argument(
         "--backend",
-        default="sparse,dense",
-        help="Comma-separated subset of {sparse, dense}",
+        default="sparse,dense,hybrid",
+        help="Comma-separated subset of {sparse, dense, hybrid}",
     )
     parser.add_argument(
         "--questions",
@@ -288,7 +300,7 @@ def main() -> int:
     args = parser.parse_args()
 
     backends = [b.strip() for b in args.backend.split(",") if b.strip()]
-    valid = {"sparse", "dense"}
+    valid = {"sparse", "dense", "hybrid"}
     bad = set(backends) - valid
     if bad:
         print(f"ERROR: unknown backend(s) {bad}; valid: {valid}", file=sys.stderr)
@@ -298,10 +310,11 @@ def main() -> int:
         print(f"ERROR: questions file not found: {args.questions}", file=sys.stderr)
         return 1
 
-    # Pre-flight check: dense backend requires Chroma collection to exist
-    # and chunks.vector_id to be populated. Bail early with a clear message
-    # if the user runs evaluate.py before embed_chunks.py completes.
-    if "dense" in backends:
+    # Pre-flight check: dense (and hybrid, which calls dense internally)
+    # requires the Chroma collection to exist and chunks.vector_id to be
+    # populated. Bail early with a clear message if the user runs
+    # evaluate.py before embed_chunks.py completes.
+    if "dense" in backends or "hybrid" in backends:
         engine_pre = create_engine(settings.db_url, future=True)
         with Session(engine_pre) as s:
             from src.models import Chunk
@@ -344,8 +357,10 @@ def main() -> int:
             for backend in backends:
                 if backend == "sparse":
                     hits = search_sparse(session, q["question"], top_k=k_retrieve)
-                else:
+                elif backend == "dense":
                     hits = search_dense(session, q["question"], top_k=k_retrieve)
+                else:
+                    hits = search_hybrid(session, q["question"], top_k=k_retrieve)
                 m = _evaluate_question(
                     question=q,
                     hits=hits,

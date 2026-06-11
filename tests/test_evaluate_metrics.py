@@ -94,6 +94,27 @@ def test_subtree_match():
     assert evaluate.reciprocal_rank(ranked, expected) == 0.5
 
 
+# ------------------------------------------------------------- _hit_score
+
+def test_hit_score_attribute_chain():
+    class Rrf:
+        rrf_score = 0.05
+
+    class Dense:
+        distance = 0.0   # must NOT fall through (old `or` chain bug)
+
+    class Sparse:
+        bm25_score = -12.5
+
+    class Bare:
+        pass
+
+    assert evaluate._hit_score(Rrf()) == 0.05
+    assert evaluate._hit_score(Dense()) == 0.0
+    assert evaluate._hit_score(Sparse()) == -12.5
+    assert evaluate._hit_score(Bare()) == 0.0
+
+
 # ------------------------------------------------------- aggregate_metrics
 
 def _qm(**overrides):
