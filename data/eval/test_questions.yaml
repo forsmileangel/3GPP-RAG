@@ -23,6 +23,24 @@
 #                        section_summary, comparison, out_of_scope}
 #   difficulty:          easy | medium | hard
 #   notes:               (optional) why this question is in the bank
+#   xref_sections:       (optional) other section(s) the question bridges via
+#                        an in-document reference. The evaluator ignores this
+#                        today; a future cross-ref-resolution eval will assert
+#                        the referenced section is surfaced too.
+#
+# Step 1 expansion (q11–q30), 4 categories x 5:
+#   q11–q15 numeric-exact lookups (top-1 quality probes)
+#   q16–q20 cross-section distractors (lookalike wording in a sibling
+#           section — see notes; tagged by their NATURAL question_type, not
+#           "comparison", to keep the query-router taxonomy clean)
+#   q21–q25 table cell lookups
+#   q26–q27 in-corpus cross-reference questions (carry xref_sections)
+#   q28–q30 test-purpose triplet over the 6.3.4.x siblings (rewritten
+#           2026-06-11 per Hank review — purpose questions are what engineers
+#           actually ask; sibling-discrimination pressure is preserved because
+#           all three 6.3.4.x.1 purposes share template wording)
+# All keywords copied verbatim from the extracted PDF page text of the
+# expected_section (PyMuPDF extraction path — same as scope-validation).
 
 - qid: q01
   question: "What is the maximum output power tolerance for FR1 PC3 UE?"
@@ -109,3 +127,201 @@
   question_type: section_summary
   difficulty: hard
   notes: "Tests whether retrieval surfaces rationale text, not just numeric tables"
+
+# --- q11–q15: numeric-exact lookups ---------------------------------------
+
+- qid: q11
+  question: "What is the maximum output power for a Power Class 2 UE in NR band n78?"
+  spec: "38.521-1"
+  expected_section: "6.2.1"
+  expected_keywords: ["power class 2", "26", "n78"]
+  question_type: numeric
+  difficulty: easy
+  notes: "PC2 = 26 dBm; complements q01 which probes the PC3 default"
+
+- qid: q12
+  question: "What is the minimum output power limit and measurement bandwidth for a 10 MHz channel in FR1?"
+  spec: "38.521-1"
+  expected_section: "6.3.1"
+  expected_keywords: ["minimum output power", "-40", "9.375"]
+  question_type: numeric
+  difficulty: easy
+  notes: "Exact cell of Table 6.3.1.3-1; harder top-1 variant of q04"
+
+- qid: q13
+  question: "What is the absolute power tolerance for an NR UE under normal conditions?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.2"
+  expected_keywords: ["absolute power tolerance", "9.0"]
+  question_type: numeric
+  difficulty: easy
+
+- qid: q14
+  question: "What is the aggregate power tolerance for PUSCH transmissions with 0 dB TPC commands?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.4"
+  expected_keywords: ["PUSCH", "3.5", "21ms"]
+  question_type: numeric
+  difficulty: medium
+
+- qid: q15
+  question: "What is the PCMAX tolerance when the configured maximum output power is between 21 and 23 dBm?"
+  spec: "38.521-1"
+  expected_section: "6.2.4"
+  expected_keywords: ["PCMAX", "2.0", "tolerance"]
+  question_type: numeric
+  difficulty: medium
+  notes: "Row of Table 6.2.4.3-2"
+
+# --- q16–q20: cross-section distractors ------------------------------------
+
+- qid: q16
+  question: "What is the allowed maximum power reduction for a power class 3 UE using DFT-s-OFDM 256 QAM modulation?"
+  spec: "38.521-1"
+  expected_section: "6.2.2"
+  expected_keywords: ["MPR", "256 QAM", "4.5"]
+  question_type: numeric
+  difficulty: medium
+  notes: "Distractor pair: 6.2.3 A-MPR shares the 'maximum output power reduction' wording; q08 covers the A-MPR side"
+
+- qid: q17
+  question: "Which test verifies the UE's ability to set its initial output power at the start of a transmission after a gap longer than 20ms?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.2"
+  expected_keywords: ["initial output power", "20ms"]
+  question_type: section_summary
+  difficulty: medium
+  notes: "Distractor pair: 6.3.4.3 relative / 6.3.4.4 aggregate are sibling '...power tolerance' sections"
+
+- qid: q18
+  question: "What is the PRACH ON power measurement period for preamble format 0?"
+  spec: "38.521-1"
+  expected_section: "6.3.3.4"
+  expected_keywords: ["PRACH", "preamble", "0.903125"]
+  question_type: table_lookup
+  difficulty: medium
+  notes: "Distractor pair: 6.3.3.2 general mask / 6.3.3.6 SRS mask are sibling 'time mask' sections"
+
+- qid: q19
+  question: "Which power control commands does the SS send to drive the UE to its minimum output power during the conformance test?"
+  spec: "38.521-1"
+  expected_section: "6.3.1"
+  expected_keywords: ["down", "200ms"]
+  question_type: procedure
+  difficulty: medium
+  notes: "Distractor pair: 6.2.1 uses the mirrored 'up' command procedure; mirrors the Phase 0 q04/q05 drift lesson"
+
+- qid: q20
+  question: "What is P-MPR in the PCMAX equation and what value must it take during UE conducted conformance testing?"
+  spec: "38.521-1"
+  expected_section: "6.2.4"
+  expected_keywords: ["P-MPR", "electromagnetic energy absorption", "0 dB"]
+  question_type: section_summary
+  difficulty: medium
+  notes: "Distractor pair: 6.2.2 MPR / 6.2.3 A-MPR are near-identical acronyms in sibling sections"
+
+# --- q21–q25: table cell lookups -------------------------------------------
+
+- qid: q21
+  question: "In the UE Power Class table, what maximum output power and tolerance apply to band n14 for Power Class 1?"
+  spec: "38.521-1"
+  expected_section: "6.2.1"
+  expected_keywords: ["n14", "31", "public safety"]
+  question_type: table_lookup
+  difficulty: medium
+  notes: "Table 6.2.1.3-1 row n14; NOTE 6 marks PC1 n14 as public-safety-only"
+
+- qid: q22
+  question: "What is the allowed MPR for CP-OFDM 256 QAM modulation in outer RB allocations for a power class 3 UE?"
+  spec: "38.521-1"
+  expected_section: "6.2.2"
+  expected_keywords: ["CP-OFDM", "256 QAM", "6.5"]
+  question_type: table_lookup
+  difficulty: medium
+  notes: "Table 6.2.2.3-1 cell; different waveform row than q16"
+
+- qid: q23
+  question: "What is the PRACH ON power measurement period for preamble format C2 with 15 kHz SCS?"
+  spec: "38.521-1"
+  expected_section: "6.3.3.4"
+  expected_keywords: ["C2", "0.333333"]
+  question_type: table_lookup
+  difficulty: hard
+  notes: "Table 6.3.3.4.3-1 cell; short-format row, not the long format 0 row of q18"
+
+- qid: q24
+  question: "What is the test requirement for measured UE output power at test point 2 in the configured transmitted power test?"
+  spec: "38.521-1"
+  expected_section: "6.2.4"
+  expected_keywords: ["test point 2", "10 dBm"]
+  question_type: table_lookup
+  difficulty: hard
+  notes: "Table 6.2.4.5-1 row"
+
+- qid: q25
+  question: "In the 5 MHz ramp up sub-test, what is the expected power step size when the RB allocation changes from 1 RB to 15 RBs?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.3"
+  expected_keywords: ["12.76", "ramp up"]
+  question_type: table_lookup
+  difficulty: hard
+  notes: "Table 6.3.4.3.5-1 row. Deliberately NOT the alternating sub-test table
+    6.3.4.3.5-7 — that table physically sits on 6.3.4.4's first page, so its
+    chunks carry the 6.3.4.4 label (page-boundary attribution limit of the
+    bookmark-based extractor)"
+
+# --- q26–q30: in-corpus cross-reference questions ---------------------------
+
+- qid: q26
+  question: "Where is the Transmit OFF power requirement actually tested, given that clause 6.3.2 defines no standalone test procedure?"
+  spec: "38.521-1"
+  expected_section: "6.3.2"
+  expected_keywords: ["covered by", "Transmit ON/OFF time mask"]
+  question_type: section_summary
+  difficulty: medium
+  xref_sections: ["6.3.3"]
+  notes: "6.3.2.4 delegates the test to clause 6.3.3"
+
+- qid: q27
+  question: "Which clauses define the MPR and A-MPR values used in the PCMAX_L formula for configured maximum output power?"
+  spec: "38.521-1"
+  expected_section: "6.2.4"
+  expected_keywords: ["6.2.2.3", "6.2.3.3", "PCMAX"]
+  question_type: section_summary
+  difficulty: hard
+  xref_sections: ["6.2.2", "6.2.3"]
+  notes: "PCMAX_L,f,c formula pulls MPR from 6.2.2.3 and A-MPR from 6.2.3.3"
+
+- qid: q28
+  question: "What is the test purpose of the absolute power tolerance test?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.2"
+  expected_keywords: ["set its initial output power", "larger than 20ms"]
+  question_type: section_summary
+  difficulty: medium
+  notes: "Test-purpose triplet with q29/q30 — all three 6.3.4.x.1 purposes open
+    with 'To verify the ability of the UE transmitter to...'; discriminator
+    here is SET INITIAL power, gap > 20ms. Rewritten 2026-06-11 per Hank
+    review: the original bounded-by phrasing is not a query engineers actually
+    make; the real query is 'what does this test verify'"
+
+- qid: q29
+  question: "What does the aggregate power tolerance test verify about UE transmitter behaviour?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.4"
+  expected_keywords: ["maintain its power", "non-contiguous transmissions", "0 dB commands"]
+  question_type: section_summary
+  difficulty: medium
+  notes: "Test-purpose triplet — discriminator is MAINTAIN power within 21ms
+    under 0 dB TPC. Rewritten 2026-06-11 per Hank review (was bounded-by)"
+
+- qid: q30
+  question: "What is the test purpose of the relative power tolerance test, and within what transmission gap does it apply?"
+  spec: "38.521-1"
+  expected_section: "6.3.4.3"
+  expected_keywords: ["target sub-frame", "reference sub-frame", "less than or equal"]
+  question_type: section_summary
+  difficulty: medium
+  notes: "Test-purpose triplet — discriminator is power RELATIVE to a reference
+    sub-frame, gap <= 20ms (complements q28's > 20ms: the two tests partition
+    the gap space). Rewritten 2026-06-11 per Hank review (was bounded-by)"

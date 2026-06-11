@@ -1,21 +1,25 @@
-"""Week 2 出口 benchmark — retrieval-only evaluation.
+"""Retrieval-only benchmark over the test bank.
 
 For every question in data/eval/test_questions.yaml:
   - run sparse (FTS5) retrieval
   - run dense (BGE-M3 → Chroma) retrieval
-  - compute per-question metrics:
-      hit@5     — does any top-5 chunk live in expected_section's subtree?
-      coverage  — fraction of expected_keywords found in any top-5 chunk
-      sec_drift — top-1's section_number (so q04/q05 drifting back to §6.2
-                  vs staying in §6.3.x is visible at a glance)
-  - aggregate hit@5 across all questions
+  - retrieve ONCE at k = max(10, --top-k), then score by slicing that single
+    ranked list:
+      hit@1 / hit@3 / hit@5 — does any chunk in the first k live in
+                              expected_section's subtree?
+      RR@10     — reciprocal rank of the first subtree hit, 0.0 if the
+                  subtree never appears in the top 10; aggregated as MRR@10
+      coverage  — fraction of expected_keywords found in the top-5 chunks
+                  (window kept at 5 for comparability with earlier reports)
   - emit a markdown report to data/eval/last_eval.md (also stdout)
 
-This is the Week 2 benchmark gate:
-  - hit@5 ≥ 8/10 across both sparse & dense (independently)
-  - q04 / q05 must surface §6.3.x at top-K, NOT drift to §6.2
-  - keyword coverage reported with explicit numerator/denominator
-    (not the spike's "at least one keyword" hand-wave)
+Gate (ratio-based so it survives test-bank growth):
+  - hit@5 ratio ≥ 0.8 per backend (sparse & dense independently)
+  - hit@1 and MRR@10 are REPORTED, NOT gated — they are the improvement
+    targets for the upcoming RRF / reranker steps
+
+--top-k only controls how many detail rows each question shows in the
+report; scoring always uses the k=10 window described above.
 
 Usage:
     .venv/Scripts/python.exe scripts/evaluate.py
@@ -42,18 +46,59 @@ from src.models import Section
 from src.retrieval import search_dense, search_sparse
 
 
+# Scoring window: hit@1/3/5 slices and the RR cap all live inside the first
+# SCORING_CAP hits, so one retrieval call per (question, backend) suffices.
+SCORING_CAP = 10
+GATE_THRESHOLD = 0.8  # hit@5 ratio each backend must clear
+
+
 @dataclass
 class QuestionMetrics:
     qid: str
     backend: str
-    hit_at_k: bool                # any top-K chunk in expected_section subtree
-    keyword_coverage: float       # 0..1
+    question_type: str            # mirrors the bank's question_type taxonomy
+    hit_at_1: bool
+    hit_at_3: bool
+    hit_at_5: bool
+    rr_at_10: float               # reciprocal rank; 0.0 if no hit in top 10
+    keyword_coverage: float       # 0..1, over the top-5 window
     keywords_found: list[str]
     keywords_missing: list[str]
     top1_section: str | None
     top1_page: int | None
     top1_table_id: str | None
     top_chunk_summaries: list[str]
+
+
+def hit_at_k(ranked_sections: list[str], expected: set[str], k: int) -> bool:
+    """True if any of the first k ranked sections is in the expected subtree."""
+    return any(s in expected for s in ranked_sections[:k])
+
+
+def reciprocal_rank(
+    ranked_sections: list[str], expected: set[str], cap: int = SCORING_CAP
+) -> float:
+    """1/rank (1-indexed) of the first expected-subtree section, scanning at
+    most `cap` positions. 0.0 when the subtree never appears in that window."""
+    for rank, section in enumerate(ranked_sections[:cap], start=1):
+        if section in expected:
+            return 1.0 / rank
+    return 0.0
+
+
+def aggregate_metrics(ms: list[QuestionMetrics]) -> dict[str, float]:
+    """Mean hit@1/3/5, MRR@10 and keyword coverage over per-question metrics.
+    Empty input -> all zeros (small question_type groups must not raise)."""
+    n = len(ms)
+    if n == 0:
+        return {"hit@1": 0.0, "hit@3": 0.0, "hit@5": 0.0, "mrr@10": 0.0, "coverage": 0.0}
+    return {
+        "hit@1": sum(1 for m in ms if m.hit_at_1) / n,
+        "hit@3": sum(1 for m in ms if m.hit_at_3) / n,
+        "hit@5": sum(1 for m in ms if m.hit_at_5) / n,
+        "mrr@10": sum(m.rr_at_10 for m in ms) / n,
+        "coverage": sum(m.keyword_coverage for m in ms) / n,
+    }
 
 
 def _build_section_subtree(session: Session) -> dict[str, set[str]]:
@@ -89,16 +134,16 @@ def _evaluate_question(
     expected_subtree = subtree.get(question["expected_section"], {question["expected_section"]})
     expected_kws = [k.lower() for k in question["expected_keywords"]]
 
-    # hit@k
-    in_subtree = [h for h in hits if h.section_number in expected_subtree]
-    hit_at_k = len(in_subtree) > 0
+    ranked = [h.section_number for h in hits]
 
     # keyword coverage — query the FULL chunk text from SQL (the hit's
     # text_preview is truncated to 240 chars; matching against preview
     # under-counts coverage when the keyword appears later in a long chunk).
+    # Window stays at top-5 even though scoring sees top-10, so coverage
+    # numbers remain comparable with reports from before the multi-K upgrade.
     from src.models import Chunk
 
-    chunk_ids = [h.chunk_id for h in hits]
+    chunk_ids = [h.chunk_id for h in hits[:5]]
     full_texts = []
     if chunk_ids:
         rows = session.execute(
@@ -121,7 +166,11 @@ def _evaluate_question(
     return QuestionMetrics(
         qid=question["qid"],
         backend=backend,
-        hit_at_k=hit_at_k,
+        question_type=question["question_type"],
+        hit_at_1=hit_at_k(ranked, expected_subtree, 1),
+        hit_at_3=hit_at_k(ranked, expected_subtree, 3),
+        hit_at_5=hit_at_k(ranked, expected_subtree, 5),
+        rr_at_10=reciprocal_rank(ranked, expected_subtree),
         keyword_coverage=coverage,
         keywords_found=found,
         keywords_missing=missing,
@@ -139,18 +188,43 @@ def _format_report(
     top_k: int,
 ) -> str:
     lines: list[str] = []
-    lines.append("# Week 2 Retrieval Benchmark\n")
-    lines.append(f"_top_k = {top_k}; backends = {', '.join(backend_metrics.keys())}_\n")
+    lines.append("# Retrieval Benchmark\n")
+    lines.append(
+        f"_scored at k={SCORING_CAP} (hit@1/3/5, MRR@10); "
+        f"detail rows show top {top_k}; "
+        f"backends = {', '.join(backend_metrics.keys())}_\n"
+    )
 
     # Aggregate header
     lines.append("## Aggregate\n")
-    lines.append("| backend | hit@K | mean coverage |")
-    lines.append("|---|---|---|")
+    lines.append("| backend | hit@1 | hit@3 | hit@5 | MRR@10 | mean coverage |")
+    lines.append("|---|---|---|---|---|---|")
     for backend, ms in backend_metrics.items():
         n = len(ms)
-        hits = sum(1 for m in ms if m.hit_at_k)
-        cov = sum(m.keyword_coverage for m in ms) / n if n else 0
-        lines.append(f"| {backend} | {hits}/{n} | {cov:.0%} |")
+        h1 = sum(1 for m in ms if m.hit_at_1)
+        h3 = sum(1 for m in ms if m.hit_at_3)
+        h5 = sum(1 for m in ms if m.hit_at_5)
+        agg = aggregate_metrics(ms)
+        lines.append(
+            f"| {backend} | {h1}/{n} | {h3}/{n} | {h5}/{n} "
+            f"| {agg['mrr@10']:.2f} | {agg['coverage']:.0%} |"
+        )
+    lines.append("")
+
+    # Per-question_type breakdown — shows which category drags a backend
+    # down. n is displayed so small groups aren't over-interpreted.
+    lines.append("## By question type\n")
+    lines.append("| backend | type | n | hit@1 | hit@3 | hit@5 | MRR@10 | coverage |")
+    lines.append("|---|---|---|---|---|---|---|---|")
+    for backend, ms in backend_metrics.items():
+        for qtype in sorted({m.question_type for m in ms}):
+            group = [m for m in ms if m.question_type == qtype]
+            agg = aggregate_metrics(group)
+            lines.append(
+                f"| {backend} | {qtype} | {len(group)} "
+                f"| {agg['hit@1']:.0%} | {agg['hit@3']:.0%} | {agg['hit@5']:.0%} "
+                f"| {agg['mrr@10']:.2f} | {agg['coverage']:.0%} |"
+            )
     lines.append("")
 
     # Per-question detail
@@ -166,16 +240,21 @@ def _format_report(
         )
         for backend, ms in backend_metrics.items():
             m = next(x for x in ms if x.qid == qid)
-            verdict = "HIT" if m.hit_at_k else "MISS"
+            flags = (
+                f"hit@1={'Y' if m.hit_at_1 else 'N'} "
+                f"hit@3={'Y' if m.hit_at_3 else 'N'} "
+                f"hit@5={'Y' if m.hit_at_5 else 'N'} "
+                f"RR@10={m.rr_at_10:.2f}"
+            )
             lines.append(
-                f"**{backend}** — {verdict} · "
+                f"**{backend}** — {flags} · "
                 f"coverage = {len(m.keywords_found)}/{len(m.keywords_found) + len(m.keywords_missing)} "
                 f"({m.keyword_coverage:.0%}) · "
                 f"top-1 = §{m.top1_section} p{m.top1_page} table={m.top1_table_id or '-'}"
             )
             if m.keywords_missing:
                 lines.append(f"  missing keywords: {m.keywords_missing}")
-            for s in m.top_chunk_summaries:
+            for s in m.top_chunk_summaries[:top_k]:
                 lines.append(f"    {s}")
             lines.append("")
 
@@ -184,7 +263,13 @@ def _format_report(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--top-k", type=int, default=5)
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        default=5,
+        help="detail rows per question in the report; scoring always uses "
+        f"k={SCORING_CAP} for hit@1/3/5 + MRR@10",
+    )
     parser.add_argument(
         "--backend",
         default="sparse,dense",
@@ -247,6 +332,10 @@ def main() -> int:
     engine = create_engine(settings.db_url, future=True)
     backend_metrics: dict[str, list[QuestionMetrics]] = {b: [] for b in backends}
 
+    # Retrieve once per (question, backend) at a depth that covers both the
+    # report detail rows and the fixed scoring window.
+    k_retrieve = max(SCORING_CAP, args.top_k)
+
     with Session(engine) as session:
         subtree = _build_section_subtree(session)
 
@@ -254,9 +343,9 @@ def main() -> int:
             print(f"[eval] {q['qid']}: {q['question']}")
             for backend in backends:
                 if backend == "sparse":
-                    hits = search_sparse(session, q["question"], top_k=args.top_k)
+                    hits = search_sparse(session, q["question"], top_k=k_retrieve)
                 else:
-                    hits = search_dense(session, q["question"], top_k=args.top_k)
+                    hits = search_dense(session, q["question"], top_k=k_retrieve)
                 m = _evaluate_question(
                     question=q,
                     hits=hits,
@@ -265,9 +354,11 @@ def main() -> int:
                     session=session,
                 )
                 backend_metrics[backend].append(m)
-                marker = "HIT " if m.hit_at_k else "MISS"
                 print(
-                    f"  [{backend:6s}] {marker}  cov={m.keyword_coverage:.0%}  "
+                    f"  [{backend:6s}] "
+                    f"h1={'Y' if m.hit_at_1 else 'N'} "
+                    f"h5={'Y' if m.hit_at_5 else 'N'} "
+                    f"rr={m.rr_at_10:.2f}  cov={m.keyword_coverage:.0%}  "
                     f"top-1=§{m.top1_section} p{m.top1_page}"
                 )
 
@@ -284,20 +375,29 @@ def main() -> int:
     print("\n=== AGGREGATE ===")
     for backend, ms in backend_metrics.items():
         n = len(ms)
-        hits = sum(1 for m in ms if m.hit_at_k)
-        cov = sum(m.keyword_coverage for m in ms) / n if n else 0
-        print(f"  {backend:6s}  hit@{args.top_k}={hits}/{n}  mean_coverage={cov:.0%}")
+        h1 = sum(1 for m in ms if m.hit_at_1)
+        h3 = sum(1 for m in ms if m.hit_at_3)
+        h5 = sum(1 for m in ms if m.hit_at_5)
+        agg = aggregate_metrics(ms)
+        print(
+            f"  {backend:6s}  hit@1={h1}/{n}  hit@3={h3}/{n}  hit@5={h5}/{n}  "
+            f"MRR@10={agg['mrr@10']:.2f}  mean_coverage={agg['coverage']:.0%}"
+        )
 
-    # Week 2 gate: BOTH backends should clear hit@5 >= 8/10
+    # Gate: BOTH backends must clear hit@5 ratio >= GATE_THRESHOLD. Ratio-based
+    # (not an absolute count) so the gate keeps meaning as the bank grows.
     gate_ok = True
     for backend, ms in backend_metrics.items():
-        n = len(ms)
-        hits = sum(1 for m in ms if m.hit_at_k)
-        if hits < 8:
-            print(f"\n  GATE FAIL  {backend} hit@{args.top_k} = {hits}/{n} (< 8 required)")
+        ratio = aggregate_metrics(ms)["hit@5"]
+        if ratio < GATE_THRESHOLD:
+            print(
+                f"\n  GATE FAIL  {backend} hit@5 = {ratio:.0%} "
+                f"(< {GATE_THRESHOLD:.0%} required)"
+            )
             gate_ok = False
     if gate_ok:
-        print("\n  GATE OK  hit@K threshold met by all backends")
+        print(f"\n  GATE OK  hit@5 >= {GATE_THRESHOLD:.0%} for all backends")
+    print("  (hit@1 / MRR@10 reported, not gated — RRF/reranker targets)")
 
     return 0
 

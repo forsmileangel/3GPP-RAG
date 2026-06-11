@@ -13,6 +13,7 @@ retrieval evaluation.
 
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import fitz
@@ -73,9 +74,9 @@ def questions() -> list[dict]:
     return qs
 
 
-def test_bank_size_at_least_10(questions):
-    """Week 1 milestone goal — at least 10 scope-validated questions."""
-    assert len(questions) >= 10, f"only {len(questions)} questions, need >=10"
+def test_bank_size_at_least_30(questions):
+    """Week 3 Step 1 milestone — at least 30 scope-validated questions."""
+    assert len(questions) >= 30, f"only {len(questions)} questions, need >=30"
 
 
 def test_qids_are_unique(questions):
@@ -87,6 +88,25 @@ def test_required_fields_present(questions):
     for q in questions:
         missing = REQUIRED_FIELDS - q.keys()
         assert not missing, f"{q.get('qid', '?')} missing fields: {missing}"
+
+
+def test_xref_sections_optional_well_formed(questions):
+    """xref_sections is OPTIONAL metadata on cross-reference questions: the
+    other section(s) the question conceptually bridges. The evaluator ignores
+    it today; the future cross-ref-resolution eval will read it. When present
+    it must be a non-empty list of section-number strings."""
+    section_number_re = re.compile(r"\d+(\.\d+)*")
+    for q in questions:
+        if "xref_sections" not in q:
+            continue
+        xs = q["xref_sections"]
+        assert isinstance(xs, list) and xs, (
+            f"{q['qid']} xref_sections must be a non-empty list"
+        )
+        for s in xs:
+            assert isinstance(s, str) and section_number_re.fullmatch(s), (
+                f"{q['qid']} xref_sections entry {s!r} is not a section number"
+            )
 
 
 def test_metadata_values_in_allowed_set(questions):
@@ -102,7 +122,7 @@ def test_metadata_values_in_allowed_set(questions):
         )
 
 
-@pytest.mark.parametrize("question_idx", range(20))  # generous upper bound
+@pytest.mark.parametrize("question_idx", range(40))  # generous upper bound
 def test_question_scope_validates(questions, question_idx):
     """Each question's keywords must appear in its expected_section text."""
     if question_idx >= len(questions):
