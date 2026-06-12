@@ -4,6 +4,8 @@ For every question in data/eval/test_questions.yaml:
   - run sparse (FTS5) retrieval
   - run dense (BGE-M3 → Chroma) retrieval
   - run hybrid (RRF fusion of sparse + dense, k=60)
+  - optionally run reranked (cross-encoder over the hybrid top-30; pick the
+    model with --reranker jina|bge, reported as "reranked:<model>")
   - retrieve ONCE at k = max(10, --top-k), then score by slicing that single
     ranked list:
       hit@1 / hit@3 / hit@5 — does any chunk in the first k live in
@@ -26,6 +28,7 @@ Usage:
     .venv/Scripts/python.exe scripts/evaluate.py
     .venv/Scripts/python.exe scripts/evaluate.py --top-k 10
     .venv/Scripts/python.exe scripts/evaluate.py --backend sparse,dense
+    .venv/Scripts/python.exe scripts/evaluate.py --backend reranked --reranker bge
 """
 
 from __future__ import annotations
@@ -44,7 +47,12 @@ from sqlalchemy.orm import Session
 
 from src.config import settings
 from src.models import Section
-from src.retrieval import search_dense, search_hybrid, search_sparse
+from src.retrieval import (
+    search_dense,
+    search_hybrid,
+    search_reranked,
+    search_sparse,
+)
 
 
 # Scoring window: hit@1/3/5 slices and the RR cap all live inside the first
@@ -73,9 +81,11 @@ class QuestionMetrics:
 
 def _hit_score(hit) -> float:
     """Score for the report's detail rows. Backends use different attribute
-    names AND sign conventions (rrf_score: larger = better; distance /
-    bm25_score: smaller = better) — this only labels rows, never ranks."""
-    for attr in ("rrf_score", "distance", "bm25_score"):
+    names AND sign conventions (rerank_score / rrf_score: larger = better;
+    distance / bm25_score: smaller = better) — this only labels rows, never
+    ranks. rerank_score comes first: RerankedHit also carries rrf_score as
+    provenance, but the rerank score is what ordered the row."""
+    for attr in ("rerank_score", "rrf_score", "distance", "bm25_score"):
         value = getattr(hit, attr, None)
         if value is not None:
             return float(value)
@@ -285,7 +295,14 @@ def main() -> int:
     parser.add_argument(
         "--backend",
         default="sparse,dense,hybrid",
-        help="Comma-separated subset of {sparse, dense, hybrid}",
+        help="Comma-separated subset of {sparse, dense, hybrid, reranked}",
+    )
+    parser.add_argument(
+        "--reranker",
+        choices=["jina", "bge"],
+        default="jina",
+        help="Cross-encoder used by the 'reranked' backend; the report "
+        "labels the run as 'reranked:<model>' so A/B runs stay distinct",
     )
     parser.add_argument(
         "--questions",
@@ -300,7 +317,7 @@ def main() -> int:
     args = parser.parse_args()
 
     backends = [b.strip() for b in args.backend.split(",") if b.strip()]
-    valid = {"sparse", "dense", "hybrid"}
+    valid = {"sparse", "dense", "hybrid", "reranked"}
     bad = set(backends) - valid
     if bad:
         print(f"ERROR: unknown backend(s) {bad}; valid: {valid}", file=sys.stderr)
@@ -310,11 +327,11 @@ def main() -> int:
         print(f"ERROR: questions file not found: {args.questions}", file=sys.stderr)
         return 1
 
-    # Pre-flight check: dense (and hybrid, which calls dense internally)
-    # requires the Chroma collection to exist and chunks.vector_id to be
-    # populated. Bail early with a clear message if the user runs
-    # evaluate.py before embed_chunks.py completes.
-    if "dense" in backends or "hybrid" in backends:
+    # Pre-flight check: dense (and hybrid/reranked, which call dense
+    # internally) requires the Chroma collection to exist and
+    # chunks.vector_id to be populated. Bail early with a clear message if
+    # the user runs evaluate.py before embed_chunks.py completes.
+    if {"dense", "hybrid", "reranked"} & set(backends):
         engine_pre = create_engine(settings.db_url, future=True)
         with Session(engine_pre) as s:
             from src.models import Chunk
@@ -343,7 +360,16 @@ def main() -> int:
         questions = yaml.safe_load(f)
 
     engine = create_engine(settings.db_url, future=True)
-    backend_metrics: dict[str, list[QuestionMetrics]] = {b: [] for b in backends}
+
+    # Report/gate label: the reranked backend embeds the model id so A/B
+    # runs ("reranked:jina" vs "reranked:bge") stay distinct everywhere.
+    backend_labels = {
+        b: (f"reranked:{args.reranker}" if b == "reranked" else b)
+        for b in backends
+    }
+    backend_metrics: dict[str, list[QuestionMetrics]] = {
+        backend_labels[b]: [] for b in backends
+    }
 
     # Retrieve once per (question, backend) at a depth that covers both the
     # report detail rows and the fixed scoring window.
@@ -359,18 +385,24 @@ def main() -> int:
                     hits = search_sparse(session, q["question"], top_k=k_retrieve)
                 elif backend == "dense":
                     hits = search_dense(session, q["question"], top_k=k_retrieve)
-                else:
+                elif backend == "hybrid":
                     hits = search_hybrid(session, q["question"], top_k=k_retrieve)
+                else:
+                    hits = search_reranked(
+                        session, q["question"],
+                        top_k=k_retrieve, reranker_model=args.reranker,
+                    )
+                label = backend_labels[backend]
                 m = _evaluate_question(
                     question=q,
                     hits=hits,
                     subtree=subtree,
-                    backend=backend,
+                    backend=label,
                     session=session,
                 )
-                backend_metrics[backend].append(m)
+                backend_metrics[label].append(m)
                 print(
-                    f"  [{backend:6s}] "
+                    f"  [{label:13s}] "
                     f"h1={'Y' if m.hit_at_1 else 'N'} "
                     f"h5={'Y' if m.hit_at_5 else 'N'} "
                     f"rr={m.rr_at_10:.2f}  cov={m.keyword_coverage:.0%}  "
@@ -395,7 +427,7 @@ def main() -> int:
         h5 = sum(1 for m in ms if m.hit_at_5)
         agg = aggregate_metrics(ms)
         print(
-            f"  {backend:6s}  hit@1={h1}/{n}  hit@3={h3}/{n}  hit@5={h5}/{n}  "
+            f"  {backend:13s}  hit@1={h1}/{n}  hit@3={h3}/{n}  hit@5={h5}/{n}  "
             f"MRR@10={agg['mrr@10']:.2f}  mean_coverage={agg['coverage']:.0%}"
         )
 
