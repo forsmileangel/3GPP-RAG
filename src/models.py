@@ -244,6 +244,11 @@ class Fact(Base):
     # the app layer (e.g. NUMERIC requires {parameter, value, unit}).
     fact_data: Mapped[dict] = mapped_column(JSON, nullable=False)
 
+    # Flattened searchable text of fact_data (written by the Step 6 fact
+    # emitter); facts_fts mirrors this column the way chunks_fts mirrors
+    # chunks.text. Nullable so pre-Step-6 rows survive the forward migration.
+    fact_text: Mapped[str | None] = mapped_column(Text)
+
     # Page + table_id duplicated from chunks for fast citation lookup.
     page: Mapped[int | None] = mapped_column(Integer)
     table_id: Mapped[str | None] = mapped_column(String(64))
