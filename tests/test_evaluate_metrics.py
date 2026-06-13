@@ -158,3 +158,60 @@ def test_aggregate_metrics_mixed():
     assert agg["hit@5"] == 1.0
     assert abs(agg["mrr@10"] - 0.625) < 1e-9
     assert abs(agg["coverage"] - 0.75) < 1e-9
+
+
+# ------------------------------------------ _build_section_subtree (DB-backed)
+
+def test_build_section_subtree_isolates_by_source_format():
+    """Two specs sharing section_numbers (the same spec ingested as both
+    pdf_pymupdf and tspec_md) must not let one source's subtree overwrite the
+    other's. The map is keyed by bare section_number, so the scorer filters by
+    --source-format to build the tree from the corpus the run retrieves from."""
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import Session
+
+    from src.models import Base, Section, Spec
+
+    engine = create_engine("sqlite://", future=True)
+    Base.metadata.create_all(engine)
+    with Session(engine) as session:
+        # pdf spec: 6.2.1 (parent) + 6.2.1.5 (child) — shallow tree
+        pdf = Spec(name="38.521-1", version="17.5.0",
+                   source_file="x.pdf", source_format="pdf_pymupdf")
+        session.add(pdf)
+        session.flush()
+        pdf_parent = Section(spec_id=pdf.spec_id, section_number="6.2.1",
+                             title="Max power", level=2, page_start=1)
+        session.add(pdf_parent)
+        session.flush()
+        session.add(Section(spec_id=pdf.spec_id, parent_id=pdf_parent.section_id,
+                            section_number="6.2.1.5", title="Test req",
+                            level=3, page_start=2))
+        # md spec: 6.2.1 (parent) + 6.2.1.4 + 6.2.1.4.1 — deeper, different
+        md = Spec(name="38.521-1", version="i00",
+                  source_file="x.md", source_format="tspec_md")
+        session.add(md)
+        session.flush()
+        md_parent = Section(spec_id=md.spec_id, section_number="6.2.1",
+                            title="Max power", level=2, page_start=1)
+        session.add(md_parent)
+        session.flush()
+        md_mid = Section(spec_id=md.spec_id, parent_id=md_parent.section_id,
+                         section_number="6.2.1.4", title="Conformance",
+                         level=3, page_start=2)
+        session.add(md_mid)
+        session.flush()
+        session.add(Section(spec_id=md.spec_id, parent_id=md_mid.section_id,
+                            section_number="6.2.1.4.1", title="Deeper",
+                            level=4, page_start=3))
+        session.commit()
+
+        pdf_tree = evaluate._build_section_subtree(
+            session, source_format="pdf_pymupdf")
+        assert pdf_tree["6.2.1"] == {"6.2.1", "6.2.1.5"}
+        # the deep md node must not bleed into the pdf-filtered map at all
+        assert "6.2.1.4.1" not in pdf_tree
+
+        md_tree = evaluate._build_section_subtree(
+            session, source_format="tspec_md")
+        assert md_tree["6.2.1"] == {"6.2.1", "6.2.1.4", "6.2.1.4.1"}

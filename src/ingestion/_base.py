@@ -80,15 +80,16 @@ class Table:
 
     `rendered_text` is the final searchable string after cell-internal
     multiline join + LaTeX rendering (see _table_parser). `raw_format`
-    distinguishes "grid" (pandoc grid table) from "html" so downstream can
-    track per-format error rates if needed.
+    distinguishes the three pandoc renderings so downstream can track
+    per-format error rates if needed.
     """
 
     rendered_text: str
-    raw_format: str          # "grid" | "html"
+    raw_format: str          # "grid" | "html" | "simple"
     n_rows: int
     n_cols: int
-    caption_id: str | None = None  # e.g. "Table 6.2.1.5-1" if detected
+    caption_id: str | None = None  # bare number, e.g. "6.2.1.5-1" — matches
+    #                                the PDF flow's Chunk.table_id convention
 
 
 @dataclass

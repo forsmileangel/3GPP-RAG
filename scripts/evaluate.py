@@ -46,7 +46,7 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
 from src.config import settings
-from src.models import Section
+from src.models import Section, Spec
 from src.retrieval import (
     search_dense,
     search_hybrid,
@@ -123,10 +123,25 @@ def aggregate_metrics(ms: list[QuestionMetrics]) -> dict[str, float]:
     }
 
 
-def _build_section_subtree(session: Session) -> dict[str, set[str]]:
+def _build_section_subtree(
+    session: Session, *, source_format: str | None = None
+) -> dict[str, set[str]]:
     """Map section_number -> set of section_numbers that are it OR its
-    descendants. Used to score 'is this hit in the expected subtree?'."""
-    sections = list(session.execute(select(Section)).scalars())
+    descendants. Used to score 'is this hit in the expected subtree?'.
+
+    When source_format is set, only sections of specs with that source are
+    included. The DB can hold the same spec under two sources (e.g. 38.521-1
+    as both pdf_pymupdf and tspec_md) with shared section_numbers; without
+    this filter the map (keyed by bare section_number) would let whichever
+    spec is iterated last silently overwrite the other's subtree. Build it
+    from the same corpus the run actually retrieves from.
+    """
+    stmt = select(Section)
+    if source_format is not None:
+        stmt = stmt.join(Spec, Spec.spec_id == Section.spec_id).where(
+            Spec.source_format == source_format
+        )
+    sections = list(session.execute(stmt).scalars())
     by_id = {s.section_id: s for s in sections}
 
     descendants: dict[int, set[int]] = {s.section_id: {s.section_id} for s in sections}
@@ -208,12 +223,15 @@ def _format_report(
     backend_metrics: dict[str, list[QuestionMetrics]],
     questions: list[dict],
     top_k: int,
+    source_format: str | None = None,
 ) -> str:
     lines: list[str] = []
     lines.append("# Retrieval Benchmark\n")
+    source_label = source_format or "mixed"
     lines.append(
         f"_scored at k={SCORING_CAP} (hit@1/3/5, MRR@10); "
         f"detail rows show top {top_k}; "
+        f"source_format = {source_label}; "
         f"backends = {', '.join(backend_metrics.keys())}_\n"
     )
 
@@ -305,6 +323,13 @@ def main() -> int:
         "labels the run as 'reranked:<model>' so A/B runs stay distinct",
     )
     parser.add_argument(
+        "--source-format",
+        choices=["pdf_pymupdf", "tspec_md"],
+        default=None,
+        help="Restrict retrieval to one corpus for source A/B runs; "
+        "default None searches the mixed collection",
+    )
+    parser.add_argument(
         "--questions",
         type=Path,
         default=settings.eval_dir / "test_questions.yaml",
@@ -376,21 +401,31 @@ def main() -> int:
     k_retrieve = max(SCORING_CAP, args.top_k)
 
     with Session(engine) as session:
-        subtree = _build_section_subtree(session)
+        subtree = _build_section_subtree(session, source_format=args.source_format)
 
         for q in questions:
             print(f"[eval] {q['qid']}: {q['question']}")
             for backend in backends:
                 if backend == "sparse":
-                    hits = search_sparse(session, q["question"], top_k=k_retrieve)
+                    hits = search_sparse(
+                        session, q["question"],
+                        top_k=k_retrieve, source_format=args.source_format,
+                    )
                 elif backend == "dense":
-                    hits = search_dense(session, q["question"], top_k=k_retrieve)
+                    hits = search_dense(
+                        session, q["question"],
+                        top_k=k_retrieve, source_format=args.source_format,
+                    )
                 elif backend == "hybrid":
-                    hits = search_hybrid(session, q["question"], top_k=k_retrieve)
+                    hits = search_hybrid(
+                        session, q["question"],
+                        top_k=k_retrieve, source_format=args.source_format,
+                    )
                 else:
                     hits = search_reranked(
                         session, q["question"],
                         top_k=k_retrieve, reranker_model=args.reranker,
+                        source_format=args.source_format,
                     )
                 label = backend_labels[backend]
                 m = _evaluate_question(
@@ -413,6 +448,7 @@ def main() -> int:
         backend_metrics=backend_metrics,
         questions=questions,
         top_k=args.top_k,
+        source_format=args.source_format,
     )
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(report, encoding="utf-8")

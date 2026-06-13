@@ -251,6 +251,57 @@ def chunk_section(
     return specs
 
 
+def chunk_section_text(
+    *,
+    section_id: int,
+    parent_section_id: int | None,
+    body_text: str,
+    tables: list[tuple[str, str | None]],
+    source_format: str,
+) -> list[ChunkSpec]:
+    """Markdown-path sibling of chunk_section — no document, no pages.
+
+    The md adapter has already split tables out of the body, so this is a
+    thin assembly step: prose goes through the SAME _chunk_prose windows
+    as the PDF path; each (rendered_text, table_id) pair becomes one whole
+    TABLE chunk. page=0 is the "no page" sentinel for markdown sources
+    (PDF pages are 1-indexed); char_offset keeps the PDF semantics of
+    "offset within the section's text".
+
+    Additive only: the PDF path (chunk_section / chunk_spec_pdf) is
+    untouched, so its benchmark numbers cannot move.
+    """
+    source_format = validate_source_format(source_format)
+    specs: list[ChunkSpec] = []
+
+    prose = body_text.strip()
+    if prose:
+        for body, abs_off, page in _chunk_prose(prose, 0, [0], 0):
+            specs.append(ChunkSpec(
+                section_id=section_id,
+                parent_section_id=parent_section_id,
+                text=body,
+                source_format=source_format,
+                page=page,
+                char_offset=abs_off,
+                chunk_type=ChunkType.PROSE,
+            ))
+
+    for rendered_text, table_id in tables:
+        if rendered_text.strip():
+            specs.append(ChunkSpec(
+                section_id=section_id,
+                parent_section_id=parent_section_id,
+                text=rendered_text,
+                source_format=source_format,
+                page=0,
+                char_offset=0,
+                chunk_type=ChunkType.TABLE,
+                table_id=table_id,
+            ))
+    return specs
+
+
 def persist_chunks(session: Session, specs: list[ChunkSpec]) -> int:
     """Insert ChunkSpec rows; FTS5 triggers keep chunks_fts in sync."""
     rows = [
