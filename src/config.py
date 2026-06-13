@@ -69,6 +69,19 @@ class Settings:
     gate_w_cover: float = _env_float("GATE_W_COVER", 0.6)
     gate_mode: str = os.environ.get("GATE_MODE", "balanced")
 
+    # LLM generation (Step 7). Provider + model are config-driven so the answer
+    # path stays pluggable — Tier 1 explicitly benchmarks across LLMs (§5).
+    # Default model claude-sonnet-4-6 (cost/quality balance for personal use;
+    # confirmed current via the bundled claude-api reference, 2026-06-04). Swap
+    # via LLM_MODEL to e.g. claude-opus-4-8 / claude-fable-5. NOTE: the
+    # opus-4-7/4-8 + fable/mythos families reject temperature; the provider
+    # drops it for them (see src/generation/providers.accepts_temperature), so
+    # llm_temperature stays harmless after a model switch.
+    llm_provider: str = os.environ.get("LLM_PROVIDER", "anthropic")
+    llm_model: str = os.environ.get("LLM_MODEL", "claude-sonnet-4-6")
+    llm_temperature: float = _env_float("LLM_TEMPERATURE", 0.0)
+    llm_max_tokens: int = _env_int("LLM_MAX_TOKENS", 1024)
+
     @property
     def db_url(self) -> str:
         return f"sqlite:///{self.db_path.as_posix()}"
