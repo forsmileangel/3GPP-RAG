@@ -2,7 +2,7 @@
 
 Pure apply_rerank math plus search_reranked integration with a
 monkeypatched hybrid backend and a fake scorer — no model downloads, no
-Chroma, no network. _fetch_full_texts is exercised against a real
+Chroma, no network. The shared full-text fetch is exercised against a real
 throwaway SQLite (same pattern as test_dense_retrieval.py).
 """
 

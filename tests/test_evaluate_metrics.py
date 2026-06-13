@@ -215,3 +215,88 @@ def test_build_section_subtree_isolates_by_source_format():
         md_tree = evaluate._build_section_subtree(
             session, source_format="tspec_md")
         assert md_tree["6.2.1"] == {"6.2.1", "6.2.1.4", "6.2.1.4.1"}
+
+
+# ----------------------------------------------------- gate scoring helpers
+
+def _gr(**overrides):
+    base = dict(
+        qid="qx", answerability="answerable", oos_kind=None, outcome="answer",
+        confidence=0.9, reason="", hit_correct=True, coverage=1.0,
+        classification="TN",
+    )
+    base.update(overrides)
+    return evaluate.GateQuestionResult(**base)
+
+
+def test_classify_gate_four_cells():
+    # REFUSE is the positive class.
+    assert evaluate.classify_gate(answerability="out_of_scope", outcome="refuse") == "TP"
+    assert evaluate.classify_gate(answerability="out_of_scope", outcome="answer") == "FN"
+    assert evaluate.classify_gate(answerability="answerable", outcome="answer") == "TN"
+    assert evaluate.classify_gate(answerability="answerable", outcome="refuse") == "FP"
+
+
+def test_classify_gate_lowconf_default_is_answer():
+    assert evaluate.classify_gate(
+        answerability="answerable", outcome="low_confidence"
+    ) == "TN"
+    assert evaluate.classify_gate(
+        answerability="out_of_scope", outcome="low_confidence"
+    ) == "FN"
+
+
+def test_classify_gate_lowconf_as_refuse_flips():
+    assert evaluate.classify_gate(
+        answerability="out_of_scope", outcome="low_confidence",
+        lowconf_as_refuse=True,
+    ) == "TP"
+    assert evaluate.classify_gate(
+        answerability="answerable", outcome="low_confidence",
+        lowconf_as_refuse=True,
+    ) == "FP"
+
+
+def test_gate_confusion_precision_recall_f1():
+    results = [
+        _gr(classification="TP"), _gr(classification="TP"),
+        _gr(classification="FP"),
+        _gr(classification="FN"),
+        _gr(classification="TN"), _gr(classification="TN"),
+    ]
+    cm = evaluate.gate_confusion(results)
+    assert (cm["TP"], cm["FP"], cm["TN"], cm["FN"]) == (2, 1, 2, 1)
+    assert abs(cm["precision"] - 2 / 3) < 1e-9
+    assert abs(cm["recall"] - 2 / 3) < 1e-9
+    assert abs(cm["f1"] - 2 / 3) < 1e-9
+
+
+def test_gate_confusion_empty_zeros():
+    cm = evaluate.gate_confusion([])
+    assert cm == {
+        "TP": 0, "FP": 0, "TN": 0, "FN": 0,
+        "precision": 0.0, "recall": 0.0, "f1": 0.0,
+    }
+
+
+def test_citation_accuracy_over_answered_only():
+    results = [
+        _gr(classification="TN", hit_correct=True),
+        _gr(classification="TN", hit_correct=False),
+        _gr(classification="FP", hit_correct=False),   # refused -> excluded
+        _gr(classification="TP", hit_correct=False),   # out-of-scope -> excluded
+    ]
+    assert evaluate.citation_accuracy(results) == 0.5
+
+
+def test_citation_accuracy_empty_zero():
+    assert evaluate.citation_accuracy([_gr(classification="FP")]) == 0.0
+
+
+def test_gate_mean_coverage_over_answered():
+    results = [
+        _gr(classification="TN", coverage=1.0),
+        _gr(classification="TN", coverage=0.5),
+        _gr(classification="TP", coverage=None),   # out-of-scope -> excluded
+    ]
+    assert abs(evaluate.gate_mean_coverage(results) - 0.75) < 1e-9

@@ -24,12 +24,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import torch
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.ingestion.embedder import DEFAULT_COLLECTION, DEFAULT_MODEL
-from src.models import Chunk
 
+from ._textfetch import fetch_full_texts
 from .hybrid import HybridHit, search_hybrid
 
 # Cap per-doc text passed to the cross-encoder. Whole-table chunks can be
@@ -179,17 +178,6 @@ def apply_rerank(
     return reranked[:top_k]
 
 
-def _fetch_full_texts(session: Session, chunk_ids: list[int]) -> dict[int, str]:
-    """Full chunk text by id — the load-bearing step that text_preview
-    (240 chars) cannot substitute for."""
-    if not chunk_ids:
-        return {}
-    rows = session.execute(
-        select(Chunk.chunk_id, Chunk.text).where(Chunk.chunk_id.in_(chunk_ids))
-    ).all()
-    return {int(chunk_id): text for chunk_id, text in rows}
-
-
 def search_reranked(
     session: Session,
     query: str,
@@ -213,7 +201,7 @@ def search_reranked(
     if not hybrid_hits:
         return []
 
-    texts = _fetch_full_texts(session, [h.chunk_id for h in hybrid_hits])
+    texts = fetch_full_texts(session, [h.chunk_id for h in hybrid_hits])
     docs = [
         (texts.get(hit.chunk_id) or hit.text_preview)[:MAX_DOC_CHARS]
         for hit in hybrid_hits

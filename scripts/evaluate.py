@@ -48,6 +48,7 @@ from sqlalchemy.orm import Session
 from src.config import settings
 from src.models import Section, Spec
 from src.retrieval import (
+    gate_for_hits,
     search_dense,
     search_hybrid,
     search_reranked,
@@ -59,6 +60,10 @@ from src.retrieval import (
 # SCORING_CAP hits, so one retrieval call per (question, backend) suffices.
 SCORING_CAP = 10
 GATE_THRESHOLD = 0.8  # hit@5 ratio each backend must clear
+
+# Evidence-gate (Step 5) acceptance targets, reported only under --gate.
+GATE_CITATION_TARGET = 0.9   # of ANSWERED answerable, fraction with correct top-1
+GATE_COVERAGE_TARGET = 0.7   # mean keyword coverage over answered answerable
 
 
 @dataclass
@@ -121,6 +126,73 @@ def aggregate_metrics(ms: list[QuestionMetrics]) -> dict[str, float]:
         "mrr@10": sum(m.rr_at_10 for m in ms) / n,
         "coverage": sum(m.keyword_coverage for m in ms) / n,
     }
+
+
+@dataclass
+class GateQuestionResult:
+    """One question's evidence-gate outcome + its confusion-matrix cell."""
+    qid: str
+    answerability: str           # "answerable" | "out_of_scope"
+    oos_kind: str | None
+    outcome: str                 # answer | low_confidence | refuse
+    confidence: float
+    reason: str
+    hit_correct: bool            # answerable only: top-1 section correct
+    coverage: float | None       # answerable only: keyword coverage
+    classification: str          # TP | FP | TN | FN (REFUSE = positive class)
+
+
+def classify_gate(
+    *, answerability: str, outcome: str, lowconf_as_refuse: bool = False,
+) -> str:
+    """2x2 confusion with REFUSE as the positive class (the gate's job is to
+    refuse the unanswerable):
+        out_of_scope + refuse -> TP        answerable + answer -> TN
+        out_of_scope + answer -> FN        answerable + refuse -> FP
+    LOW_CONFIDENCE counts as ANSWER unless lowconf_as_refuse is set."""
+    refused = outcome == "refuse" or (
+        lowconf_as_refuse and outcome == "low_confidence"
+    )
+    if answerability == "out_of_scope":
+        return "TP" if refused else "FN"
+    return "FP" if refused else "TN"
+
+
+def gate_confusion(results: list[GateQuestionResult]) -> dict[str, float]:
+    """Confusion counts + refusal precision / recall / F1. Empty -> zeros."""
+    tp = sum(1 for r in results if r.classification == "TP")
+    fp = sum(1 for r in results if r.classification == "FP")
+    tn = sum(1 for r in results if r.classification == "TN")
+    fn = sum(1 for r in results if r.classification == "FN")
+    precision = tp / (tp + fp) if (tp + fp) else 0.0
+    recall = tp / (tp + fn) if (tp + fn) else 0.0
+    f1 = (
+        2 * precision * recall / (precision + recall)
+        if (precision + recall) else 0.0
+    )
+    return {
+        "TP": tp, "FP": fp, "TN": tn, "FN": fn,
+        "precision": precision, "recall": recall, "f1": f1,
+    }
+
+
+def citation_accuracy(results: list[GateQuestionResult]) -> float:
+    """Among answerable questions the gate chose to ANSWER (classification TN),
+    fraction whose top-1 retrieved section is correct — when we answer, is the
+    citation trustworthy? Empty -> 0.0."""
+    answered = [r for r in results if r.classification == "TN"]
+    if not answered:
+        return 0.0
+    return sum(1 for r in answered if r.hit_correct) / len(answered)
+
+
+def gate_mean_coverage(results: list[GateQuestionResult]) -> float:
+    """Mean keyword coverage over answered answerable questions. Empty -> 0.0."""
+    covs = [
+        r.coverage for r in results
+        if r.classification == "TN" and r.coverage is not None
+    ]
+    return sum(covs) / len(covs) if covs else 0.0
 
 
 def _build_section_subtree(
@@ -301,6 +373,118 @@ def _format_report(
     return "\n".join(lines)
 
 
+def _retrieve(
+    session: Session, backend: str, query: str, *,
+    k: int, source_format: str | None, reranker: str,
+) -> list:
+    """Dispatch to a backend's search function. Shared by the metric loop and
+    the gate pass so both retrieve identically for a given backend."""
+    if backend == "sparse":
+        return search_sparse(session, query, top_k=k, source_format=source_format)
+    if backend == "dense":
+        return search_dense(session, query, top_k=k, source_format=source_format)
+    if backend == "hybrid":
+        return search_hybrid(session, query, top_k=k, source_format=source_format)
+    return search_reranked(
+        session, query, top_k=k, reranker_model=reranker,
+        source_format=source_format,
+    )
+
+
+def _format_gate_report(
+    *, results: list[GateQuestionResult], gate_label: str, mode: str,
+    source_format: str | None,
+) -> str:
+    cm = gate_confusion(results)
+    cite = citation_accuracy(results)
+    cov = gate_mean_coverage(results)
+    n_oos = sum(1 for r in results if r.answerability == "out_of_scope")
+    n_ans = sum(1 for r in results if r.answerability == "answerable")
+    source_label = source_format or "mixed"
+
+    lines: list[str] = []
+    lines.append("# Evidence Gate\n")
+    lines.append(
+        f"_backend = {gate_label}; mode = {mode}; "
+        f"source_format = {source_label}; {n_ans} answerable + {n_oos} "
+        f"out-of-scope; REFUSE = positive class_\n"
+    )
+
+    lines.append("## Confusion matrix\n")
+    lines.append("| | gate REFUSE | gate ANSWER |")
+    lines.append("|---|---|---|")
+    lines.append(
+        f"| out_of_scope (should refuse) | {cm['TP']} (TP) | {cm['FN']} (FN) |"
+    )
+    lines.append(
+        f"| answerable (should answer) | {cm['FP']} (FP) | {cm['TN']} (TN) |"
+    )
+    lines.append("")
+    lines.append(
+        f"refusal precision = {cm['precision']:.0%} · "
+        f"refusal recall = {cm['recall']:.0%} · F1 = {cm['f1']:.2f}\n"
+    )
+
+    lines.append("## Acceptance\n")
+    lines.append(
+        f"- out-of-scope refusal correctness (recall) = {cm['recall']:.0%} "
+        f"({cm['TP']}/{cm['TP'] + cm['FN']} OOS refused)"
+    )
+    lines.append(
+        f"- citation accuracy = {cite:.0%} "
+        f"({'PASS' if cite >= GATE_CITATION_TARGET else 'FAIL'} "
+        f"vs >= {GATE_CITATION_TARGET:.0%})"
+    )
+    lines.append(
+        f"- mean coverage (answered) = {cov:.0%} "
+        f"({'PASS' if cov >= GATE_COVERAGE_TARGET else 'FAIL'} "
+        f"vs >= {GATE_COVERAGE_TARGET:.0%})\n"
+    )
+
+    lines.append("## Out-of-scope refusal by kind\n")
+    lines.append("| oos_kind | n | refused | refusal rate |")
+    lines.append("|---|---|---|---|")
+    for kind in ("hard", "scope_boundary"):
+        group = [r for r in results if r.oos_kind == kind]
+        refused = sum(1 for r in group if r.classification == "TP")
+        rate = refused / len(group) if group else 0.0
+        lines.append(f"| {kind} | {len(group)} | {refused} | {rate:.0%} |")
+    lines.append("")
+
+    lines.append("## Gate detail\n")
+    for r in results:
+        tag = r.answerability + (f"/{r.oos_kind}" if r.oos_kind else "")
+        lines.append(
+            f"- **{r.qid}** [{tag}] [{r.classification}] "
+            f"{r.outcome} (conf {r.confidence:.2f}) — {r.reason}"
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+def _print_gate_summary(
+    results: list[GateQuestionResult], gate_label: str,
+) -> None:
+    cm = gate_confusion(results)
+    cite = citation_accuracy(results)
+    cov = gate_mean_coverage(results)
+    print(f"\n=== GATE (evidence) — {gate_label} ===")
+    print(
+        f"  refusal precision={cm['precision']:.0%}  recall={cm['recall']:.0%}  "
+        f"F1={cm['f1']:.2f}  (TP={cm['TP']} FP={cm['FP']} "
+        f"TN={cm['TN']} FN={cm['FN']})"
+    )
+    print(
+        f"  citation accuracy={cite:.0%} (target {GATE_CITATION_TARGET:.0%})  "
+        f"mean coverage={cov:.0%} (target {GATE_COVERAGE_TARGET:.0%})"
+    )
+    ok = cite >= GATE_CITATION_TARGET and cov >= GATE_COVERAGE_TARGET
+    print(
+        f"  GATE(evidence) {'OK' if ok else 'FAIL'} "
+        f"(citation + coverage targets; refusal precision/recall reported)"
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -339,6 +523,35 @@ def main() -> int:
         type=Path,
         default=settings.eval_dir / "last_eval.md",
     )
+    parser.add_argument(
+        "--gate",
+        action="store_true",
+        help="ALSO run the evidence-gate eval (ANSWER/REFUSE per question + "
+        "confusion matrix over the out-of-scope questions). Off by default so "
+        "the retrieval report stays byte-identical to committed baselines; "
+        "on writes a SEPARATE --gate-report.",
+    )
+    parser.add_argument(
+        "--gate-mode",
+        choices=["strict", "balanced", "permissive"],
+        default="balanced",
+    )
+    parser.add_argument(
+        "--gate-backend",
+        choices=["sparse", "dense", "hybrid", "reranked"],
+        default="hybrid",
+        help="Retrieval backend the gate scores over (default hybrid).",
+    )
+    parser.add_argument(
+        "--gate-report",
+        type=Path,
+        default=settings.eval_dir / "gate_eval.md",
+    )
+    parser.add_argument(
+        "--gate-lowconf-as-refuse",
+        action="store_true",
+        help="Count LOW_CONFIDENCE as a refusal in the confusion matrix.",
+    )
     args = parser.parse_args()
 
     backends = [b.strip() for b in args.backend.split(",") if b.strip()]
@@ -356,7 +569,8 @@ def main() -> int:
     # internally) requires the Chroma collection to exist and
     # chunks.vector_id to be populated. Bail early with a clear message if
     # the user runs evaluate.py before embed_chunks.py completes.
-    if {"dense", "hybrid", "reranked"} & set(backends):
+    dense_users = set(backends) | ({args.gate_backend} if args.gate else set())
+    if {"dense", "hybrid", "reranked"} & dense_users:
         engine_pre = create_engine(settings.db_url, future=True)
         with Session(engine_pre) as s:
             from src.models import Chunk
@@ -384,6 +598,15 @@ def main() -> int:
     with args.questions.open(encoding="utf-8") as f:
         questions = yaml.safe_load(f)
 
+    # Retrieval metrics run over ANSWERABLE questions only — out-of-scope
+    # questions carry no expected_section. The answerable set + order match
+    # the pre-OOS bank, so existing reports stay byte-identical. OOS questions
+    # are consumed only by the --gate pass below.
+    answerable = [
+        q for q in questions
+        if q.get("answerability", "answerable") == "answerable"
+    ]
+
     engine = create_engine(settings.db_url, future=True)
 
     # Report/gate label: the reranked backend embeds the model id so A/B
@@ -403,30 +626,14 @@ def main() -> int:
     with Session(engine) as session:
         subtree = _build_section_subtree(session, source_format=args.source_format)
 
-        for q in questions:
+        for q in answerable:
             print(f"[eval] {q['qid']}: {q['question']}")
             for backend in backends:
-                if backend == "sparse":
-                    hits = search_sparse(
-                        session, q["question"],
-                        top_k=k_retrieve, source_format=args.source_format,
-                    )
-                elif backend == "dense":
-                    hits = search_dense(
-                        session, q["question"],
-                        top_k=k_retrieve, source_format=args.source_format,
-                    )
-                elif backend == "hybrid":
-                    hits = search_hybrid(
-                        session, q["question"],
-                        top_k=k_retrieve, source_format=args.source_format,
-                    )
-                else:
-                    hits = search_reranked(
-                        session, q["question"],
-                        top_k=k_retrieve, reranker_model=args.reranker,
-                        source_format=args.source_format,
-                    )
+                hits = _retrieve(
+                    session, backend, q["question"],
+                    k=k_retrieve, source_format=args.source_format,
+                    reranker=args.reranker,
+                )
                 label = backend_labels[backend]
                 m = _evaluate_question(
                     question=q,
@@ -446,7 +653,7 @@ def main() -> int:
 
     report = _format_report(
         backend_metrics=backend_metrics,
-        questions=questions,
+        questions=answerable,
         top_k=args.top_k,
         source_format=args.source_format,
     )
@@ -481,6 +688,59 @@ def main() -> int:
     if gate_ok:
         print(f"\n  GATE OK  hit@5 >= {GATE_THRESHOLD:.0%} for all backends")
     print("  (hit@1 / MRR@10 reported, not gated — RRF/reranker targets)")
+
+    # Evidence gate (Step 5) — opt-in, separate report, never perturbs the
+    # retrieval numbers above. Runs over ALL questions (answerable + OOS) on a
+    # single backend, fresh retrieval so the metric path is untouched.
+    if args.gate:
+        gate_label = (
+            f"reranked:{args.reranker}"
+            if args.gate_backend == "reranked" else args.gate_backend
+        )
+        gate_results: list[GateQuestionResult] = []
+        with Session(engine) as gate_session:
+            for q in questions:  # answerable + out-of-scope
+                answerability = q.get("answerability", "answerable")
+                hits = _retrieve(
+                    gate_session, args.gate_backend, q["question"],
+                    k=k_retrieve, source_format=args.source_format,
+                    reranker=args.reranker,
+                )
+                decision = gate_for_hits(
+                    gate_session, q["question"], hits,
+                    backend=gate_label, mode=args.gate_mode,
+                )
+                if answerability == "answerable":
+                    qm = _evaluate_question(
+                        question=q, hits=hits, subtree=subtree,
+                        backend=gate_label, session=gate_session,
+                    )
+                    hit_correct, coverage = qm.hit_at_1, qm.keyword_coverage
+                else:
+                    hit_correct, coverage = False, None
+                gate_results.append(GateQuestionResult(
+                    qid=q["qid"],
+                    answerability=answerability,
+                    oos_kind=q.get("oos_kind"),
+                    outcome=decision.outcome.value,
+                    confidence=decision.confidence,
+                    reason=decision.reason,
+                    hit_correct=hit_correct,
+                    coverage=coverage,
+                    classification=classify_gate(
+                        answerability=answerability,
+                        outcome=decision.outcome.value,
+                        lowconf_as_refuse=args.gate_lowconf_as_refuse,
+                    ),
+                ))
+        gate_report = _format_gate_report(
+            results=gate_results, gate_label=gate_label,
+            mode=args.gate_mode, source_format=args.source_format,
+        )
+        args.gate_report.parent.mkdir(parents=True, exist_ok=True)
+        args.gate_report.write_text(gate_report, encoding="utf-8")
+        print(f"\n[eval] Gate report written to {args.gate_report}")
+        _print_gate_summary(gate_results, gate_label)
 
     return 0
 

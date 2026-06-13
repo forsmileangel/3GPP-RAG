@@ -27,6 +27,16 @@
 #                        an in-document reference. The evaluator ignores this
 #                        today; a future cross-ref-resolution eval will assert
 #                        the referenced section is surfaced too.
+#   answerability:       (optional, default "answerable") "answerable" |
+#                        "out_of_scope". out_of_scope entries SHOULD be refused
+#                        by the evidence gate (Step 5) and carry no
+#                        expected_section.
+#   oos_kind:            (out_of_scope only) "hard" (clearly outside 38.521-1)
+#                        | "scope_boundary" (a real 38.521-1 section not in the
+#                        indexed §6.2+6.3 scope).
+#   index_dependent:     (out_of_scope only) bool — true for scope_boundary
+#                        (answerable once that section is ingested), else false.
+#   oos_section:         (scope_boundary only) the section it would live in.
 #
 # Step 1 expansion (q11–q30), 4 categories x 5:
 #   q11–q15 numeric-exact lookups (top-1 quality probes)
@@ -325,3 +335,147 @@
   notes: "Test-purpose triplet — discriminator is power RELATIVE to a reference
     sub-frame, gap <= 20ms (complements q28's > 20ms: the two tests partition
     the gap space). Rewritten 2026-06-11 per Hank review (was bounded-by)"
+
+# ── Out-of-scope questions (q31–q42), added 2026-06-13 for the Step 5 evidence
+#    gate: the gate MUST refuse these. 8 hard (clearly outside 38.521-1) + 4
+#    scope-boundary (real 38.521-1 sections §6.4/§6.5 that are NOT in the
+#    indexed §6.2+6.3 scope — index_dependent: true). These carry no
+#    expected_section and are skipped by the retrieval scope-validation. Their
+#    expected_keywords are DESCRIPTIVE only — nothing consumes them; the gate
+#    never reads question metadata (it judges from the query + retrieved hits).
+- qid: q31
+  question: "What is the maximum output power for an LTE Band 7 UE?"
+  spec: "38.521-1"
+  expected_keywords: ["lte", "band 7", "e-utra"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: medium
+  notes: "Hard OOS — LTE/E-UTRA (TS 36.521), not NR; the 38.521-1 index cannot answer."
+
+- qid: q32
+  question: "What OFDM symbol duration and guard interval does 802.11ax (Wi-Fi 6) use?"
+  spec: "38.521-1"
+  expected_keywords: ["802.11ax", "wi-fi", "guard interval"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: easy
+  notes: "Hard OOS — IEEE 802.11, a different standards body entirely."
+
+- qid: q33
+  question: "What messages are exchanged during the 5G NAS registration procedure?"
+  spec: "38.521-1"
+  expected_keywords: ["registration request", "nas", "amf"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: medium
+  notes: "Hard OOS — NAS signalling (TS 24.501), not RF conformance."
+
+- qid: q34
+  question: "How is an Xn-based handover between two gNBs executed?"
+  spec: "38.521-1"
+  expected_keywords: ["xn", "handover", "gnb"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: medium
+  notes: "Hard OOS — RAN architecture (TS 38.300/38.423), not UE RF test."
+
+- qid: q35
+  question: "Which RRC messages establish an RRC connection?"
+  spec: "38.521-1"
+  expected_keywords: ["rrcsetuprequest", "rrc", "srb"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: medium
+  notes: "Hard OOS — RRC protocol (TS 38.331), not RF conformance."
+
+- qid: q36
+  question: "How does TCP congestion control adjust the window size on packet loss?"
+  spec: "38.521-1"
+  expected_keywords: ["tcp", "congestion window", "slow start"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: easy
+  notes: "Hard OOS — transport-layer networking, unrelated to 3GPP RF."
+
+- qid: q37
+  question: "What battery capacity in mAh does a typical 5G smartphone have?"
+  spec: "38.521-1"
+  expected_keywords: ["battery", "mah", "capacity"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: easy
+  notes: "Hard OOS — hardware product trivia, not in any 3GPP spec."
+
+- qid: q38
+  question: "What modulation index does Bluetooth Low Energy GFSK use?"
+  spec: "38.521-1"
+  expected_keywords: ["bluetooth", "gfsk", "modulation index"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: hard
+  index_dependent: false
+  difficulty: easy
+  notes: "Hard OOS — Bluetooth (Bluetooth SIG), not 3GPP NR."
+
+- qid: q39
+  question: "What is the EVM requirement for 256QAM on FR1?"
+  spec: "38.521-1"
+  expected_keywords: ["evm", "error vector magnitude", "256qam"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: scope_boundary
+  index_dependent: true
+  oos_section: "6.4"
+  difficulty: hard
+  notes: "Scope-boundary — EVM is §6.4 (transmit signal quality), real in
+    38.521-1 but NOT in the indexed §6.2+6.3; answerable once §6.4 is ingested."
+
+- qid: q40
+  question: "What is the carrier frequency error requirement for the NR UE transmitter?"
+  spec: "38.521-1"
+  expected_keywords: ["frequency error", "ppm", "carrier"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: scope_boundary
+  index_dependent: true
+  oos_section: "6.4"
+  difficulty: hard
+  notes: "Scope-boundary — frequency error is §6.4.1, outside the indexed §6.2+6.3."
+
+- qid: q41
+  question: "What is the adjacent channel leakage ratio (ACLR) limit for NR FR1?"
+  spec: "38.521-1"
+  expected_keywords: ["aclr", "adjacent channel leakage", "dbc"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: scope_boundary
+  index_dependent: true
+  oos_section: "6.5"
+  difficulty: hard
+  notes: "Scope-boundary — ACLR is §6.5 (output RF spectrum emissions), outside §6.2+6.3."
+
+- qid: q42
+  question: "What are the spurious emission limits for an NR FR1 UE transmitter?"
+  spec: "38.521-1"
+  expected_keywords: ["spurious emissions", "dbm", "frequency range"]
+  question_type: out_of_scope
+  answerability: out_of_scope
+  oos_kind: scope_boundary
+  index_dependent: true
+  oos_section: "6.5"
+  difficulty: hard
+  notes: "Scope-boundary — spurious emissions is §6.5, outside the indexed §6.2+6.3."
