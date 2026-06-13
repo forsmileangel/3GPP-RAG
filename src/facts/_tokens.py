@@ -78,6 +78,23 @@ def _looks_like_formula(s: str) -> bool:
     return any(h in low for h in _FORMULA_HINTS)
 
 
+_ALPHA_WORD_RE = re.compile(r"[A-Za-z]{2,}")
+_UNIT_LOWER = frozenset(u.lower() for u in _UNITS)
+
+
+def is_clean_value(cell: str) -> bool:
+    """True if `cell` is a bare measured value (sign / number / unit /
+    tolerance / footnote) — NOT prose. The v2 extraction filter: rejects the
+    NOTE / header / formula / sentence cells that flooded the v1 index (45k
+    facts). Requires a parseable number AND no non-unit alphabetic word
+    (>=2 letters). Examples kept: '-40', '± 2', '9.0 dB', '+2/-3', '31^6'.
+    Rejected: 'Modulation (NOTE 2)', 'Class 1 (dBm)', '-40+10log_10(BW/20)'."""
+    stripped = _strip_footnotes(cell)
+    if any(w.lower() not in _UNIT_LOWER for w in _ALPHA_WORD_RE.findall(stripped)):
+        return False
+    return parse_value(cell) is not None
+
+
 def extract_value_unit(cell: str, *, header_unit: str | None = None) -> ValueToken:
     """Tokenize one table cell into (verbatim, value_num, unit). The unit falls
     back to `header_unit` (the column's unit) when the cell carries none — 3GPP

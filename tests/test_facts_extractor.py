@@ -38,13 +38,12 @@ def _cv(text: str, *, sf: str = "tspec_md", table_id: str | None = "6.x-1") -> C
 def test_extract_min_power_value():
     facts = extract_facts_from_chunk(_cv(_MIN_PWR, table_id="6.3.1.3-1"))
     mins = [f for f in facts if f.fact_data["row_label"] == "Minimum output power"]
-    # q12's -40 is extractable as a real value...
+    # q12's -40 is extractable as a clean value...
     assert any(f.fact_data.get("value_num") == -40.0 for f in mins)
-    # ...but the 10 MHz cell is a formula in md, stored verbatim, NOT matchable.
-    assert any(
-        f.fact_data["value"].startswith("-40+10log") and "value_num" not in f.fact_data
-        for f in mins
-    )
+    # ...and v2 drops the formula cell entirely (clean-value filter), so every
+    # emitted fact carries a real value_num and none is a formula.
+    assert all(f.fact_data.get("value_num") is not None for f in facts)
+    assert not any("log" in str(f.fact_data["value"]) for f in facts)
     assert all(f.fact_type is FactType.NUMERIC for f in facts)
     assert all(f.confidence is Confidence.CONFIRMED for f in facts)
     assert all(f.extracted_by == "rule/table_v1" for f in facts)
@@ -70,8 +69,9 @@ def test_mis_sliced_yields_no_facts():
 def test_fact_to_text():
     fd = {
         "table_id": "6.3.1.3-1", "row_label": "Minimum output power",
-        "col_label": "", "value": "-40", "value_num": -40.0, "unit": "dBm",
+        "col_label": "5 MHz", "value": "-40", "value_num": -40.0, "unit": "dBm",
     }
     text = fact_to_text(fd)
-    assert "Minimum output power" in text
-    assert "-40" in text and "dBm" in text and "6.3.1.3-1" in text
+    assert "Minimum output power" in text and "5 MHz" in text and "dBm" in text
+    # v2: the raw value and table_id are NOT indexed (parameter-focused).
+    assert "-40" not in text and "6.3.1.3-1" not in text

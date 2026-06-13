@@ -27,7 +27,7 @@ from ._grid import (
     is_well_formed,
     split_rendered_grid,
 )
-from ._tokens import extract_value_unit, find_unit
+from ._tokens import extract_value_unit, find_unit, is_clean_value
 
 
 @dataclass(frozen=True)
@@ -54,10 +54,6 @@ class FactRecord:
     confidence: Confidence
 
 
-def _has_digit(s: str) -> bool:
-    return any(ch.isdigit() for ch in s)
-
-
 def extract_facts_from_chunk(chunk: ChunkView) -> list[FactRecord]:
     """Dispatch on source_format. md → grid; pdf → [] (see module docstring)."""
     if chunk.source_format == SOURCE_FORMAT_TSPEC_MD:
@@ -81,8 +77,8 @@ def _extract_grid(chunk: ChunkView) -> list[FactRecord]:
             continue
         for c in range(1, len(row)):
             cell = row[c].strip()
-            if not cell or not _has_digit(cell):
-                continue  # skip empty + purely-textual (label-like) cells
+            if not is_clean_value(cell):
+                continue  # v2: bare numeric values only (drop prose/NOTE/header/formula)
             clabel = col_label(rows, header_rows, c)
             tok = extract_value_unit(cell, header_unit=find_unit(clabel))
             fact_data: dict = {
@@ -109,10 +105,12 @@ def _extract_grid(chunk: ChunkView) -> list[FactRecord]:
 
 
 def fact_to_text(fact_data: dict) -> str:
-    """Flatten fact_data into one searchable string for facts_fts (M5). Keys
-    in a stable order; missing keys skipped."""
+    """Flatten fact_data into the searchable string for facts_fts. v2 indexes
+    the PARAMETER (row/col label + unit), NOT the raw value or table_id:
+    queries describe the parameter ('minimum output power'), not the answer
+    number, so indexing the value only added BM25 noise."""
     parts = [
         str(fact_data.get(k, ""))
-        for k in ("row_label", "col_label", "value", "unit", "table_id")
+        for k in ("row_label", "col_label", "unit")
     ]
     return " ".join(p for p in parts if p)

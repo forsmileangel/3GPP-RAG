@@ -5,6 +5,7 @@ from __future__ import annotations
 from src.facts._tokens import (
     extract_value_unit,
     find_unit,
+    is_clean_value,
     normalize_minus,
     parse_value,
 )
@@ -68,3 +69,18 @@ def test_extract_value_unit_formula_nulls_value():
 
 def test_normalize_minus():
     assert normalize_minus("−40") == "-40"
+
+
+def test_is_clean_value():
+    # kept: bare measured values (sign / number / unit / tolerance / footnote)
+    assert is_clean_value("-40") is True
+    assert is_clean_value("± 2") is True
+    assert is_clean_value("9.0 dB") is True        # dB is a unit, not prose
+    assert is_clean_value("+2/-3") is True
+    assert is_clean_value("31^6") is True          # footnote stripped
+    # rejected: prose / header / note / formula / no-number cells
+    assert is_clean_value("Modulation (NOTE 2)") is False
+    assert is_clean_value("Class 1 (dBm)") is False
+    assert is_clean_value("-40+10log_10 (BW /20)") is False
+    assert is_clean_value("(dBm)") is False        # no number
+    assert is_clean_value("") is False
