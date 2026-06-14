@@ -235,3 +235,57 @@ def test_generate_answer_low_confidence_still_generates(monkeypatch):
 def test_generate_answer_unknown_backend_raises():
     with pytest.raises(ValueError):
         answer_mod.generate_answer(None, "Q?", backend="bogus")
+
+
+# ----------------------------------------------------- seams (Step 8 refactor)
+
+def test_retrieve_and_gate_builds_context(monkeypatch):
+    hits = [
+        _FakeHit(1, "6.3.1", None, 0),
+        _FakeHit(2, "6.2.1", "6.2.1.5-1", 12),
+    ]
+    monkeypatch.setitem(
+        answer_mod._RETRIEVERS, "hybrid",
+        lambda s, q, *, top_k, source_format: hits,
+    )
+    monkeypatch.setattr(
+        answer_mod, "gate_for_hits", lambda *a, **k: _gate(GateOutcome.ANSWER),
+    )
+    ctx = answer_mod.retrieve_and_gate(None, "Q?", backend="hybrid")
+    assert ctx.query == "Q?" and ctx.backend == "hybrid"
+    assert ctx.decision.outcome is GateOutcome.ANSWER
+    assert ctx.hits == hits
+    assert ctx.citations == [
+        {"n": 1, "section": "6.3.1", "page": None, "table_id": None, "chunk_id": 1},
+        {"n": 2, "section": "6.2.1", "page": 12, "table_id": "6.2.1.5-1", "chunk_id": 2},
+    ]
+
+
+def test_build_grounded_answer_generates_from_context(monkeypatch):
+    hits = [_FakeHit(1, "6.3.1", None, 0)]
+    monkeypatch.setattr(
+        answer_mod, "fetch_full_texts", lambda s, ids: {1: "the full chunk text"},
+    )
+    ctx = answer_mod.AnswerContext(
+        query="Q?", backend="hybrid", hits=hits,
+        decision=_gate(GateOutcome.ANSWER),
+        citations=[{"n": 1, "section": "6.3.1", "page": None,
+                    "table_id": None, "chunk_id": 1}],
+    )
+    prov = _RecordingProvider()
+    res = answer_mod.build_grounded_answer(None, ctx, provider=prov)
+    assert res.refused is False
+    assert res.text == "GENERATED ANSWER [1]"
+    assert res.citations == ctx.citations
+    assert res.backend == "hybrid" and res.gate_outcome == "answer"
+    assert "the full chunk text" in prov.calls[0]["user"]
+
+
+def test_build_grounded_answer_rejects_refuse_context():
+    # The firewall: generating from a REFUSE context must be impossible.
+    ctx = answer_mod.AnswerContext(
+        query="Q?", backend="hybrid", hits=[],
+        decision=_gate(GateOutcome.REFUSE), citations=[],
+    )
+    with pytest.raises(ValueError):
+        answer_mod.build_grounded_answer(None, ctx, provider=_ExplodingProvider())

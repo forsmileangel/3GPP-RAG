@@ -7,7 +7,13 @@ default — Tier 1 benchmarks across LLMs, see CLAUDE.md §5). The evidence gate
 LLM call, so a REFUSE never reaches the provider.
 """
 
-from .answer import AnswerResult, generate_answer
+from .answer import (
+    AnswerContext,
+    AnswerResult,
+    build_grounded_answer,
+    generate_answer,
+    retrieve_and_gate,
+)
 from .prompt import (
     REFUSAL_TEXT,
     Excerpt,
@@ -22,14 +28,17 @@ from .providers import (
 )
 
 __all__ = [
+    "AnswerContext",
     "AnswerResult",
     "AnthropicProvider",
     "Excerpt",
     "LLMProvider",
     "REFUSAL_TEXT",
     "accepts_temperature",
+    "build_grounded_answer",
     "build_grounded_prompt",
     "format_excerpt",
     "generate_answer",
     "get_provider",
+    "retrieve_and_gate",
 ]
