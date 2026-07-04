@@ -2,7 +2,7 @@
 
 3GPP 規範資料保存與查詢系統 — 本地優先、漸進式建庫、可分級分享。
 
-> **Status**: Phase 0 (spike + reality check) — 尚未進入正式開發
+> **Status**(2026-06-14): Phase A Steps 0–8 完成 — 30 題 benchmark、RRF hybrid、jina/bge reranker、TSpec-md ingestion、evidence gate(拒答)、fact layer(scaffold)、LLM generation、Streamlit 查詢 MVP。現行 roadmap:全量建庫 → MCP server。
 
 ## 系統定位
 
@@ -11,34 +11,51 @@
 ## 兩個前端 / 同一份後端
 
 - **Streamlit Web UI**(主):瀏覽器即可使用,可給同事 / 客戶 / 未來公開化
-- **MCP Server**(後置可選):讓 Claude Code 內問 3GPP 問題時自動接 RAG
+- **MCP Server**:**parked(2026-07-03,不建)** — 觸發自評 <5(隨手查 spec 的場景會用 NotebookLM,不花 Claude token)。日後要撿:重用 `src/generation` 的 `retrieve_and_gate` / `build_grounded_answer`,照 `../rag-3gpp-generic-anchor.md` :525-556 的 spec 建
 
 兩者共用同一個介面中性的 RAG 後端(`src/retrieval/`、`src/generation/`)。
 
 ## 規劃文件
 
-- 原始架構規劃:`~/.claude/plans/3gpp-splendid-wand.md`
-- 介面策略 + 正確性驗證的補充規劃:`~/.claude/plans/rag-3gpp-generic-anchor.md`
+- 原始架構規劃:`../3gpp-splendid-wand.md`(工作區 root)
+- 介面策略 + 正確性驗證的補充規劃:`../rag-3gpp-generic-anchor.md` — **「補充內容 4」(2026-05-16)為現行 source of truth**
 
-## 目錄結構(規劃中,實際隨開發演進)
+## 快速使用(已建庫的機器)
+
+```bash
+# 瀏覽器查詢 UI:gate 徽章 + 來源面板不需 API key;勾「生成」才呼叫 LLM
+.venv/Scripts/streamlit.exe run app/streamlit_app.py
+
+# CLI 單題問答(生成需 .env 設 ANTHROPIC_API_KEY)
+.venv/Scripts/python.exe scripts/answer.py --query "..." --source-format tspec_md
+
+# 30 題 retrieval benchmark(sparse/dense/hybrid;--backend reranked 掛 reranker)
+.venv/Scripts/python.exe scripts/evaluate.py --source-format tspec_md
+
+# 每日備份:data/db/ → snapshots/YYYY-MM-DD.tar.gz
+.venv/Scripts/python.exe scripts/backup.py
+```
+
+## 目錄結構(現況)
 
 ```
 3gpp-rag/
 ├── data/
-│   ├── raw/          # 原始 PDF / docx (gitignored)
-│   ├── processed/    # 解析後 JSON (gitignored)
+│   ├── raw/          # 原始 PDF (gitignored)
 │   ├── db/           # SQLite + Chroma (gitignored)
-│   └── eval/         # test Q&A bank + tester feedback
+│   └── eval/         # test bank (30 answerable + 12 OOS) + eval baselines
 ├── src/
-│   ├── ingestion/
-│   ├── retrieval/
-│   ├── generation/
-│   └── ...
-├── app/              # Streamlit
-├── spike/            # Phase 0 拋棄式腳本
-├── scripts/          # evaluate.py, backup.sh 等
-├── pyproject.toml
-└── config.yaml
+│   ├── ingestion/    # PDF (PyMuPDF) + TSpec-LLM markdown 雙 adapter
+│   ├── retrieval/    # sparse / dense / hybrid / rerank / evidence gate
+│   ├── facts/        # rule-based fact 抽取(scaffold,parked)
+│   ├── generation/   # LLM provider 抽象 + grounded answer
+│   ├── compare/      # (stub) 世代對照
+│   └── notes/        # (stub) 個人筆記
+├── app/              # Streamlit 查詢 MVP
+├── spike/            # 拋棄式腳本(不進主線)
+├── scripts/          # ingest/embed/evaluate/answer/backup CLI
+├── snapshots/        # backup.py 輸出 (gitignored)
+└── pyproject.toml    # 設定集中在 src/config.py + .env(無 config.yaml)
 ```
 
 ## Setup on a new machine
@@ -76,9 +93,13 @@ mkdir -p data/raw
 # 7. Initialize the SQLite metadata DB (regenerates instantly)
 uv run python scripts/init_db.py
 
-# 8. Re-run Phase 0 spike to repopulate Chroma vector cache
-#    (BGE-M3 ~2.3 GB downloads on first run; needs HF_TOKEN)
-uv run python spike/quick_rag.py
+# 8. Rebuild the index (BGE-M3 ~2.3 GB downloads on first run; needs HF_TOKEN)
+#    PDF corpus:
+uv run python scripts/ingest_toc.py && uv run python scripts/chunk_sections.py
+#    TSpec markdown corpus (per spec, e.g. §6.2+6.3):
+uv run python scripts/ingest_md.py --spec 38.521-1 --sections "6.2,6.3"
+#    then embed whatever is un-embedded:
+uv run python scripts/embed_chunks.py
 ```
 
 ### Scenario B: new machine has limited / no internet
@@ -91,8 +112,8 @@ Bring the whole `3gpp-rag/` folder via USB or cloud sync. Include:
 | `.env` | `.env` | tiny | has `HF_TOKEN` (gitignored) |
 | Source PDFs | `data/raw/*.pdf` | MB–GB | gitignored, copyrighted |
 | HuggingFace model cache | `~/.cache/huggingface/` (NOT in project!) | ~4 GB | so BGE-M3 doesn't re-download |
-| Chroma vector DB | `data/db/chroma_spike/` | hundreds of MB | so embeddings don't re-run |
-| Spike outputs | `spike/extracted.json`, `spike/last_run.json` | small | optional, just runtime working files |
+| Chroma vector DB | `data/db/chroma/` | tens–hundreds of MB | so embeddings don't re-run |
+| Snapshots(或直接帶 `snapshots/*.tar.gz`) | `snapshots/` | ~15 MB+ | `scripts/backup.py` 的 data/db 打包,可替代逐檔複製 |
 
 What you can skip (regeneratable on the new machine):
 - `.venv/` — `uv sync` rebuilds from `uv.lock`
@@ -131,12 +152,12 @@ git fetch && git checkout home-work
 
 1. **後端介面中性**:`src/retrieval/`、`src/generation/` 不依賴任何前端(Streamlit / MCP / CLI)
 2. **正確性是 first-class**:`data/eval/test_questions.yaml` 跟程式碼同等重要
-3. **絕不寫死絕對路徑**:所有路徑從 `config.yaml` 或環境變數讀
+3. **絕不寫死絕對路徑**:所有路徑從環境變數(`.env`)讀,集中在 `src/config.py`
 4. **拋棄式 vs 正式碼分清楚**:`spike/` 不進主 codebase
 
 ## 跨機器移植
 
-詳見 `~/.claude/plans/3gpp-splendid-wand.md` 的「跨機器移植 / 公司擋權限的備案策略」段落。
+詳見 `../3gpp-splendid-wand.md`(工作區 root)的「跨機器移植 / 公司擋權限的備案策略」段落;每日備份用 `scripts/backup.py`。
 
 ## License
 
