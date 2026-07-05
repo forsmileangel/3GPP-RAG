@@ -1,317 +1,320 @@
 # Retrieval Benchmark
 
-_scored at k=10 (hit@1/3/5, MRR@10); detail rows show top 5; backends = sparse, dense, hybrid, reranked:bge_
+_scored at k=10 (hit@1/3/5, MRR@10); detail rows show top 5; source_format = mixed; backends = sparse, dense, hybrid, reranked:bge_
 
 ## Aggregate
 
 | backend | hit@1 | hit@3 | hit@5 | MRR@10 | mean coverage |
 |---|---|---|---|---|---|
-| sparse | 22/30 | 29/30 | 29/30 | 0.85 | 89% |
-| dense | 21/30 | 27/30 | 28/30 | 0.80 | 84% |
-| hybrid | 22/30 | 29/30 | 30/30 | 0.85 | 89% |
-| reranked:bge | 22/30 | 28/30 | 29/30 | 0.84 | 93% |
+| sparse | 14/30 | 22/30 | 27/30 | 0.63 | 88% |
+| dense | 18/30 | 23/30 | 24/30 | 0.69 | 82% |
+| hybrid | 20/30 | 27/30 | 29/30 | 0.78 | 88% |
+| reranked:bge | 16/30 | 22/30 | 25/30 | 0.66 | 87% |
 
 ## By question type
 
 | backend | type | n | hit@1 | hit@3 | hit@5 | MRR@10 | coverage |
 |---|---|---|---|---|---|---|---|
-| sparse | numeric | 9 | 89% | 100% | 100% | 0.94 | 100% |
-| sparse | procedure | 3 | 67% | 100% | 100% | 0.83 | 72% |
-| sparse | section_summary | 11 | 73% | 91% | 91% | 0.83 | 86% |
-| sparse | table_lookup | 7 | 57% | 100% | 100% | 0.79 | 86% |
-| dense | numeric | 9 | 56% | 89% | 89% | 0.68 | 89% |
-| dense | procedure | 3 | 67% | 67% | 67% | 0.70 | 44% |
-| dense | section_summary | 11 | 64% | 91% | 100% | 0.80 | 97% |
-| dense | table_lookup | 7 | 100% | 100% | 100% | 1.00 | 76% |
-| hybrid | numeric | 9 | 89% | 100% | 100% | 0.94 | 94% |
-| hybrid | procedure | 3 | 67% | 67% | 100% | 0.75 | 61% |
-| hybrid | section_summary | 11 | 64% | 100% | 100% | 0.80 | 94% |
-| hybrid | table_lookup | 7 | 71% | 100% | 100% | 0.86 | 86% |
-| reranked:bge | numeric | 9 | 67% | 100% | 100% | 0.81 | 94% |
-| reranked:bge | procedure | 3 | 100% | 100% | 100% | 1.00 | 61% |
-| reranked:bge | section_summary | 11 | 64% | 91% | 91% | 0.79 | 97% |
-| reranked:bge | table_lookup | 7 | 86% | 86% | 100% | 0.89 | 100% |
+| sparse | numeric | 9 | 44% | 89% | 100% | 0.67 | 100% |
+| sparse | procedure | 3 | 0% | 67% | 100% | 0.29 | 61% |
+| sparse | section_summary | 11 | 45% | 64% | 82% | 0.60 | 88% |
+| sparse | table_lookup | 7 | 71% | 71% | 86% | 0.75 | 86% |
+| dense | numeric | 9 | 56% | 67% | 78% | 0.65 | 89% |
+| dense | procedure | 3 | 0% | 67% | 67% | 0.28 | 44% |
+| dense | section_summary | 11 | 73% | 82% | 82% | 0.79 | 88% |
+| dense | table_lookup | 7 | 71% | 86% | 86% | 0.79 | 79% |
+| hybrid | numeric | 9 | 89% | 100% | 100% | 0.93 | 94% |
+| hybrid | procedure | 3 | 33% | 67% | 100% | 0.53 | 61% |
+| hybrid | section_summary | 11 | 55% | 91% | 91% | 0.71 | 92% |
+| hybrid | table_lookup | 7 | 71% | 86% | 100% | 0.82 | 86% |
+| reranked:bge | numeric | 9 | 56% | 78% | 89% | 0.68 | 91% |
+| reranked:bge | procedure | 3 | 0% | 67% | 67% | 0.33 | 72% |
+| reranked:bge | section_summary | 11 | 55% | 73% | 82% | 0.67 | 80% |
+| reranked:bge | table_lookup | 7 | 71% | 71% | 86% | 0.74 | 100% |
 
 ## q01 — What is the maximum output power tolerance for FR1 PC3 UE?
 _expected_section = §6.2.1 · type = numeric · difficulty = easy_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=-12.033
-    #2 sec=6.2.1 page=97 table=6.2.1.5-2 score=-10.144
-    #3 sec=6.2.1 page=92 table=- score=-9.732
-    #4 sec=6.2.3 page=222 table=- score=-9.621
-    #5 sec=6.2.1 page=95 table=- score=-9.556
+**sparse** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 3/3 (100%) · top-1 = §6.2A.2.1.5 p0 table=-
+    #1 sec=6.2A.2.1.5 page=0 table=- score=-19.083
+    #2 sec=6.2A.2.1.5 page=0 table=- score=-19.031
+    #3 sec=6.2A.3.1.5 page=0 table=- score=-17.481
+    #4 sec=6.2A.2.1.5 page=0 table=- score=-13.839
+    #5 sec=6.2.1 page=93 table=6.2.1.3-1 score=-13.600
 
-**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 3/3 (100%) · top-1 = §6.2.4 p273 table=-
+**dense** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 3/3 (100%) · top-1 = §6.2.4 p273 table=-
     #1 sec=6.2.4 page=273 table=- score=0.332
     #2 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.334
-    #3 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.347
-    #4 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.353
-    #5 sec=6.2.1 page=96 table=6.2.1.5-1 score=0.364
+    #3 sec=6.2A.2.1.5 page=0 table=- score=0.340
+    #4 sec=6.2A.3.1.5 page=0 table=- score=0.342
+    #5 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.347
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.032
-    #2 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.032
-    #3 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.031
-    #4 sec=6.2.4 page=273 table=- score=0.031
-    #5 sec=6.2.1 page=96 table=6.2.1.5-1 score=0.029
+**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 3/3 (100%) · top-1 = §6.2A.2.1.5 p0 table=-
+    #1 sec=6.2A.2.1.5 page=0 table=- score=0.032
+    #2 sec=6.2A.3.1.5 page=0 table=- score=0.031
+    #3 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.031
+    #4 sec=6.2A.2.1.5 page=0 table=- score=0.031
+    #5 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.026
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
     #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.972
-    #2 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.857
-    #3 sec=6.2.4 page=273 table=- score=0.819
-    #4 sec=6.2.1 page=97 table=6.2.1.5-3 score=0.760
-    #5 sec=6.2.3 page=222 table=6.2.3.5-0 score=0.694
+    #2 sec=6.2A.2.1.5 page=0 table=- score=0.910
+    #3 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.857
+    #4 sec=6.2.4 page=273 table=- score=0.819
+    #5 sec=6.2D.2.3 page=0 table=- score=0.790
 
 ## q02 — How is the test procedure defined for UE maximum output power across power classes?
 _expected_section = §6.2.1 · type = procedure · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.1 p92 table=-
-  missing keywords: ['pc3']
-    #1 sec=6.2.1 page=92 table=- score=-15.284
-    #2 sec=6.2.3 page=123 table=- score=-9.528
-    #3 sec=6.3.1 page=541 table=- score=-9.517
-    #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=-9.502
-    #5 sec=6.2.2 page=98 table=- score=-9.396
-
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/3 (33%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
+**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 1/3 (33%) · top-1 = §6.2A.1.0.4 p0 table=-
   missing keywords: ['test procedure', 'pc3']
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.294
-    #2 sec=6.2.1 page=92 table=- score=0.314
-    #3 sec=6.2.4 page=273 table=- score=0.316
-    #4 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.319
-    #5 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.331
+    #1 sec=6.2A.1.0.4 page=0 table=- score=-17.575
+    #2 sec=6.2A.1.0.3 page=0 table=- score=-16.882
+    #3 sec=6.2.1 page=92 table=- score=-16.397
+    #4 sec=6.2.1.3 page=0 table=- score=-16.390
+    #5 sec=6.2A.1.0.5 page=0 table=- score=-16.293
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/3 (33%) · top-1 = §6.2.1 p92 table=-
+**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/3 (33%) · top-1 = §6.2G.1.3 p0 table=-
   missing keywords: ['test procedure', 'pc3']
-    #1 sec=6.2.1 page=92 table=- score=0.033
-    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.032
-    #3 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.030
-    #4 sec=6.2.2 page=98 table=- score=0.029
-    #5 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.029
+    #1 sec=6.2G.1.3 page=0 table=- score=0.268
+    #2 sec=6.2.1.3 page=0 table=- score=0.292
+    #3 sec=6.2D.2.5 page=0 table=- score=0.293
+    #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.294
+    #5 sec=6.2G.1.5 page=0 table=- score=0.304
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/3 (33%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/3 (33%) · top-1 = §6.2.1.3 p0 table=-
   missing keywords: ['test procedure', 'pc3']
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.966
-    #2 sec=6.2.4 page=273 table=- score=0.939
-    #3 sec=6.2.2 page=121 table=6.2.2.5-9 score=0.939
-    #4 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.923
-    #5 sec=6.2.1 page=92 table=- score=0.914
+    #1 sec=6.2.1.3 page=0 table=- score=0.032
+    #2 sec=6.2.1 page=92 table=- score=0.031
+    #3 sec=6.2G.1.3 page=0 table=- score=0.028
+    #4 sec=6.2G.2.3 page=0 table=- score=0.028
+    #5 sec=6.2G.1.5 page=0 table=- score=0.027
+
+**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/3 (67%) · top-1 = §6.2G.2.3 p0 table=-
+  missing keywords: ['test procedure']
+    #1 sec=6.2G.2.3 page=0 table=- score=0.971
+    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.966
+    #3 sec=6.2G.1.3 page=0 table=- score=0.957
+    #4 sec=6.2D.2.3 page=0 table=- score=0.941
+    #5 sec=6.2A.1.0.3 page=0 table=- score=0.941
 
 ## q03 — What are the test conditions and channel bandwidth for inner / outer maximum output power?
 _expected_section = §6.2.1 · type = table_lookup · difficulty = medium_
 
-**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2.2 p99 table=6.2.2.3-5
-    #1 sec=6.2.2 page=99 table=6.2.2.3-5 score=-17.068
-    #2 sec=6.2.1 page=94 table=6.2.1.4.1-1 score=-14.296
-    #3 sec=6.3.1 page=541 table=- score=-12.264
-    #4 sec=6.2.3 page=123 table=- score=-12.097
-    #5 sec=6.2.3 page=135 table=6.2.3.3.8-1 score=-11.369
+**sparse** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 3/3 (100%) · top-1 = §6.2E.2.0.2 p0 table=-
+    #1 sec=6.2E.2.0.2 page=0 table=- score=-18.471
+    #2 sec=6.2.2 page=99 table=6.2.2.3-5 score=-16.742
+    #3 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-2c score=-15.488
+    #4 sec=6.2A.2.1.4.1 page=0 table=6.2A.2.1.4.1-2b score=-15.366
+    #5 sec=6.2A.2.1.4.1 page=0 table=6.2A.2.1.4.1-2a score=-15.189
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/3 (33%) · top-1 = §6.2.1 p97 table=6.2.1.5-2
-  missing keywords: ['inner', 'outer']
-    #1 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.332
-    #2 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=0.341
-    #3 sec=6.2.4 page=273 table=- score=0.341
-    #4 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.343
-    #5 sec=6.2.1 page=97 table=6.2.1.5-3 score=0.345
+**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2A.2.1.4.1 p0 table=6.2A.2.1.4.1-3a
+    #1 sec=6.2A.2.1.4.1 page=0 table=6.2A.2.1.4.1-3a score=0.299
+    #2 sec=6.2.1.4.1 page=0 table=6.2.1.4.1-1 score=0.312
+    #3 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-3 score=0.315
+    #4 sec=6.2G.2.4.1 page=0 table=6.2G.2.4.1-3 score=0.316
+    #5 sec=6.2C.1.5 page=0 table=6.2C.1.5-1 score=0.319
 
-**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2.2 p99 table=6.2.2.3-5
-    #1 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.031
-    #2 sec=6.2.1 page=94 table=6.2.1.4.1-1 score=0.030
-    #3 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.029
-    #4 sec=6.3.3.2 page=546 table=6.3.3.2.4.1-1 score=0.028
-    #5 sec=6.2.1 page=92 table=- score=0.028
+**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2.2.4.1 p0 table=6.2.2.4.1-2c
+    #1 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-2c score=0.031
+    #2 sec=6.2.1.4.1 page=0 table=6.2.1.4.1-1 score=0.030
+    #3 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-3 score=0.029
+    #4 sec=6.2G.2.4.1 page=0 table=6.2G.2.4.1-3 score=0.029
+    #5 sec=6.2G.2.4.1 page=0 table=6.2G.2.4.1-2 score=0.028
 
-**reranked:bge** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 3/3 (100%) · top-1 = §6.2.2 p101 table=6.2.2.4.1-1
-    #1 sec=6.2.2 page=101 table=6.2.2.4.1-1 score=0.848
-    #2 sec=6.2.2 page=102 table=6.2.2.4.1-2 score=0.811
-    #3 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.807
-    #4 sec=6.2.2 page=104 table=6.2.2.4.1-3 score=0.790
-    #5 sec=6.2.1 page=94 table=6.2.1.4.1-1 score=0.751
+**reranked:bge** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 3/3 (100%) · top-1 = §6.2.2.4.1 p0 table=6.2.2.4.1-2c
+    #1 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-2c score=0.894
+    #2 sec=6.2G.2.4.1 page=0 table=6.2G.2.4.1-3 score=0.859
+    #3 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-3 score=0.855
+    #4 sec=6.2.2.4.1 page=0 table=6.2.2.4.1-1 score=0.854
+    #5 sec=6.2G.2.4.1 page=0 table=6.2G.2.4.1-2a score=0.854
 
 ## q04 — Define UE output power dynamics — minimum output power requirement.
 _expected_section = §6.3.1 · type = numeric · difficulty = easy_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/1 (100%) · top-1 = §6.3.1 p541 table=-
-    #1 sec=6.3.1 page=541 table=- score=-22.816
-    #2 sec=6.2.1 page=92 table=- score=-18.922
-    #3 sec=6.3.4.1 page=567 table=- score=-14.262
-    #4 sec=6.3.4.2 page=567 table=- score=-14.262
-    #5 sec=6.3.4.4 page=587 table=- score=-13.331
+    #1 sec=6.3.1 page=541 table=- score=-25.551
+    #2 sec=6.2.1 page=92 table=- score=-20.074
+    #3 sec=6.3B page=0 table=- score=-19.065
+    #4 sec=6.3.1.3 page=0 table=- score=-17.914
+    #5 sec=6.3F.1.3 page=0 table=- score=-17.849
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/1 (100%) · top-1 = §6.3.1 p541 table=-
-    #1 sec=6.3.1 page=541 table=- score=0.252
-    #2 sec=6.3.4.3 page=570 table=- score=0.351
-    #3 sec=6.3.4.4 page=587 table=- score=0.356
-    #4 sec=6.3.4.4 page=590 table=- score=0.363
-    #5 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.376
+**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/1 (100%) · top-1 = §6.3F.1.3 p0 table=-
+    #1 sec=6.3F.1.3 page=0 table=- score=0.231
+    #2 sec=6.3.1.3 page=0 table=- score=0.235
+    #3 sec=6.3.1 page=541 table=- score=0.252
+    #4 sec=6.3G.1.3 page=0 table=- score=0.257
+    #5 sec=6.3D.1.3 page=0 table=- score=0.295
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/1 (100%) · top-1 = §6.3.1 p541 table=-
-    #1 sec=6.3.1 page=541 table=- score=0.033
-    #2 sec=6.3.4.3 page=570 table=- score=0.031
-    #3 sec=6.3.4.4 page=587 table=- score=0.031
-    #4 sec=6.3.4.1 page=567 table=- score=0.031
-    #5 sec=6.2.1 page=92 table=- score=0.031
+    #1 sec=6.3.1 page=541 table=- score=0.032
+    #2 sec=6.3F.1.3 page=0 table=- score=0.032
+    #3 sec=6.3.1.3 page=0 table=- score=0.032
+    #4 sec=6.3D.1.3 page=0 table=- score=0.030
+    #5 sec=6.3G.1.3 page=0 table=- score=0.030
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/1 (100%) · top-1 = §6.3.1 p541 table=-
     #1 sec=6.3.1 page=541 table=- score=0.992
-    #2 sec=6.3.4.1 page=567 table=- score=0.861
-    #3 sec=6.3.4.2 page=567 table=- score=0.861
-    #4 sec=6.3.4.4 page=587 table=- score=0.821
-    #5 sec=6.3.4.3 page=570 table=- score=0.678
+    #2 sec=6.3.1.3 page=0 table=- score=0.990
+    #3 sec=6.3F.1.3 page=0 table=- score=0.989
+    #4 sec=6.3D.1.3 page=0 table=- score=0.988
+    #5 sec=6.3G.1.3 page=0 table=- score=0.987
 
 ## q05 — What is the transmit OFF power requirement for NR FR1 UE?
 _expected_section = §6.3.2 · type = numeric · difficulty = easy_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=-14.803
-    #2 sec=6.3.3.1 page=545 table=- score=-13.521
-    #3 sec=6.3.3.2 page=545 table=- score=-13.134
-    #4 sec=6.3.3.6 page=557 table=- score=-13.111
-    #5 sec=6.3.2 page=544 table=- score=-11.536
+**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.3.2.3 p0 table=-
+    #1 sec=6.3.3.2.3 page=0 table=- score=-18.838
+    #2 sec=6.3.2 page=544 table=- score=-16.186
+    #3 sec=6.3A.2.0 page=0 table=- score=-15.984
+    #4 sec=6.3.3.6 page=557 table=- score=-15.850
+    #5 sec=6.3.2.3 page=0 table=- score=-15.612
 
-**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 2/2 (100%) · top-1 = §6.2.3 p123 table=-
-    #1 sec=6.2.3 page=123 table=- score=0.367
-    #2 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.367
-    #3 sec=6.3.2 page=544 table=- score=0.374
-    #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.378
-    #5 sec=6.3.4.3 page=570 table=- score=0.383
+**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 2/2 (100%) · top-1 = §6.3E.2.0.1 p0 table=-
+    #1 sec=6.3E.2.0.1 page=0 table=- score=0.312
+    #2 sec=6.5.3.2.3 page=0 table=6.5.3.2.3-1 score=0.348
+    #3 sec=6.5.3.2.3 page=0 table=6.5.3.2.3-2 score=0.356
+    #4 sec=6.5.3.3.3.10 page=0 table=- score=0.356
+    #5 sec=6.2.1.5 page=0 table=6.2.1.5-2a score=0.359
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=0.032
-    #2 sec=6.3.3.2 page=546 table=- score=0.029
-    #3 sec=6.3.3.2 page=546 table=6.3.3.2.4.1-1 score=0.027
-    #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.027
-    #5 sec=6.2.2 page=98 table=- score=0.026
+    #1 sec=6.3.2 page=544 table=- score=0.029
+    #2 sec=6.3E.2.0.1 page=0 table=- score=0.028
+    #3 sec=6.3G.2.3 page=0 table=- score=0.027
+    #4 sec=6.3.3.2.3 page=0 table=- score=0.016
+    #5 sec=6.5.3.2.3 page=0 table=6.5.3.2.3-1 score=0.016
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=0.888
-    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.844
-    #3 sec=6.3.3.2 page=546 table=6.3.3.2.4.1-1 score=0.836
-    #4 sec=6.3.3.6 page=557 table=- score=0.828
-    #5 sec=6.3.3.2 page=545 table=- score=0.727
+**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 2/2 (100%) · top-1 = §6.3G.2.3 p0 table=-
+    #1 sec=6.3G.2.3 page=0 table=- score=0.974
+    #2 sec=6.3A.2.0 page=0 table=- score=0.941
+    #3 sec=6.3.2.3 page=0 table=- score=0.941
+    #4 sec=6.3F.2.3 page=0 table=- score=0.941
+    #5 sec=6.3.2 page=544 table=- score=0.888
 
 ## q06 — What are the absolute and relative power tolerance requirements?
 _expected_section = §6.3.4 · type = section_summary · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.3 p576 table=-
-    #1 sec=6.3.4.3 page=576 table=- score=-11.708
-    #2 sec=6.3.4.3 page=570 table=- score=-11.376
-    #3 sec=6.3.4.1 page=567 table=- score=-10.699
-    #4 sec=6.3.4.2 page=567 table=- score=-10.699
-    #5 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=-8.972
+**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/2 (50%) · top-1 = §3.2 p0 table=-
+  missing keywords: ['absolute power tolerance']
+    #1 sec=3.2 page=0 table=- score=-14.597
+    #2 sec=6.3.4.3.5 page=0 table=- score=-14.308
+    #3 sec=6.3D.4.2.5 page=0 table=- score=-14.266
+    #4 sec=6.3G.4.2.5 page=0 table=- score=-14.094
+    #5 sec=6.3C.4.2.5 page=0 table=- score=-14.083
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=6.3.4.2.3-1
-    #1 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.307
-    #2 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=0.307
-    #3 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.333
-    #4 sec=6.3.4.1 page=567 table=- score=0.341
-    #5 sec=6.3.4.2 page=567 table=- score=0.341
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.2.3 p0 table=-
+    #1 sec=6.3.4.2.3 page=0 table=- score=0.282
+    #2 sec=6.3A.4.1.0 page=0 table=- score=0.305
+    #3 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.307
+    #4 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=0.307
+    #5 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.333
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=6.3.4.2.3-1
-    #1 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.032
-    #2 sec=6.3.4.1 page=567 table=- score=0.031
-    #3 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=0.031
-    #4 sec=6.3.4.2 page=567 table=- score=0.031
-    #5 sec=6.3.4.3 page=570 table=- score=0.031
+**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/2 (50%) · top-1 = §6.3A.4.1.0 p0 table=-
+  missing keywords: ['relative power tolerance']
+    #1 sec=6.3A.4.1.0 page=0 table=- score=0.028
+    #2 sec=6.3.4.2.3 page=0 table=- score=0.028
+    #3 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.028
+    #4 sec=6.3.4.1 page=567 table=- score=0.027
+    #5 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=0.027
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.3 p570 table=6.3.4.3.3-1
-    #1 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.825
-    #2 sec=6.3.4.1 page=567 table=- score=0.790
-    #3 sec=6.3.4.2 page=567 table=- score=0.790
-    #4 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.756
-    #5 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=0.756
+**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3A.4.1.0 p0 table=-
+    #1 sec=6.3A.4.1.0 page=0 table=- score=0.939
+    #2 sec=6.3.4.2.3 page=0 table=- score=0.909
+    #3 sec=6.3G.4.3.3 page=0 table=- score=0.839
+    #4 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.825
+    #5 sec=6.3.4.3.5 page=0 table=- score=0.800
 
 ## q07 — What is the configured transmitted power for UE in NR?
 _expected_section = §6.2.4 · type = section_summary · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/1 (100%) · top-1 = §6.2.4 p279 table=6.2.4.5-2
-    #1 sec=6.2.4 page=279 table=6.2.4.5-2 score=-13.080
-    #2 sec=6.2.4 page=273 table=- score=-12.524
-    #3 sec=6.2.4 page=274 table=- score=-12.465
-    #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=-12.283
-    #5 sec=6.3.1 page=541 table=6.2I.4.5-0 score=-11.728
+**sparse** — hit@1=N hit@3=N hit@5=N RR@10=0.12 · coverage = 1/1 (100%) · top-1 = §6.2A.1.0.3 p0 table=-
+    #1 sec=6.2A.1.0.3 page=0 table=- score=-12.951
+    #2 sec=6.2A.4.1.5 page=0 table=- score=-12.503
+    #3 sec=6.2.1.3 page=0 table=- score=-12.064
+    #4 sec=6.2G.1.3 page=0 table=- score=-11.433
+    #5 sec=6.3.1 page=541 table=6.2I.4.5-0 score=-11.088
 
-**dense** — hit@1=N hit@3=N hit@5=Y RR@10=0.25 · coverage = 1/1 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.379
-    #2 sec=6.2.3 page=123 table=- score=0.389
-    #3 sec=6.3.4.3 page=570 table=- score=0.391
-    #4 sec=6.2.4 page=273 table=- score=0.391
-    #5 sec=6.2.3 page=123 table=- score=0.392
+**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 0/1 (0%) · top-1 = §6.2B.4.0.1.3 p0 table=-
+  missing keywords: ['configured transmitted power']
+    #1 sec=6.2B.4.0.1.3 page=0 table=- score=0.324
+    #2 sec=6.2E.1.0.1 page=0 table=- score=0.333
+    #3 sec=6.5.3.2.3 page=0 table=6.5.3.2.3-1 score=0.334
+    #4 sec=6.5.3.2.3 page=0 table=6.5.3.2.3-2 score=0.341
+    #5 sec=6.5E.2.2.1D.1 page=0 table=- score=0.348
 
-**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/1 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.032
-    #2 sec=6.2.4 page=273 table=- score=0.031
-    #3 sec=6.3.4.3 page=570 table=- score=0.030
-    #4 sec=6.2.4 page=274 table=- score=0.030
-    #5 sec=6.2.4 page=279 table=6.2.4.5-2 score=0.030
+**hybrid** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 1/1 (100%) · top-1 = §3.2 p0 table=-
+    #1 sec=3.2 page=0 table=- score=0.029
+    #2 sec=6.5E.2.2.1.1 page=0 table=- score=0.026
+    #3 sec=6.2B.4.0.1.3 page=0 table=- score=0.026
+    #4 sec=6.2C.1.3 page=0 table=- score=0.024
+    #5 sec=6.2A.1.0.3 page=0 table=- score=0.016
 
-**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/1 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.960
-    #2 sec=6.2.4 page=273 table=- score=0.937
-    #3 sec=6.2.4 page=273 table=- score=0.844
-    #4 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.815
-    #5 sec=6.2.4 page=279 table=6.2.4.5-2 score=0.792
+**reranked:bge** — hit@1=N hit@3=N hit@5=N RR@10=0.14 · coverage = 0/1 (0%) · top-1 = §6.2C.1.3 p0 table=-
+  missing keywords: ['configured transmitted power']
+    #1 sec=6.2C.1.3 page=0 table=- score=0.970
+    #2 sec=6.2B.4.0.1.3 page=0 table=- score=0.967
+    #3 sec=6.2B.4.0.1.3 page=0 table=- score=0.945
+    #4 sec=6.2E.1.0.1 page=0 table=- score=0.918
+    #5 sec=6.3E.1.0.1 page=0 table=- score=0.873
 
 ## q08 — How are additional MPR (A-MPR) requirements defined for NR FR1?
 _expected_section = §6.2.3 · type = procedure · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/2 (50%) · top-1 = §6.2.3 p123 table=-
+**sparse** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 1/2 (50%) · top-1 = §6.2A.3.0.3 p0 table=-
   missing keywords: ['additional mpr']
-    #1 sec=6.2.3 page=123 table=- score=-12.766
-    #2 sec=6.3.3.2 page=546 table=- score=-10.336
-    #3 sec=6.2.3 page=123 table=- score=-10.329
-    #4 sec=6.2.4 page=274 table=- score=-10.233
-    #5 sec=6.2.2 page=98 table=- score=-9.821
+    #1 sec=6.2A.3.0.3 page=0 table=- score=-18.294
+    #2 sec=6.2B.3.0.3 page=0 table=- score=-17.852
+    #3 sec=6.2B.3.1.1 page=0 table=- score=-16.903
+    #4 sec=6.2F.3.3.1 page=0 table=- score=-16.648
+    #5 sec=6.2.3.1 page=0 table=- score=-16.636
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/2 (50%) · top-1 = §6.2.3 p123 table=-
+**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 1/2 (50%) · top-1 = §6.2B.3.1.1 p0 table=-
   missing keywords: ['additional mpr']
-    #1 sec=6.2.3 page=123 table=- score=0.361
-    #2 sec=6.2.3 page=127 table=6.2.3.3.1-2 score=0.378
-    #3 sec=6.2.3 page=123 table=6.2.3.3.1-1 score=0.398
-    #4 sec=6.2.3 page=137 table=6.2.3.3.11-1 score=0.406
-    #5 sec=6.2.3 page=129 table=- score=0.409
+    #1 sec=6.2B.3.1.1 page=0 table=- score=0.347
+    #2 sec=6.2A.3.0.1 page=0 table=- score=0.351
+    #3 sec=6.2.3.1 page=0 table=- score=0.355
+    #4 sec=6.2F.3.3.1 page=0 table=- score=0.357
+    #5 sec=6.2G.3.1 page=0 table=- score=0.359
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/2 (50%) · top-1 = §6.2.3 p123 table=-
+**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 1/2 (50%) · top-1 = §6.2B.3.1.1 p0 table=-
   missing keywords: ['additional mpr']
-    #1 sec=6.2.3 page=123 table=- score=0.033
-    #2 sec=6.2.3 page=123 table=6.2.3.3.1-1 score=0.031
-    #3 sec=6.2.3 page=127 table=6.2.3.3.1-2 score=0.029
-    #4 sec=6.2.3 page=125 table=6.2.3.3.1-1 score=0.028
-    #5 sec=6.2.3 page=140 table=- score=0.028
+    #1 sec=6.2B.3.1.1 page=0 table=- score=0.032
+    #2 sec=6.2A.3.0.1 page=0 table=- score=0.031
+    #3 sec=6.2.3.1 page=0 table=- score=0.031
+    #4 sec=6.2F.3.3.1 page=0 table=- score=0.031
+    #5 sec=6.2G.3.1 page=0 table=- score=0.030
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/2 (50%) · top-1 = §6.2.3 p123 table=-
+**reranked:bge** — hit@1=N hit@3=N hit@5=N RR@10=0.14 · coverage = 1/2 (50%) · top-1 = §6.2B.3.1.1 p0 table=-
   missing keywords: ['additional mpr']
-    #1 sec=6.2.3 page=123 table=- score=0.931
-    #2 sec=6.2.3 page=123 table=6.2.3.3.1-1 score=0.644
-    #3 sec=6.2.3 page=127 table=6.2.3.3.1-2 score=0.630
-    #4 sec=6.2.1 page=94 table=6.2.1.4.1-1 score=0.366
-    #5 sec=6.2.3 page=148 table=- score=0.283
+    #1 sec=6.2B.3.1.1 page=0 table=- score=0.958
+    #2 sec=6.2F.3.3.1 page=0 table=- score=0.955
+    #3 sec=6.2G.3.1 page=0 table=- score=0.954
+    #4 sec=6.2D.3_1.1 page=0 table=- score=0.950
+    #5 sec=6.2D.3.1 page=0 table=- score=0.946
 
 ## q09 — What is the test purpose for the minimum output power conformance test?
 _expected_section = §6.3.1 · type = section_summary · difficulty = easy_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.1 p541 table=-
-    #1 sec=6.3.1 page=541 table=- score=-16.958
-    #2 sec=6.3.4.1 page=567 table=- score=-14.910
-    #3 sec=6.3.4.2 page=567 table=- score=-14.910
-    #4 sec=6.3.4.4 page=587 table=- score=-14.591
-    #5 sec=6.3.4.3 page=570 table=- score=-14.575
+    #1 sec=6.3.1 page=541 table=- score=-18.061
+    #2 sec=6.3.4.1 page=567 table=- score=-15.460
+    #3 sec=6.3.4.2 page=567 table=- score=-15.460
+    #4 sec=6.3.4.4 page=587 table=- score=-15.089
+    #5 sec=6.3.4.3 page=570 table=- score=-15.086
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.1 p541 table=-
-    #1 sec=6.3.1 page=541 table=- score=0.348
-    #2 sec=6.3.4.4 page=587 table=- score=0.360
-    #3 sec=6.3.4.1 page=567 table=- score=0.371
-    #4 sec=6.3.4.2 page=567 table=- score=0.371
-    #5 sec=6.3.4.3 page=570 table=- score=0.371
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.1.1 p0 table=-
+    #1 sec=6.3.1.1 page=0 table=- score=0.347
+    #2 sec=6.3F.1.1 page=0 table=- score=0.347
+    #3 sec=6.3.1 page=541 table=- score=0.348
+    #4 sec=6.3D.1.1 page=0 table=- score=0.357
+    #5 sec=6.3.4.4 page=587 table=- score=0.360
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.1 p541 table=-
-    #1 sec=6.3.1 page=541 table=- score=0.033
-    #2 sec=6.3.4.1 page=567 table=- score=0.032
-    #3 sec=6.3.4.4 page=587 table=- score=0.032
+    #1 sec=6.3.1 page=541 table=- score=0.032
+    #2 sec=6.3.4.1 page=567 table=- score=0.031
+    #3 sec=6.3.4.4 page=587 table=- score=0.031
     #4 sec=6.3.4.2 page=567 table=- score=0.031
-    #5 sec=6.3.4.3 page=570 table=- score=0.031
+    #5 sec=6.3.4.3 page=570 table=- score=0.030
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.1 p541 table=-
     #1 sec=6.3.1 page=541 table=- score=0.988
@@ -323,488 +326,490 @@ _expected_section = §6.3.1 · type = section_summary · difficulty = easy_
 ## q10 — Why does excess Transmit OFF power matter for cell coverage?
 _expected_section = §6.3.2 · type = section_summary · difficulty = hard_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=-24.756
-    #2 sec=6.2.1 page=92 table=- score=-17.183
-    #3 sec=6.3.3.1 page=545 table=- score=-10.813
-    #4 sec=6.3.3.2 page=545 table=- score=-10.640
-    #5 sec=6.3.3.2 page=546 table=6.3.3.2.4.1-1 score=-9.895
+**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2.1 p0 table=-
+    #1 sec=6.3.2.1 page=0 table=- score=-29.889
+    #2 sec=6.3E.2.1.1 page=0 table=- score=-29.889
+    #3 sec=6.3E.2.1D.1 page=0 table=- score=-29.889
+    #4 sec=6.3E.2.2.1 page=0 table=- score=-29.889
+    #5 sec=6.3F.2.1 page=0 table=- score=-29.889
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=0.334
-    #2 sec=6.3.3.1 page=545 table=- score=0.411
-    #3 sec=6.3.3.2 page=545 table=- score=0.413
-    #4 sec=6.3.3.3 page=550 table=6.3.3.2.5-1 score=0.422
-    #5 sec=6.3.3.4 page=550 table=6.3.3.2.5-1 score=0.422
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2.1 p0 table=-
+    #1 sec=6.3.2.1 page=0 table=- score=0.261
+    #2 sec=6.3E.2.1.1 page=0 table=- score=0.261
+    #3 sec=6.3E.2.1D.1 page=0 table=- score=0.261
+    #4 sec=6.3E.2.2.1 page=0 table=- score=0.261
+    #5 sec=6.3F.2.1 page=0 table=- score=0.261
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=0.033
-    #2 sec=6.3.3.1 page=545 table=- score=0.032
-    #3 sec=6.3.3.2 page=545 table=- score=0.031
-    #4 sec=6.3.2 page=544 table=- score=0.030
-    #5 sec=6.3.3.1 page=545 table=- score=0.030
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2.1 p0 table=-
+    #1 sec=6.3.2.1 page=0 table=- score=0.033
+    #2 sec=6.3E.2.1.1 page=0 table=- score=0.032
+    #3 sec=6.3E.2.1D.1 page=0 table=- score=0.032
+    #4 sec=6.3E.2.2.1 page=0 table=- score=0.031
+    #5 sec=6.3F.2.1 page=0 table=- score=0.031
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2 p544 table=-
-    #1 sec=6.3.2 page=544 table=- score=0.945
-    #2 sec=6.3.3.2 page=545 table=- score=0.049
-    #3 sec=6.3.3.1 page=545 table=- score=0.044
-    #4 sec=6.3.3.5 page=557 table=- score=0.040
-    #5 sec=6.3.3.6 page=557 table=- score=0.040
+**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.2.1 p0 table=-
+    #1 sec=6.3.2.1 page=0 table=- score=0.986
+    #2 sec=6.3E.2.1.1 page=0 table=- score=0.986
+    #3 sec=6.3E.2.1D.1 page=0 table=- score=0.986
+    #4 sec=6.3E.2.2.1 page=0 table=- score=0.986
+    #5 sec=6.3F.2.1 page=0 table=- score=0.986
 
 ## q11 — What is the maximum output power for a Power Class 2 UE in NR band n78?
 _expected_section = §6.2.1 · type = numeric · difficulty = easy_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p97 table=6.2.1.5-2
-    #1 sec=6.2.1 page=97 table=6.2.1.5-2 score=-19.697
-    #2 sec=6.2.4 page=278 table=6.2.4.5-1 score=-17.504
-    #3 sec=6.2.1 page=93 table=6.2.1.3-1 score=-16.857
-    #4 sec=6.2.1 page=96 table=6.2.1.5-1 score=-16.620
-    #5 sec=6.2.2 page=98 table=- score=-15.828
+**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 3/3 (100%) · top-1 = §6.2A.3.1.5 p0 table=-
+    #1 sec=6.2A.3.1.5 page=0 table=- score=-20.823
+    #2 sec=6.2D.2.5 page=0 table=- score=-19.451
+    #3 sec=6.2.1 page=97 table=6.2.1.5-2 score=-18.971
+    #4 sec=6.2G.1.5 page=0 table=- score=-18.166
+    #5 sec=6.2G.2.5 page=0 table=- score=-17.915
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p97 table=6.2.1.5-2
     #1 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.344
-    #2 sec=6.2.2 page=118 table=6.2.2.5-6 score=0.374
-    #3 sec=6.2.3 page=224 table=6.2.3.5-2 score=0.381
-    #4 sec=6.2.2 page=110 table=6.2.2.5-1 score=0.383
-    #5 sec=6.2.3 page=236 table=6.2.3.5-12 score=0.385
+    #2 sec=6.2D.2.5 page=0 table=- score=0.351
+    #3 sec=6.2D.2.5 page=0 table=- score=0.352
+    #4 sec=6.2D.2.5 page=0 table=- score=0.356
+    #5 sec=6.2G.1.5 page=0 table=6.2G.1.5-2 score=0.357
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p97 table=6.2.1.5-2
-    #1 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.033
-    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.031
-    #3 sec=6.2.1 page=96 table=6.2.1.5-1 score=0.029
-    #4 sec=6.2.2 page=98 table=- score=0.029
-    #5 sec=6.2.4 page=274 table=- score=0.028
+    #1 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.032
+    #2 sec=6.2G.1.5 page=0 table=6.2G.1.5-2 score=0.029
+    #3 sec=6.2D.2.5 page=0 table=- score=0.029
+    #4 sec=6.2D.2_1.5 page=0 table=- score=0.027
+    #5 sec=6.2.1.3 page=0 table=- score=0.026
 
-**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2.2 p121 table=6.2.2.5-9
-    #1 sec=6.2.2 page=121 table=6.2.2.5-9 score=0.983
-    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.973
-    #3 sec=6.2.3 page=127 table=6.2.3.3.1-2 score=0.966
-    #4 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.962
-    #5 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.940
+**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
+    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.973
+    #2 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.940
+    #3 sec=6.2A.1.1.5 page=0 table=6.2A.1.1.5-1a score=0.913
+    #4 sec=6.2G.1.5 page=0 table=6.2G.1.5-2 score=0.870
+    #5 sec=6.2.1.5 page=0 table=6.2.1.5-2 score=0.869
 
 ## q12 — What is the minimum output power limit and measurement bandwidth for a 10 MHz channel in FR1?
 _expected_section = §6.3.1 · type = numeric · difficulty = easy_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.1 p542 table=6.3.1.3-1
-    #1 sec=6.3.1 page=542 table=6.3.1.3-1 score=-16.954
-    #2 sec=6.3.1 page=543 table=6.3.1.5-1 score=-16.575
-    #3 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=-15.989
-    #4 sec=6.3.3.6 page=565 table=6.3.3.6.5-1 score=-15.974
-    #5 sec=6.3.3.3 page=550 table=6.3.3.2.5-1 score=-15.501
+**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.1.3 p0 table=6.3.1.3-1
+    #1 sec=6.3.1.3 page=0 table=6.3.1.3-1 score=-18.040
+    #2 sec=6.3E.1.0.1 page=0 table=6.3E.1.0.1-1 score=-17.433
+    #3 sec=6.3F.3.2.5 page=0 table=6.3F.3.2.5-1 score=-17.395
+    #4 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=-17.007
+    #5 sec=6.3.4.2.5 page=0 table=6.3.4.2.5-1 score=-17.000
 
-**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 3/3 (100%) · top-1 = §6.3.3.4 p556 table=6.3.3.4.5-1
-    #1 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.370
-    #2 sec=6.3.3.6 page=565 table=6.3.3.6.5-1 score=0.375
-    #3 sec=6.3.1 page=543 table=6.3.1.5-1 score=0.376
-    #4 sec=6.3.1 page=542 table=6.3.1.3-1 score=0.383
-    #5 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=0.388
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.1.3 p0 table=6.3.1.3-1
+    #1 sec=6.3.1.3 page=0 table=6.3.1.3-1 score=0.330
+    #2 sec=6.3D.3_1.5 page=0 table=6.3D.3_1.5-1 score=0.330
+    #3 sec=6.3G.3.2.5 page=0 table=6.3G.3.2.5-1 score=0.332
+    #4 sec=6.3.3.4.5 page=0 table=6.3.3.4.5-1 score=0.333
+    #5 sec=6.3G.3.3.5 page=0 table=6.3G.3.3.5-1 score=0.334
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.1 p542 table=6.3.1.3-1
-    #1 sec=6.3.1 page=542 table=6.3.1.3-1 score=0.032
-    #2 sec=6.3.1 page=543 table=6.3.1.5-1 score=0.032
-    #3 sec=6.3.3.6 page=565 table=6.3.3.6.5-1 score=0.032
-    #4 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.031
-    #5 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=0.031
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.1.3 p0 table=6.3.1.3-1
+    #1 sec=6.3.1.3 page=0 table=6.3.1.3-1 score=0.033
+    #2 sec=6.3F.3.2.5 page=0 table=6.3F.3.2.5-1 score=0.031
+    #3 sec=6.3D.3_1.5 page=0 table=6.3D.3_1.5-1 score=0.029
+    #4 sec=6.3.4.2.5 page=0 table=6.3.4.2.5-1 score=0.029
+    #5 sec=6.3G.3.3.5 page=0 table=6.3G.3.3.5-1 score=0.029
 
-**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 3/3 (100%) · top-1 = §6.3.3.4 p556 table=6.3.3.4.5-1
-    #1 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.829
-    #2 sec=6.3.3.6 page=565 table=6.3.3.6.5-1 score=0.805
-    #3 sec=6.3.1 page=542 table=6.3.1.3-1 score=0.785
-    #4 sec=6.3.1 page=543 table=6.3.1.5-1 score=0.781
-    #5 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=0.777
+**reranked:bge** — hit@1=N hit@3=N hit@5=N RR@10=0.10 · coverage = 2/3 (67%) · top-1 = §6.3F.3.2.5 p0 table=6.3F.3.2.5-1
+  missing keywords: ['-40']
+    #1 sec=6.3F.3.2.5 page=0 table=6.3F.3.2.5-1 score=0.938
+    #2 sec=6.3D.3_1.5 page=0 table=6.3D.3_1.5-1 score=0.931
+    #3 sec=6.3G.3.1.5 page=0 table=6.3G.3.1.5-1 score=0.926
+    #4 sec=6.3.3.2.5 page=0 table=6.3.3.2.5-1 score=0.916
+    #5 sec=6.3G.3.3.5 page=0 table=6.3G.3.3.5-1 score=0.909
 
 ## q13 — What is the absolute power tolerance for an NR UE under normal conditions?
 _expected_section = §6.3.4.2 · type = numeric · difficulty = easy_
 
 **sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=-19.084
-    #2 sec=6.3.4.2 page=567 table=- score=-19.084
-    #3 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=-15.285
-    #4 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=-15.285
-    #5 sec=6.3.4.2 page=568 table=6.3.4.2.4.1-1 score=-12.446
+    #1 sec=6.3.4.1 page=567 table=- score=-18.228
+    #2 sec=6.3.4.2 page=567 table=- score=-18.228
+    #3 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=-18.223
+    #4 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=-18.223
+    #5 sec=6.3.4.2.4.1 page=0 table=6.3.4.2.4.1-1 score=-14.159
 
-**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.10 · coverage = 0/2 (0%) · top-1 = §6.2.1 p97 table=6.2.1.5-2
+**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.14 · coverage = 0/2 (0%) · top-1 = §6.2B.4.0.1.3 p0 table=-
   missing keywords: ['absolute power tolerance', '9.0']
-    #1 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.332
-    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.354
-    #3 sec=6.3.4.3 page=570 table=- score=0.355
-    #4 sec=6.3.4.4 page=587 table=- score=0.357
-    #5 sec=6.2.1 page=97 table=6.2.1.5-3 score=0.369
+    #1 sec=6.2B.4.0.1.3 page=0 table=- score=0.315
+    #2 sec=6.2B.1.1.5 page=0 table=- score=0.325
+    #3 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.332
+    #4 sec=6.5.3.2.3 page=0 table=6.5.3.2.3-1 score=0.344
+    #5 sec=6.2D.1_1.5 page=0 table=- score=0.349
 
-**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/2 (50%) · top-1 = §6.3.4.1 p567 table=-
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/2 (50%) · top-1 = §6.3.4.2.3 p0 table=-
   missing keywords: ['9.0']
-    #1 sec=6.3.4.1 page=567 table=- score=0.031
-    #2 sec=6.3.4.2 page=567 table=- score=0.030
-    #3 sec=6.2.3 page=123 table=- score=0.030
-    #4 sec=6.2.1 page=97 table=6.2.1.5-3 score=0.029
-    #5 sec=6.2.1 page=92 table=- score=0.028
+    #1 sec=6.3.4.2.3 page=0 table=- score=0.028
+    #2 sec=6.3A.4.1.0 page=0 table=- score=0.027
+    #3 sec=6.3.4.1 page=567 table=- score=0.016
+    #4 sec=6.2B.4.0.1.3 page=0 table=- score=0.016
+    #5 sec=6.3.4.2 page=567 table=- score=0.016
 
 **reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 1/2 (50%) · top-1 = §6.3.4.1 p567 table=-
   missing keywords: ['9.0']
     #1 sec=6.3.4.1 page=567 table=- score=0.955
     #2 sec=6.3.4.2 page=567 table=- score=0.955
-    #3 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.755
+    #3 sec=6.3.4.2.3 page=0 table=- score=0.766
     #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.747
-    #5 sec=6.3.4.2 page=568 table=6.3.4.2.4.1-1 score=0.711
+    #5 sec=6.3A.4.1.0 page=0 table=- score=0.735
 
 ## q14 — What is the aggregate power tolerance for PUSCH transmissions with 0 dB TPC commands?
 _expected_section = §6.3.4.4 · type = numeric · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p587 table=-
-    #1 sec=6.3.4.4 page=587 table=- score=-21.799
-    #2 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=-21.433
-    #3 sec=6.3.4.3 page=576 table=- score=-19.213
-    #4 sec=6.3.4.4 page=590 table=- score=-16.491
-    #5 sec=6.3.4.4 page=590 table=- score=-15.670
+**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p588 table=6.3.4.4.3-1
+    #1 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=-28.180
+    #2 sec=6.3.4.4.3 page=0 table=6.3.4.4.3-1 score=-27.668
+    #3 sec=6.3.4.4 page=587 table=- score=-24.929
+    #4 sec=6.3.4.4.3 page=0 table=- score=-24.688
+    #5 sec=6.3.4.4.4.2 page=0 table=- score=-20.585
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p588 table=6.3.4.4.3-1
-    #1 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=0.262
-    #2 sec=6.3.4.3 page=576 table=- score=0.309
-    #3 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.314
-    #4 sec=6.3.4.4 page=590 table=- score=0.333
-    #5 sec=6.3.4.4 page=587 table=6.3.4.3.5-7 score=0.344
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4.3 p0 table=6.3.4.4.3-1
+    #1 sec=6.3.4.4.3 page=0 table=6.3.4.4.3-1 score=0.246
+    #2 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=0.262
+    #3 sec=6.3.4.3 page=576 table=- score=0.309
+    #4 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.314
+    #5 sec=6.3.4.4 page=590 table=- score=0.333
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p588 table=6.3.4.4.3-1
     #1 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=0.033
-    #2 sec=6.3.4.3 page=576 table=- score=0.032
-    #3 sec=6.3.4.4 page=590 table=- score=0.031
-    #4 sec=6.3.4.4 page=590 table=- score=0.031
-    #5 sec=6.3.4.4 page=590 table=- score=0.031
+    #2 sec=6.3.4.4.3 page=0 table=6.3.4.4.3-1 score=0.033
+    #3 sec=6.3.4.3 page=576 table=- score=0.031
+    #4 sec=6.3D.4.3.5 page=0 table=6.3D.4.3.5-1 score=0.029
+    #5 sec=6.3.4.4.4.2 page=0 table=- score=0.028
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p588 table=6.3.4.4.3-1
     #1 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=0.999
-    #2 sec=6.3.4.3 page=576 table=- score=0.974
-    #3 sec=6.3.4.4 page=587 table=6.3.4.3.5-7 score=0.959
-    #4 sec=6.3.4.4 page=590 table=- score=0.948
-    #5 sec=6.3.4.3 page=586 table=6.3.4.3.5-6 score=0.930
+    #2 sec=6.3.4.4.3 page=0 table=6.3.4.4.3-1 score=0.998
+    #3 sec=6.3.4.4.4.2 page=0 table=- score=0.981
+    #4 sec=6.3.4.3 page=576 table=- score=0.974
+    #5 sec=6.3.4.4 page=587 table=6.3.4.3.5-7 score=0.959
 
 ## q15 — What is the PCMAX tolerance when the configured maximum output power is between 21 and 23 dBm?
 _expected_section = §6.2.4 · type = numeric · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.4 p273 table=-
-    #1 sec=6.2.4 page=273 table=- score=-20.162
-    #2 sec=6.2.2 page=107 table=- score=-19.144
-    #3 sec=6.2.4 page=278 table=6.2.4.5-1 score=-18.539
-    #4 sec=6.3.1 page=541 table=6.2I.4.5-1 score=-18.351
-    #5 sec=6.2.1 page=93 table=6.2.1.3-1 score=-17.945
+**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2.2 p107 table=-
+    #1 sec=6.2.2 page=107 table=- score=-26.524
+    #2 sec=6.2.4 page=276 table=6.2.4.3-2 score=-23.970
+    #3 sec=6.2.4 page=273 table=- score=-23.702
+    #4 sec=6.2.3 page=263 table=6.2.3.5-29 score=-21.955
+    #5 sec=6.2.4 page=278 table=6.2.4.5-1 score=-21.348
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.4 p276 table=6.2.4.3-2
     #1 sec=6.2.4 page=276 table=6.2.4.3-2 score=0.228
-    #2 sec=6.2.4 page=273 table=- score=0.310
-    #3 sec=6.2.4 page=275 table=6.2.4.3-1 score=0.336
-    #4 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.336
-    #5 sec=6.3.4.4 page=588 table=6.3.4.4.3-1 score=0.337
+    #2 sec=6.2B.4.0.1.3 page=0 table=- score=0.234
+    #3 sec=6.2G.4.3 page=0 table=- score=0.293
+    #4 sec=6.2.4 page=273 table=- score=0.310
+    #5 sec=6.2A.3.1.5 page=0 table=6.2A.3.1.5-1 score=0.314
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.4 p273 table=-
-    #1 sec=6.2.4 page=273 table=- score=0.033
-    #2 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.031
-    #3 sec=6.2.2 page=107 table=- score=0.031
-    #4 sec=6.2.4 page=275 table=6.2.4.3-1 score=0.031
-    #5 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.030
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.4 p276 table=6.2.4.3-2
+    #1 sec=6.2.4 page=276 table=6.2.4.3-2 score=0.033
+    #2 sec=6.2.4 page=273 table=- score=0.031
+    #3 sec=6.2.2.5 page=0 table=- score=0.025
+    #4 sec=6.2.2 page=107 table=- score=0.016
+    #5 sec=6.2B.4.0.1.3 page=0 table=- score=0.016
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.4 p276 table=6.2.4.3-2
-    #1 sec=6.2.4 page=276 table=6.2.4.3-2 score=0.973
-    #2 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.972
-    #3 sec=6.2.3 page=258 table=6.2.3.5-26 score=0.957
-    #4 sec=6.2.3 page=251 table=6.2.3.5-21 score=0.949
-    #5 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.933
+**reranked:bge** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 3/3 (100%) · top-1 = §6.2.2.5 p0 table=6.2.2.5-1a
+    #1 sec=6.2.2.5 page=0 table=6.2.2.5-1a score=0.984
+    #2 sec=6.2G.2.5 page=0 table=6.2G.2.5-7 score=0.977
+    #3 sec=6.2.2.5 page=0 table=6.2.2.5-2 score=0.975
+    #4 sec=6.2.2.5 page=0 table=6.2.2.5-3 score=0.975
+    #5 sec=6.2.4 page=276 table=6.2.4.3-2 score=0.973
 
 ## q16 — What is the allowed maximum power reduction for a power class 3 UE using DFT-s-OFDM 256 QAM modulation?
 _expected_section = §6.2.2 · type = numeric · difficulty = medium_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p99 table=6.2.2.3-2
-    #1 sec=6.2.2 page=99 table=6.2.2.3-2 score=-21.952
-    #2 sec=6.2.2 page=98 table=6.2.2.3-1 score=-19.439
-    #3 sec=6.2.2 page=99 table=6.2.2.3-5 score=-18.738
-    #4 sec=6.2.2 page=98 table=- score=-17.730
-    #5 sec=6.2.2 page=98 table=- score=-17.597
+    #1 sec=6.2.2 page=99 table=6.2.2.3-2 score=-29.609
+    #2 sec=6.2.2 page=98 table=6.2.2.3-1 score=-24.418
+    #3 sec=6.2.2.3 page=0 table=- score=-24.178
+    #4 sec=6.5D.2.2.4.1 page=0 table=6.5D.2.2.4.1-3 score=-22.655
+    #5 sec=6.2.2 page=99 table=6.2.2.3-5 score=-22.148
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p98 table=6.2.2.3-1
     #1 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.298
     #2 sec=6.2.2 page=99 table=6.2.2.3-2 score=0.326
-    #3 sec=6.2.2 page=98 table=- score=0.341
-    #4 sec=6.2.3 page=151 table=- score=0.361
-    #5 sec=6.2.3 page=129 table=6.2.3.3.1-2 score=0.371
+    #3 sec=6.2.2.3 page=0 table=- score=0.339
+    #4 sec=6.2.2 page=98 table=- score=0.341
+    #5 sec=6.2.3 page=151 table=- score=0.361
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p98 table=6.2.2.3-1
     #1 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.033
     #2 sec=6.2.2 page=99 table=6.2.2.3-2 score=0.033
-    #3 sec=6.2.2 page=98 table=- score=0.031
-    #4 sec=6.2.3 page=147 table=6.2.3.3.26-2 score=0.029
-    #5 sec=6.2.3 page=151 table=- score=0.028
+    #3 sec=6.2.2.3 page=0 table=- score=0.032
+    #4 sec=6.2.2 page=98 table=- score=0.028
+    #5 sec=6.2.3.3.20 page=0 table=6.2.3.3.21-2 score=0.026
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p98 table=6.2.2.3-1
     #1 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.994
     #2 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.988
-    #3 sec=6.2.2 page=98 table=- score=0.978
-    #4 sec=6.2.3 page=225 table=6.2.3.5-3 score=0.957
-    #5 sec=6.2.2 page=101 table=6.2.2.4.1-1 score=0.907
+    #3 sec=6.2.2.3 page=0 table=- score=0.985
+    #4 sec=6.2.2 page=98 table=- score=0.978
+    #5 sec=6.2.3 page=225 table=6.2.3.5-3 score=0.957
 
 ## q17 — Which test verifies the UE's ability to set its initial output power at the start of a transmission after a gap longer than 20ms?
 _expected_section = §6.3.4.2 · type = section_summary · difficulty = medium_
 
-**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=-54.624
-    #2 sec=6.3.4.2 page=567 table=- score=-54.624
-    #3 sec=6.3.4.3 page=570 table=- score=-31.057
-    #4 sec=6.3.4.4 page=587 table=- score=-22.060
-    #5 sec=6.2.2 page=99 table=6.2.2.3-5 score=-21.098
+**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.2.1 p0 table=-
+    #1 sec=6.3.4.2.1 page=0 table=- score=-55.903
+    #2 sec=6.3D.4.1.1 page=0 table=- score=-55.397
+    #3 sec=6.3A.4.1.1.1 page=0 table=- score=-54.575
+    #4 sec=6.3.4.1 page=567 table=- score=-50.391
+    #5 sec=6.3.4.2 page=567 table=- score=-50.391
 
-**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=0.325
-    #2 sec=6.3.4.2 page=567 table=- score=0.325
-    #3 sec=6.3.4.3 page=570 table=- score=0.341
-    #4 sec=6.3.4.4 page=587 table=- score=0.351
-    #5 sec=6.2.1 page=92 table=- score=0.365
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.2.1 p0 table=-
+    #1 sec=6.3.4.2.1 page=0 table=- score=0.207
+    #2 sec=6.3D.4.1.1 page=0 table=- score=0.249
+    #3 sec=6.3A.4.1.1.1 page=0 table=- score=0.276
+    #4 sec=6.3D.4.2.1 page=0 table=- score=0.293
+    #5 sec=6.3.4.3.1 page=0 table=- score=0.293
 
-**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=0.033
-    #2 sec=6.3.4.2 page=567 table=- score=0.032
-    #3 sec=6.3.4.3 page=570 table=- score=0.032
-    #4 sec=6.3.4.4 page=587 table=- score=0.031
-    #5 sec=6.3.1 page=541 table=- score=0.030
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.2.1 p0 table=-
+    #1 sec=6.3.4.2.1 page=0 table=- score=0.033
+    #2 sec=6.3D.4.1.1 page=0 table=- score=0.032
+    #3 sec=6.3A.4.1.1.1 page=0 table=- score=0.032
+    #4 sec=6.3.4.1 page=567 table=- score=0.031
+    #5 sec=6.3.4.2 page=567 table=- score=0.030
 
-**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=0.992
-    #2 sec=6.3.4.2 page=567 table=- score=0.992
-    #3 sec=6.3.4.3 page=570 table=- score=0.936
-    #4 sec=6.3.4.4 page=590 table=- score=0.918
-    #5 sec=6.3.4.4 page=587 table=- score=0.901
+**reranked:bge** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 2/2 (100%) · top-1 = §6.3D.4.1.1 p0 table=-
+    #1 sec=6.3D.4.1.1 page=0 table=- score=0.999
+    #2 sec=6.3A.4.1.0 page=0 table=- score=0.995
+    #3 sec=6.3A.4.1.1.1 page=0 table=- score=0.995
+    #4 sec=6.3.4.1 page=567 table=- score=0.992
+    #5 sec=6.3.4.2 page=567 table=- score=0.992
 
 ## q18 — What is the PRACH ON power measurement period for preamble format 0?
 _expected_section = §6.3.3.4 · type = table_lookup · difficulty = medium_
 
-**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.3.3.3 p550 table=-
-    #1 sec=6.3.3.3 page=550 table=- score=-28.069
-    #2 sec=6.3.3.4 page=550 table=- score=-28.069
-    #3 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=-27.728
-    #4 sec=6.3.3.4 page=553 table=- score=-20.617
-    #5 sec=6.3.3.3 page=550 table=- score=-16.729
+**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
+    #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=-31.047
+    #2 sec=6.3.3.3 page=550 table=- score=-30.617
+    #3 sec=6.3.3.4 page=550 table=- score=-30.617
+    #4 sec=6.3.3.4.3 page=0 table=- score=-30.537
+    #5 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=-27.961
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
-    #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.288
-    #2 sec=6.3.3.3 page=550 table=- score=0.301
-    #3 sec=6.3.3.4 page=550 table=- score=0.301
-    #4 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.374
-    #5 sec=6.3.3.4 page=551 table=- score=0.389
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.3.4.3 p0 table=6.3.3.4.3-1
+    #1 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=0.280
+    #2 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.288
+    #3 sec=6.3.3.3 page=550 table=- score=0.301
+    #4 sec=6.3.3.4 page=550 table=- score=0.301
+    #5 sec=6.3.3.4.3 page=0 table=- score=0.310
 
-**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.3.3.3 p550 table=-
-    #1 sec=6.3.3.3 page=550 table=- score=0.033
-    #2 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.032
-    #3 sec=6.3.3.4 page=550 table=- score=0.032
-    #4 sec=6.3.3.4 page=553 table=- score=0.031
-    #5 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.031
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
+    #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.033
+    #2 sec=6.3.3.3 page=550 table=- score=0.032
+    #3 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=0.032
+    #4 sec=6.3.3.4 page=550 table=- score=0.031
+    #5 sec=6.3.3.4.3 page=0 table=- score=0.031
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
     #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.971
-    #2 sec=6.3.3.3 page=550 table=- score=0.834
-    #3 sec=6.3.3.4 page=550 table=- score=0.834
-    #4 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.775
-    #5 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.596
+    #2 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=0.960
+    #3 sec=6.3.3.4.3 page=0 table=- score=0.937
+    #4 sec=6.3.3.3 page=550 table=- score=0.834
+    #5 sec=6.3.3.4 page=550 table=- score=0.834
 
 ## q19 — Which power control commands does the SS send to drive the UE to its minimum output power during the conformance test?
 _expected_section = §6.3.1 · type = procedure · difficulty = medium_
 
-**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.4 p587 table=-
-    #1 sec=6.3.4.4 page=587 table=- score=-36.315
-    #2 sec=6.3.1 page=543 table=- score=-28.448
-    #3 sec=6.3.3.6 page=561 table=- score=-26.868
-    #4 sec=6.3.3.2 page=547 table=- score=-26.073
-    #5 sec=6.3.4.1 page=567 table=- score=-25.607
+**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 2/2 (100%) · top-1 = §6.3.4.4 p587 table=-
+    #1 sec=6.3.4.4 page=587 table=- score=-32.189
+    #2 sec=6.3.4.4.3 page=0 table=- score=-26.783
+    #3 sec=6.3.1.4.2 page=0 table=- score=-24.106
+    #4 sec=6.3F.1.4.2 page=0 table=- score=-24.106
+    #5 sec=6.3.4.4.1 page=0 table=- score=-22.963
 
-**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.10 · coverage = 1/2 (50%) · top-1 = §6.3.4.4 p587 table=-
+**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 1/2 (50%) · top-1 = §6.3.4.4 p587 table=-
   missing keywords: ['200ms']
     #1 sec=6.3.4.4 page=587 table=- score=0.378
-    #2 sec=6.3.4.3 page=576 table=- score=0.393
+    #2 sec=6.3A.4.2.1.4.2 page=0 table=- score=0.390
     #3 sec=6.3.4.3 page=576 table=- score=0.393
-    #4 sec=6.3.4.4 page=590 table=- score=0.399
-    #5 sec=6.3.4.1 page=567 table=- score=0.399
+    #4 sec=6.3.4.3 page=576 table=- score=0.393
+    #5 sec=6.3A.4.2.1.4.2 page=0 table=- score=0.396
 
 **hybrid** — hit@1=N hit@3=N hit@5=Y RR@10=0.25 · coverage = 2/2 (100%) · top-1 = §6.3.4.4 p587 table=-
     #1 sec=6.3.4.4 page=587 table=- score=0.033
-    #2 sec=6.3.4.1 page=567 table=- score=0.031
-    #3 sec=6.3.3.2 page=547 table=- score=0.031
-    #4 sec=6.3.1 page=543 table=- score=0.030
-    #5 sec=6.3.3.6 page=561 table=- score=0.030
+    #2 sec=6.3.4.1 page=567 table=- score=0.029
+    #3 sec=6.3.4.2 page=567 table=- score=0.029
+    #4 sec=6.3.1 page=543 table=- score=0.028
+    #5 sec=6.4.2.1.4.2 page=0 table=- score=0.027
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.1 p543 table=-
-    #1 sec=6.3.1 page=543 table=- score=0.964
-    #2 sec=6.3.4.4 page=590 table=- score=0.925
-    #3 sec=6.3.4.3 page=576 table=- score=0.916
-    #4 sec=6.3.4.4 page=589 table=- score=0.912
-    #5 sec=6.3.4.3 page=577 table=- score=0.882
+**reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 2/2 (100%) · top-1 = §6.4.2.1.4.2 p0 table=-
+    #1 sec=6.4.2.1.4.2 page=0 table=- score=0.973
+    #2 sec=6.3A.1.1.4.2 page=0 table=- score=0.965
+    #3 sec=6.3.1 page=543 table=- score=0.964
+    #4 sec=6.3D.1.4.2 page=0 table=- score=0.961
+    #5 sec=6.3D.1_1.4.2 page=0 table=- score=0.960
 
 ## q20 — What is P-MPR in the PCMAX equation and what value must it take during UE conducted conformance testing?
 _expected_section = §6.2.4 · type = section_summary · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4 p275 table=-
+**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4.3 p0 table=-
   missing keywords: ['electromagnetic energy absorption']
-    #1 sec=6.2.4 page=275 table=- score=-27.022
-    #2 sec=6.3.4.4 page=587 table=- score=-10.325
-    #3 sec=6.2.4 page=273 table=- score=-9.915
-    #4 sec=6.3.3.6 page=558 table=- score=-8.607
-    #5 sec=6.2.3 page=135 table=6.2.3.3.7-1 score=-8.134
+    #1 sec=6.2.4.3 page=0 table=- score=-34.722
+    #2 sec=6.2.4 page=275 table=- score=-31.625
+    #3 sec=H.2.2 page=0 table=- score=-29.092
+    #4 sec=6.4.2.6.3 page=0 table=6.4.2.5-2 score=-20.752
+    #5 sec=6.2.4.3 page=0 table=- score=-17.450
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4 p275 table=-
   missing keywords: ['electromagnetic energy absorption']
     #1 sec=6.2.4 page=275 table=- score=0.335
-    #2 sec=6.2.4 page=273 table=- score=0.368
-    #3 sec=6.2.1 page=95 table=6.2.1.4.3-2 score=0.411
-    #4 sec=6.2.3 page=129 table=- score=0.416
-    #5 sec=6.2.3 page=123 table=- score=0.418
+    #2 sec=6.2.4.3 page=0 table=- score=0.356
+    #3 sec=6.2A.4.0.1.3 page=0 table=- score=0.363
+    #4 sec=6.2B.4.0.1.3 page=0 table=- score=0.364
+    #5 sec=6.2.4 page=273 table=- score=0.368
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4 p275 table=-
   missing keywords: ['electromagnetic energy absorption']
     #1 sec=6.2.4 page=275 table=- score=0.033
-    #2 sec=6.2.4 page=273 table=- score=0.032
-    #3 sec=6.3.4.4 page=587 table=- score=0.016
-    #4 sec=6.2.1 page=95 table=6.2.1.4.3-2 score=0.016
-    #5 sec=6.2.3 page=129 table=- score=0.016
+    #2 sec=6.2.4.3 page=0 table=- score=0.032
+    #3 sec=6.2.4 page=273 table=- score=0.031
+    #4 sec=6.2.4.3 page=0 table=- score=0.029
+    #5 sec=6.2A.4.0.1.4 page=0 table=- score=0.028
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4 p275 table=-
+**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4.3 p0 table=-
   missing keywords: ['electromagnetic energy absorption']
-    #1 sec=6.2.4 page=275 table=- score=0.941
-    #2 sec=6.2.4 page=273 table=- score=0.829
-    #3 sec=6.2.3 page=254 table=6.2.3.5-23 score=0.711
-    #4 sec=6.2.3 page=244 table=6.2.3.5-18 score=0.666
-    #5 sec=6.2.2 page=115 table=6.2.2.5-4 score=0.608
+    #1 sec=6.2.4.3 page=0 table=- score=0.962
+    #2 sec=6.2.4 page=275 table=- score=0.941
+    #3 sec=6.4.2.6.3 page=0 table=6.4.2.5-2 score=0.832
+    #4 sec=6.2B.4.0.1.3 page=0 table=- score=0.831
+    #5 sec=6.2A.4.0.1.4 page=0 table=- score=0.830
 
 ## q21 — In the UE Power Class table, what maximum output power and tolerance apply to band n14 for Power Class 1?
 _expected_section = §6.2.1 · type = table_lookup · difficulty = medium_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=-27.900
-    #2 sec=6.2.2 page=98 table=- score=-26.354
-    #3 sec=6.2.1 page=97 table=6.2.1.5-2 score=-24.737
-    #4 sec=6.2.3 page=123 table=- score=-23.613
-    #5 sec=6.2.1 page=96 table=6.2.1.5-1 score=-21.395
+    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=-29.205
+    #2 sec=6.2.1 page=97 table=6.2.1.5-2 score=-27.957
+    #3 sec=6.2A.1.1.5 page=0 table=- score=-26.916
+    #4 sec=6.2.2 page=98 table=- score=-26.806
+    #5 sec=6.2.2.5 page=0 table=- score=-26.176
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
-    #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.266
-    #2 sec=6.2.2 page=118 table=6.2.2.5-6 score=0.279
-    #3 sec=6.2.3 page=270 table=6.2.3.5-35 score=0.282
-    #4 sec=6.2.2 page=110 table=6.2.2.5-1 score=0.287
-    #5 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.288
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1.5 p0 table=6.2.1.5-2a
+    #1 sec=6.2.1.5 page=0 table=6.2.1.5-2a score=0.262
+    #2 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.266
+    #3 sec=6.2.2 page=118 table=6.2.2.5-6 score=0.279
+    #4 sec=6.2.3 page=270 table=6.2.3.5-35 score=0.282
+    #5 sec=6.2.2 page=110 table=6.2.2.5-1 score=0.287
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
     #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.033
     #2 sec=6.2.1 page=97 table=6.2.1.5-2 score=0.031
-    #3 sec=6.2.1 page=96 table=6.2.1.5-1 score=0.030
-    #4 sec=6.2.2 page=98 table=- score=0.028
-    #5 sec=6.2.2 page=98 table=- score=0.028
+    #3 sec=6.2.1.5 page=0 table=6.2.1.5-2a score=0.030
+    #4 sec=6.2.2.5 page=0 table=- score=0.030
+    #5 sec=6.2.2.5 page=0 table=- score=0.029
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.1 p93 table=6.2.1.3-1
     #1 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.998
-    #2 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.984
-    #3 sec=6.2.4 page=273 table=- score=0.982
-    #4 sec=6.2.3 page=270 table=6.2.3.5-35 score=0.973
-    #5 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.972
+    #2 sec=6.2.1.3 page=0 table=6.2.1.3-1 score=0.986
+    #3 sec=6.2.3 page=270 table=6.2.3.5-35 score=0.973
+    #4 sec=6.2.2 page=98 table=- score=0.968
+    #5 sec=6.2.1.5 page=0 table=6.2.1.5-2a score=0.967
 
 ## q22 — What is the allowed MPR for CP-OFDM 256 QAM modulation in outer RB allocations for a power class 3 UE?
 _expected_section = §6.2.2 · type = table_lookup · difficulty = medium_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p99 table=6.2.2.3-2
-    #1 sec=6.2.2 page=99 table=6.2.2.3-2 score=-28.327
-    #2 sec=6.2.2 page=99 table=6.2.2.3-5 score=-25.909
-    #3 sec=6.2.2 page=98 table=6.2.2.3-1 score=-25.538
-    #4 sec=6.2.3 page=139 table=6.2.3.3.15-2 score=-20.555
-    #5 sec=6.2.3 page=123 table=- score=-20.488
+    #1 sec=6.2.2 page=99 table=6.2.2.3-2 score=-38.551
+    #2 sec=6.2E.2.0.2 page=0 table=6.2E.2.0.2-1 score=-35.435
+    #3 sec=6.2.2.3 page=0 table=6.2.2.3-2 score=-34.926
+    #4 sec=6.2.2.3 page=0 table=6.2.2.3-5 score=-34.781
+    #5 sec=6.2D.2.3 page=0 table=6.2D.2.3-1 score=-34.710
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p98 table=6.2.2.3-1
     #1 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.289
     #2 sec=6.2.2 page=99 table=6.2.2.3-2 score=0.299
-    #3 sec=6.2.3 page=151 table=- score=0.318
-    #4 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.320
-    #5 sec=6.2.2 page=98 table=- score=0.338
+    #3 sec=6.2.2.3 page=0 table=6.2.2.3-1 score=0.313
+    #4 sec=6.2.3 page=151 table=- score=0.318
+    #5 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.320
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p99 table=6.2.2.3-2
     #1 sec=6.2.2 page=99 table=6.2.2.3-2 score=0.033
-    #2 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.032
-    #3 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.032
-    #4 sec=6.2.3 page=151 table=- score=0.031
-    #5 sec=6.2.3 page=147 table=6.2.3.3.26-2 score=0.029
+    #2 sec=6.2E.2.0.2 page=0 table=6.2E.2.0.2-1 score=0.031
+    #3 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.031
+    #4 sec=6.2.2.3 page=0 table=6.2.2.3-1 score=0.031
+    #5 sec=6.2.2.3 page=0 table=6.2.2.3-2 score=0.031
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.2.2 p99 table=6.2.2.3-5
     #1 sec=6.2.2 page=99 table=6.2.2.3-5 score=0.996
     #2 sec=6.2.2 page=98 table=6.2.2.3-1 score=0.994
-    #3 sec=6.2.2 page=101 table=6.2.2.4.1-1 score=0.966
-    #4 sec=6.2.2 page=98 table=- score=0.959
-    #5 sec=6.2.3 page=135 table=6.2.3.3.7-1 score=0.937
+    #3 sec=6.2.2.3 page=0 table=- score=0.971
+    #4 sec=6.2E.2.0.2 page=0 table=6.2E.2.0.2-1 score=0.962
+    #5 sec=6.2.2 page=98 table=- score=0.959
 
 ## q23 — What is the PRACH ON power measurement period for preamble format C2 with 15 kHz SCS?
 _expected_section = §6.3.3.4 · type = table_lookup · difficulty = hard_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 0/2 (0%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
   missing keywords: ['c2', '0.333333']
-    #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=-33.585
-    #2 sec=6.3.3.3 page=550 table=- score=-28.069
-    #3 sec=6.3.3.4 page=550 table=- score=-28.069
-    #4 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=-23.116
-    #5 sec=6.3.3.4 page=553 table=- score=-22.250
+    #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=-36.359
+    #2 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=-33.799
+    #3 sec=6.3.3.3 page=550 table=- score=-30.617
+    #4 sec=6.3.3.4 page=550 table=- score=-30.617
+    #5 sec=6.3.3.4.3 page=0 table=- score=-29.824
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 0/2 (0%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
+**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 0/2 (0%) · top-1 = §6.3.3.4.3 p0 table=6.3.3.4.3-1
   missing keywords: ['c2', '0.333333']
-    #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.273
-    #2 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.339
-    #3 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.350
-    #4 sec=6.3.3.3 page=550 table=- score=0.378
-    #5 sec=6.3.3.4 page=550 table=- score=0.378
+    #1 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=0.260
+    #2 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.273
+    #3 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.339
+    #4 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.350
+    #5 sec=6.3.3.4.5 page=0 table=6.3.3.4.5-1 score=0.356
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 0/2 (0%) · top-1 = §6.3.3.4 p551 table=6.3.3.4.3-1
   missing keywords: ['c2', '0.333333']
     #1 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.033
-    #2 sec=6.3.3.3 page=550 table=- score=0.032
-    #3 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.032
-    #4 sec=6.3.3.4 page=550 table=- score=0.031
-    #5 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.031
+    #2 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=0.033
+    #3 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.031
+    #4 sec=6.3.3.3 page=550 table=- score=0.031
+    #5 sec=6.3.3.4 page=550 table=- score=0.030
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.3.4 p554 table=6.3.3.4.4.3-2
-    #1 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.899
-    #2 sec=6.3.3.4 page=551 table=- score=0.856
-    #3 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.846
-    #4 sec=6.3.3.4 page=556 table=6.3.3.4.5-1 score=0.676
-    #5 sec=6.3.3.3 page=550 table=- score=0.589
+**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.3.4.3 p0 table=6.3.3.4.3-1
+    #1 sec=6.3.3.4.3 page=0 table=6.3.3.4.3-1 score=0.903
+    #2 sec=6.3.3.4 page=554 table=6.3.3.4.4.3-2 score=0.899
+    #3 sec=6.3.3.4 page=551 table=- score=0.856
+    #4 sec=6.3.3.4.3 page=0 table=- score=0.848
+    #5 sec=6.3.3.4 page=551 table=6.3.3.4.3-1 score=0.846
 
 ## q24 — What is the test requirement for measured UE output power at test point 2 in the configured transmitted power test?
 _expected_section = §6.2.4 · type = table_lookup · difficulty = hard_
 
-**sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.1 p541 table=6.2I.4.5-1
-    #1 sec=6.3.1 page=541 table=6.2I.4.5-1 score=-22.960
-    #2 sec=6.2.4 page=278 table=6.2.4.5-1 score=-19.804
-    #3 sec=6.2.1 page=93 table=6.2.1.3-1 score=-15.854
-    #4 sec=6.2.4 page=273 table=- score=-15.840
-    #5 sec=6.3.4.2 page=569 table=6.3.4.2.5-2 score=-13.810
+**sparse** — hit@1=N hit@3=N hit@5=Y RR@10=0.25 · coverage = 2/2 (100%) · top-1 = §6.2D.4.5 p0 table=6.2D.4.5-1
+    #1 sec=6.2D.4.5 page=0 table=6.2D.4.5-1 score=-27.568
+    #2 sec=6.2D.4_1.5 page=0 table=6.2D.4_1.5-1 score=-27.568
+    #3 sec=6.3.1 page=541 table=6.2I.4.5-1 score=-22.555
+    #4 sec=6.2.4.5 page=0 table=- score=-22.341
+    #5 sec=6.2G.4.5 page=0 table=- score=-22.311
 
-**dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.2.4 p278 table=6.2.4.5-1
-    #1 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.333
-    #2 sec=6.3.4.3 page=570 table=- score=0.337
-    #3 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.337
-    #4 sec=6.3.4.4 page=587 table=- score=0.340
-    #5 sec=6.3.4.1 page=567 table=- score=0.344
+**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 1/2 (50%) · top-1 = §6.2D.4_1.5 p0 table=6.2D.4_1.5-1
+  missing keywords: ['10 dbm']
+    #1 sec=6.2D.4_1.5 page=0 table=6.2D.4_1.5-1 score=0.255
+    #2 sec=6.2D.4.5 page=0 table=6.2D.4.5-1 score=0.263
+    #3 sec=6.3A.2.1.1 page=0 table=- score=0.305
+    #4 sec=6.3A.1.1.1 page=0 table=- score=0.315
+    #5 sec=6.2B.4.1.1 page=0 table=- score=0.321
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.2.4 p278 table=6.2.4.5-1
-    #1 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.033
-    #2 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.032
-    #3 sec=6.3.4.3 page=570 table=- score=0.031
-    #4 sec=6.3.4.1 page=567 table=- score=0.029
-    #5 sec=6.3.4.2 page=567 table=- score=0.028
+**hybrid** — hit@1=N hit@3=N hit@5=Y RR@10=0.25 · coverage = 2/2 (100%) · top-1 = §6.2D.4.5 p0 table=6.2D.4.5-1
+    #1 sec=6.2D.4.5 page=0 table=6.2D.4.5-1 score=0.033
+    #2 sec=6.2D.4_1.5 page=0 table=6.2D.4_1.5-1 score=0.033
+    #3 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.029
+    #4 sec=6.2.4.5 page=0 table=- score=0.029
+    #5 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.028
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.2.4 p278 table=6.2.4.5-1
-    #1 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.977
-    #2 sec=6.3.1 page=541 table=6.2I.4.5-1 score=0.963
-    #3 sec=6.3.4.4 page=590 table=- score=0.948
-    #4 sec=6.2.1 page=93 table=6.2.1.3-1 score=0.939
-    #5 sec=6.3.4.4 page=590 table=- score=0.895
+**reranked:bge** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 2/2 (100%) · top-1 = §6.2D.4.5 p0 table=6.2D.4.5-1
+    #1 sec=6.2D.4.5 page=0 table=6.2D.4.5-1 score=0.997
+    #2 sec=6.2D.4_1.5 page=0 table=6.2D.4_1.5-1 score=0.996
+    #3 sec=6.2A.4.1.5 page=0 table=6.2A.4.1.5-1 score=0.979
+    #4 sec=6.2B.4.1.5 page=0 table=6.2B.4.1.5-1 score=0.979
+    #5 sec=6.2.4 page=278 table=6.2.4.5-1 score=0.977
 
 ## q25 — In the 5 MHz ramp up sub-test, what is the expected power step size when the RB allocation changes from 1 RB to 15 RBs?
 _expected_section = §6.3.4.3 · type = table_lookup · difficulty = hard_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.3 p579 table=6.3.4.3.5-1
-    #1 sec=6.3.4.3 page=579 table=6.3.4.3.5-1 score=-39.306
-    #2 sec=6.3.4.3 page=585 table=6.3.4.3.5-5 score=-37.896
-    #3 sec=6.3.4.3 page=581 table=6.3.4.3.5-3 score=-35.893
-    #4 sec=6.3.4.3 page=580 table=6.3.4.3.5-2 score=-35.255
-    #5 sec=6.3.4.3 page=586 table=6.3.4.3.5-6 score=-34.428
+    #1 sec=6.3.4.3 page=579 table=6.3.4.3.5-1 score=-38.985
+    #2 sec=6.3.4.3 page=585 table=6.3.4.3.5-5 score=-36.677
+    #3 sec=6.3.4.3 page=580 table=6.3.4.3.5-2 score=-36.065
+    #4 sec=6.3.4.3 page=581 table=6.3.4.3.5-3 score=-34.516
+    #5 sec=6.3.4.3 page=586 table=6.3.4.3.5-6 score=-34.442
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.4.3 p579 table=6.3.4.3.5-1
     #1 sec=6.3.4.3 page=579 table=6.3.4.3.5-1 score=0.277
@@ -830,157 +835,157 @@ _expected_section = §6.3.4.3 · type = table_lookup · difficulty = hard_
 ## q26 — Where is the Transmit OFF power requirement actually tested, given that clause 6.3.2 defines no standalone test procedure?
 _expected_section = §6.3.2 · type = section_summary · difficulty = medium_
 
-**sparse** — hit@1=N hit@3=N hit@5=N RR@10=0.11 · coverage = 1/2 (50%) · top-1 = §6.3.3.1 p545 table=-
+**sparse** — hit@1=N hit@3=N hit@5=N RR@10=0.10 · coverage = 1/2 (50%) · top-1 = §6.3.3.2.1 p0 table=-
   missing keywords: ['covered by']
-    #1 sec=6.3.3.1 page=545 table=- score=-31.556
-    #2 sec=6.3.3.2 page=545 table=- score=-31.556
-    #3 sec=6.3.3.1 page=545 table=- score=-29.081
-    #4 sec=6.3.3.2 page=545 table=- score=-27.280
-    #5 sec=6.3.3.3 page=550 table=- score=-24.102
+    #1 sec=6.3.3.2.1 page=0 table=- score=-34.125
+    #2 sec=6.3.3.1 page=545 table=- score=-32.607
+    #3 sec=6.3.3.2 page=545 table=- score=-32.607
+    #4 sec=6.3.3.1 page=545 table=- score=-31.712
+    #5 sec=6.3.3.2 page=545 table=- score=-29.433
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.2 p544 table=-
     #1 sec=6.3.2 page=544 table=- score=0.299
-    #2 sec=6.3.2 page=544 table=- score=0.347
-    #3 sec=6.3.3.2 page=545 table=- score=0.375
-    #4 sec=6.3.3.1 page=545 table=- score=0.393
-    #5 sec=6.3.3.4 page=553 table=- score=0.406
+    #2 sec=6.3.2.5 page=0 table=- score=0.325
+    #3 sec=6.3F.2.5 page=0 table=- score=0.328
+    #4 sec=6.3E.2.2.5 page=0 table=- score=0.334
+    #5 sec=6.3E.2.1.5 page=0 table=- score=0.334
 
-**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 2/2 (100%) · top-1 = §6.3.3.1 p545 table=-
-    #1 sec=6.3.3.1 page=545 table=- score=0.031
-    #2 sec=6.3.3.2 page=545 table=- score=0.031
-    #3 sec=6.3.2 page=544 table=- score=0.031
-    #4 sec=6.3.2 page=544 table=- score=0.030
-    #5 sec=6.3.3.3 page=550 table=- score=0.030
+**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.2 p544 table=-
+    #1 sec=6.3.2 page=544 table=- score=0.031
+    #2 sec=6.3.2.5 page=0 table=- score=0.029
+    #3 sec=6.3.3.2 page=545 table=- score=0.029
+    #4 sec=6.3.2 page=544 table=- score=0.028
+    #5 sec=6.3.3.1 page=545 table=- score=0.027
 
-**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/2 (100%) · top-1 = §6.3.2 p544 table=-
+**reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/2 (50%) · top-1 = §6.3.2 p544 table=-
+  missing keywords: ['covered by']
     #1 sec=6.3.2 page=544 table=- score=0.759
-    #2 sec=6.3.2 page=544 table=- score=0.705
-    #3 sec=6.3.3.2 page=545 table=- score=0.614
-    #4 sec=6.3.3.1 page=545 table=- score=0.532
-    #5 sec=6.3.3.3 page=550 table=- score=0.449
+    #2 sec=6.3.2.3 page=0 table=- score=0.749
+    #3 sec=6.3D.2.3 page=0 table=- score=0.728
+    #4 sec=6.3A.2.0 page=0 table=- score=0.727
+    #5 sec=6.3F.3.1 page=0 table=- score=0.723
 
 ## q27 — Which clauses define the MPR and A-MPR values used in the PCMAX_L formula for configured maximum output power?
 _expected_section = §6.2.4 · type = section_summary · difficulty = hard_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 1/3 (33%) · top-1 = §6.2.4 p275 table=6.2.4.3-1
-  missing keywords: ['6.2.2.3', '6.2.3.3']
-    #1 sec=6.2.4 page=275 table=6.2.4.3-1 score=-20.222
-    #2 sec=6.2.4 page=275 table=- score=-19.123
-    #3 sec=6.2.4 page=273 table=- score=-18.903
-    #4 sec=6.2.3 page=123 table=- score=-15.855
-    #5 sec=6.3.1 page=541 table=6.2I.4.5-1 score=-14.747
+**sparse** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 3/3 (100%) · top-1 = §6.2A.4.0.1.4 p0 table=-
+    #1 sec=6.2A.4.0.1.4 page=0 table=- score=-26.905
+    #2 sec=6.2D.3.3 page=0 table=- score=-24.902
+    #3 sec=6.2A.4.0.1.3 page=0 table=- score=-24.524
+    #4 sec=6.2D.3_1.3 page=0 table=- score=-23.902
+    #5 sec=6.2.4 page=275 table=6.2.4.3-1 score=-23.688
 
-**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.2.3 p129 table=-
-    #1 sec=6.2.3 page=129 table=- score=0.320
-    #2 sec=6.2.4 page=273 table=- score=0.357
-    #3 sec=6.2.3 page=222 table=- score=0.368
-    #4 sec=6.2.3 page=139 table=6.2.3.3.15-2 score=0.382
-    #5 sec=6.2.3 page=123 table=- score=0.386
+**dense** — hit@1=N hit@3=N hit@5=N RR@10=0.17 · coverage = 3/3 (100%) · top-1 = §6.2.3.3.2 p0 table=-
+    #1 sec=6.2.3.3.2 page=0 table=- score=0.310
+    #2 sec=6.2A.4.0.1.4 page=0 table=- score=0.313
+    #3 sec=6.2A.4.0.1.3 page=0 table=- score=0.313
+    #4 sec=6.2.3 page=129 table=- score=0.320
+    #5 sec=6.2A.4.0.1.3 page=0 table=- score=0.321
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 2/3 (67%) · top-1 = §6.2.4 p273 table=-
-  missing keywords: ['6.2.2.3']
-    #1 sec=6.2.4 page=273 table=- score=0.032
-    #2 sec=6.2.4 page=275 table=- score=0.031
-    #3 sec=6.2.3 page=123 table=- score=0.031
-    #4 sec=6.2.3 page=222 table=- score=0.031
-    #5 sec=6.2.4 page=275 table=6.2.4.3-1 score=0.030
+**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.33 · coverage = 3/3 (100%) · top-1 = §6.2A.4.0.1.4 p0 table=-
+    #1 sec=6.2A.4.0.1.4 page=0 table=- score=0.033
+    #2 sec=6.2A.4.0.1.3 page=0 table=- score=0.031
+    #3 sec=6.2.4.3 page=0 table=- score=0.030
+    #4 sec=6.2.4 page=273 table=- score=0.029
+    #5 sec=6.2.3 page=222 table=- score=0.028
 
-**reranked:bge** — hit@1=N hit@3=N hit@5=N RR@10=0.17 · coverage = 3/3 (100%) · top-1 = §6.2.3 p123 table=-
-    #1 sec=6.2.3 page=123 table=- score=0.960
-    #2 sec=6.2.3 page=140 table=- score=0.939
-    #3 sec=6.2.3 page=222 table=- score=0.924
-    #4 sec=6.2.3 page=139 table=6.2.3.3.15-2 score=0.902
-    #5 sec=6.2.3 page=129 table=- score=0.820
+**reranked:bge** — hit@1=N hit@3=N hit@5=N RR@10=0.00 · coverage = 2/3 (67%) · top-1 = §6.2D.4.3 p0 table=-
+  missing keywords: ['pcmax']
+    #1 sec=6.2D.4.3 page=0 table=- score=0.985
+    #2 sec=6.2A.4.0.1.4 page=0 table=- score=0.983
+    #3 sec=6.2A.4.0.1.3 page=0 table=- score=0.961
+    #4 sec=6.2.3 page=123 table=- score=0.960
+    #5 sec=6.2A.3.0.3 page=0 table=- score=0.957
 
 ## q28 — What is the test purpose of the absolute power tolerance test?
 _expected_section = §6.3.4.2 · type = section_summary · difficulty = medium_
 
 **sparse** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=-12.501
-    #2 sec=6.3.4.2 page=567 table=- score=-12.501
-    #3 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=-8.877
-    #4 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=-8.877
-    #5 sec=6.2.4 page=275 table=6.2.4.3-1 score=-8.303
+    #1 sec=6.3.4.1 page=567 table=- score=-13.445
+    #2 sec=6.3.4.2 page=567 table=- score=-13.445
+    #3 sec=6.3A.4.1.1.5 page=0 table=- score=-13.270
+    #4 sec=6.3.4.2.5 page=0 table=- score=-12.680
+    #5 sec=6.3C.4.1.5 page=0 table=- score=-12.680
 
-**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=0.349
-    #2 sec=6.3.4.2 page=567 table=- score=0.349
-    #3 sec=6.3.4.4 page=587 table=- score=0.378
-    #4 sec=6.3.4.3 page=570 table=- score=0.412
-    #5 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.418
+**dense** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3A.4.1.0 p0 table=-
+    #1 sec=6.3A.4.1.0 page=0 table=- score=0.334
+    #2 sec=6.3.4.2.3 page=0 table=- score=0.341
+    #3 sec=6.3.4.1 page=567 table=- score=0.349
+    #4 sec=6.3.4.2 page=567 table=- score=0.349
+    #5 sec=6.3.4.4 page=587 table=- score=0.378
 
 **hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
-    #1 sec=6.3.4.1 page=567 table=- score=0.033
+    #1 sec=6.3.4.1 page=567 table=- score=0.032
     #2 sec=6.3.4.2 page=567 table=- score=0.032
-    #3 sec=6.3.4.1 page=567 table=6.3.4.2.3-1 score=0.031
-    #4 sec=6.3.4.2 page=567 table=6.3.4.2.3-1 score=0.031
-    #5 sec=6.3.4.4 page=587 table=- score=0.031
+    #3 sec=6.3A.4.1.0 page=0 table=- score=0.031
+    #4 sec=6.3.4.2.3 page=0 table=- score=0.031
+    #5 sec=6.3.4.2.5 page=0 table=- score=0.031
 
 **reranked:bge** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 2/2 (100%) · top-1 = §6.3.4.1 p567 table=-
     #1 sec=6.3.4.1 page=567 table=- score=0.993
     #2 sec=6.3.4.2 page=567 table=- score=0.993
-    #3 sec=6.3.4.3 page=570 table=- score=0.499
-    #4 sec=6.3.4.2 page=568 table=6.3.4.2.4.1-1 score=0.408
-    #5 sec=6.3.4.2 page=569 table=6.3.4.2.5-1 score=0.364
+    #3 sec=6.3A.4.1.0 page=0 table=- score=0.966
+    #4 sec=6.3.4.2.3 page=0 table=- score=0.872
+    #5 sec=6.3G.4.3.3 page=0 table=- score=0.772
 
 ## q29 — What does the aggregate power tolerance test verify about UE transmitter behaviour?
 _expected_section = §6.3.4.4 · type = section_summary · difficulty = medium_
 
 **sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p587 table=-
-    #1 sec=6.3.4.4 page=587 table=- score=-19.355
-    #2 sec=6.2.1 page=92 table=- score=-15.929
-    #3 sec=6.3.4.1 page=567 table=- score=-12.783
-    #4 sec=6.3.4.2 page=567 table=- score=-12.783
-    #5 sec=6.3.2 page=544 table=- score=-11.082
+    #1 sec=6.3.4.4 page=587 table=- score=-19.876
+    #2 sec=6.5.2.4.1.1 page=0 table=- score=-18.061
+    #3 sec=6.5F.2.4.2.1 page=0 table=- score=-18.061
+    #4 sec=6.5.2.4.2.1 page=0 table=- score=-18.061
+    #5 sec=6.5C.2.4.1.1 page=0 table=- score=-18.061
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p587 table=-
     #1 sec=6.3.4.4 page=587 table=- score=0.271
-    #2 sec=6.3.4.3 page=570 table=- score=0.308
-    #3 sec=6.3.4.1 page=567 table=- score=0.322
-    #4 sec=6.3.4.2 page=567 table=- score=0.322
-    #5 sec=6.3.4.3 page=576 table=- score=0.333
+    #2 sec=6.3.4.4.3 page=0 table=- score=0.278
+    #3 sec=7.7A.1.4.2 page=0 table=- score=0.294
+    #4 sec=6.3A.4.1.0 page=0 table=- score=0.295
+    #5 sec=6.3.4.2.3 page=0 table=- score=0.306
 
 **hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p587 table=-
     #1 sec=6.3.4.4 page=587 table=- score=0.033
-    #2 sec=6.3.4.1 page=567 table=- score=0.032
-    #3 sec=6.3.4.2 page=567 table=- score=0.031
-    #4 sec=6.3.4.3 page=570 table=- score=0.031
-    #5 sec=6.2.1 page=92 table=- score=0.031
+    #2 sec=6.3.4.4.3 page=0 table=- score=0.016
+    #3 sec=6.5.2.4.1.1 page=0 table=- score=0.016
+    #4 sec=6.5F.2.4.2.1 page=0 table=- score=0.016
+    #5 sec=7.7A.1.4.2 page=0 table=- score=0.016
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.4 p587 table=-
     #1 sec=6.3.4.4 page=587 table=- score=0.991
     #2 sec=6.3.4.3 page=570 table=- score=0.884
-    #3 sec=6.3.4.1 page=567 table=- score=0.874
-    #4 sec=6.3.4.2 page=567 table=- score=0.874
-    #5 sec=6.3.4.4 page=589 table=- score=0.713
+    #3 sec=6.2F.1A.1 page=0 table=- score=0.878
+    #4 sec=6.3.4.4.3 page=0 table=- score=0.877
+    #5 sec=6.3.4.1 page=567 table=- score=0.874
 
 ## q30 — What is the test purpose of the relative power tolerance test, and within what transmission gap does it apply?
 _expected_section = §6.3.4.3 · type = section_summary · difficulty = medium_
 
-**sparse** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.3 p570 table=-
-    #1 sec=6.3.4.3 page=570 table=- score=-22.924
-    #2 sec=6.3.4.1 page=567 table=- score=-22.190
-    #3 sec=6.3.4.2 page=567 table=- score=-22.190
-    #4 sec=6.3.4.4 page=587 table=- score=-17.411
-    #5 sec=6.2.1 page=92 table=- score=-17.363
+**sparse** — hit@1=N hit@3=N hit@5=Y RR@10=0.20 · coverage = 3/3 (100%) · top-1 = §6.4D.4.3 p0 table=-
+    #1 sec=6.4D.4.3 page=0 table=- score=-25.498
+    #2 sec=H.2.2 page=0 table=- score=-22.720
+    #3 sec=6.3.4.1 page=567 table=- score=-21.818
+    #4 sec=6.3.4.2 page=567 table=- score=-21.818
+    #5 sec=6.3.4.3 page=570 table=- score=-21.026
 
 **dense** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.3 p570 table=-
     #1 sec=6.3.4.3 page=570 table=- score=0.325
     #2 sec=6.3.4.1 page=567 table=- score=0.341
     #3 sec=6.3.4.2 page=567 table=- score=0.341
     #4 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.356
-    #5 sec=6.3.4.4 page=587 table=- score=0.375
+    #5 sec=6.3A.4.1.0 page=0 table=- score=0.360
 
-**hybrid** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.3 p570 table=-
-    #1 sec=6.3.4.3 page=570 table=- score=0.033
-    #2 sec=6.3.4.1 page=567 table=- score=0.032
-    #3 sec=6.3.4.2 page=567 table=- score=0.032
-    #4 sec=6.3.4.4 page=587 table=- score=0.031
-    #5 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.029
+**hybrid** — hit@1=N hit@3=Y hit@5=Y RR@10=0.50 · coverage = 3/3 (100%) · top-1 = §6.3.4.1 p567 table=-
+    #1 sec=6.3.4.1 page=567 table=- score=0.032
+    #2 sec=6.3.4.3 page=570 table=- score=0.032
+    #3 sec=6.3.4.2 page=567 table=- score=0.031
+    #4 sec=6.3.4.2.3 page=0 table=- score=0.030
+    #5 sec=6.3.4.4 page=587 table=- score=0.029
 
 **reranked:bge** — hit@1=Y hit@3=Y hit@5=Y RR@10=1.00 · coverage = 3/3 (100%) · top-1 = §6.3.4.3 p570 table=-
     #1 sec=6.3.4.3 page=570 table=- score=0.987
     #2 sec=6.3.4.1 page=567 table=- score=0.785
     #3 sec=6.3.4.2 page=567 table=- score=0.785
-    #4 sec=6.3.4.4 page=587 table=6.3.4.3.5-7 score=0.598
-    #5 sec=6.3.4.3 page=570 table=6.3.4.3.3-1 score=0.580
+    #4 sec=6.3G.4.2.3 page=0 table=- score=0.737
+    #5 sec=6.3A.4.3.0 page=0 table=- score=0.631

@@ -28,11 +28,13 @@
 
 ## B. 階段規劃 R0–R8(建議順序;各項獨立可重排,依 Hank)
 
-### R0 — 完成 Step 10 收尾(最優先;若 Fable 5 離場前已完成則打勾略過)
-- **目標**:全量 index 上拿到誠實的新 baseline,Step 10 收官 commit。
-- **做法**:① `extract_facts.py --spec 38.521-1 --source-format tspec_md`(重抽 + 清 33,421 筆孤兒);② 三評測:`pdf_ab_eval`(隔離對照:pdf 資料不動已由 SQL 證明,數字預期≈同、漂移如實記載)、`md_ab_eval` + `gate_eval`(**新 baseline**,index ~17×,hit 可能降 — 不調參)、`last_eval`(混跑刷新,掛 bge ~15–35 min);③ brain 整合 review Step 10 全 diff;④ 彙整 → Hank 拍板 commit。
-- **驗收**:pdf 隔離對照通過;新 baseline 報告落地;313+ 測試綠;commit 訊息含前後數字對照。
-- **風險**:gate 在大 index 失準 → 只記載,重校準是獨立決策(Hank 核准才動 config)。
+### ✅ R0 — Step 10 收尾(2026-07-05 由 Fable 5 完成)
+- **結果**:facts 重抽 95,152 筆、孤兒 0;整合 review 0 P0/P1;313+45 測試綠。新 baseline(誠實記載,未調參):
+  - `pdf_ab`:資料不動(SQL 證),統計漂移如預測 — sparse hit@1 22→19、**hybrid 22→23(MRR .85→.88)**、hit@5 全 30/30,GATE OK。
+  - `md_ab`(全量 index):**hybrid hit@1 26→13、hit@5 27→22=73% GATE FAIL**;sparse 22→9。根因 = **量尺過時**:§6.2A–I/§6.3A–G 變體家族(CA/DC/SUL/UL-MIMO)與基礎條款共用詞彙,30 題是為窄 index 寫的、未指明「非 CA」,在全量 index 上題目本身歧義 → **R2 的急迫性有了數字**。
+  - `gate_eval`:refusal precision 100→75%(出現 1 FP)、recall 17→25%、citation 45%(FAIL,= hit@1 崩的直接反映)、coverage 71% PASS。
+  - `last_eval`(mixed):hybrid 20/27/29 GATE OK — **注意:是 pdf 子集(無變體家族)把分數撐住,不是 md 問題變小**;bge 依舊無增益(16/30)。
+- **給 R1/R2 的含義**:R1 jina-on-md 在新 index 上的預期要下修(檢索天花板變低);**R2(題庫消歧義:指明 non-CA/單載波、或 expected_section 接受變體家族)是恢復量尺有效性的關鍵路徑,優先級高於 R1**。
 
 ### R1 — jina-on-md 長跑(citation ≥0.9 驗收判定)
 - **目標**:Phase A 唯一未過的量化驗收。§6.2/6.3 時代 jina hit@1 26/30=87%;新 index 重跑定生死。

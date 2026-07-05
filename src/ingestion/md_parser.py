@@ -125,12 +125,16 @@ class MarkdownAdapter(IngestionAdapter):
 
         headings, heading_warnings = parse_headings(cleaned, anchor_map)
         sections, section_warnings = _build_sections(cleaned, headings)
+        sections, merge_warnings = _merge_duplicate_sections(sections)
 
         return ParsedSpec(
             unit=unit,
             sections=sections,
             full_text=cleaned,
-            warnings=[*seam_warnings, *heading_warnings, *section_warnings],
+            warnings=[
+                *seam_warnings, *heading_warnings,
+                *section_warnings, *merge_warnings,
+            ],
         )
 
     def emit(
@@ -338,6 +342,38 @@ def _build_sections(
     return sections, warnings
 
 
+def _merge_duplicate_sections(
+    sections: list[ParsedSection],
+) -> tuple[list[ParsedSection], list[str]]:
+    """Fold sections whose anchor repeats an already-seen clause number into
+    the first occurrence (body appended, tables extended) — corpus reality:
+    a handful of upstream artifacts reuse a number (a list item promoted to
+    a heading, the 7.6A.4,1.1 comma typo, twin NS_xx variants). The DB has
+    UNIQUE(spec_id, section_number), so a second row would abort the whole
+    emit; merging keeps every byte searchable and warns instead.
+    parse_headings already emits the heading-level duplicate warning."""
+    by_anchor: dict[str, ParsedSection] = {}
+    merged: list[ParsedSection] = []
+    warnings: list[str] = []
+    for sec in sections:
+        first = by_anchor.get(sec.heading.anchor)
+        if first is None:
+            by_anchor[sec.heading.anchor] = sec
+            merged.append(sec)
+            continue
+        if sec.body_text:
+            first.body_text = (
+                f"{first.body_text}\n\n{sec.body_text}".strip("\n")
+            )
+        first.tables.extend(sec.tables)
+        warnings.append(
+            f"§{sec.heading.anchor}: merged duplicate section at line "
+            f"{sec.heading.line_no} into first occurrence at line "
+            f"{first.heading.line_no}"
+        )
+    return merged, warnings
+
+
 def _with_line_bounds(
     sections: list[ParsedSection], full_text: str,
 ) -> list[tuple[ParsedSection, int, int]]:
@@ -362,7 +398,9 @@ def _filter_selected(
     sections_filter: list[str] | None,
 ) -> list[tuple[ParsedSection, int, int]]:
     """Dotted-prefix subtree filter: keep a section when its anchor IS one
-    of the filters or descends from one ("6.2" keeps 6.2, 6.2.1, 6.2A...)."""
+    of the filters or descends from one by DOT ("6.2" keeps 6.2 and 6.2.1;
+    letter-suffixed siblings like 6.2A/6.2D do NOT match — pass them as
+    their own filter entries when wanted)."""
     if not sections_filter:
         return bounded
     wanted = [f.strip() for f in sections_filter if f.strip()]

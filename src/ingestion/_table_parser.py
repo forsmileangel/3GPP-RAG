@@ -37,6 +37,7 @@ import re
 from dataclasses import dataclass
 from html.parser import HTMLParser
 
+from ._artifact_cleaner import unescape_pandoc_underscore
 from ._base import Table
 
 _CAPTION_RE = re.compile(r"Table\s+([A-Z0-9][\w.]*-\d+[a-z]?)\s*:", re.IGNORECASE)
@@ -190,7 +191,7 @@ def _caption_above(lines: list[str], block_start: int) -> str | None:
     for line in reversed(lines[max(0, block_start - 4):block_start]):
         # pandoc escapes underscores in caption ids ("6.2.2\_1.3-1"); the
         # backslash would otherwise truncate the match.
-        match = _CAPTION_RE.search(line.replace("\\_", "_"))
+        match = _CAPTION_RE.search(unescape_pandoc_underscore(line))
         if match:
             return match.group(1)
     return None

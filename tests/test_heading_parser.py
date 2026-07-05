@@ -30,6 +30,20 @@ FIXTURES = Path(__file__).parent / "fixtures" / "md"
     ("6.3.1.1.1 Test purpose", "6.3.1.1.1"),
     ("6.2A Maximum output power for CA", "6.2A"),
     ("6.3.1A Minimum output power for CA", "6.3.1A"),
+    # band-combination clause numbers: pandoc-escaped "\_" is part of the
+    # 3GPP number and must survive (previously silently truncated).
+    (r"6.2D.1\_1.1 Test purpose", "6.2D.1_1.1"),
+    (r"6.3A.3.1\_1 Void", "6.3A.3.1_1"),
+    (r"6.2D.3\_1.4.3.3 Message contents", "6.2D.3_1.4.3.3"),
+    (r"6.2C.3\_1 Void", "6.2C.3_1"),
+    (r"7.7D\_1.1 Test purpose", "7.7D_1.1"),
+    ("6.2D.1_1.1 Test purpose", "6.2D.1_1.1"),  # plain form accepted too
+    # inserted-clause lowercase variants (3GPP "1a" numbering; previously
+    # truncated to the parent and collided).
+    ("6.4.2.1a Error Vector Magnitude including symbols", "6.4.2.1a"),
+    ("6.4.2.1a.4.1 Initial conditions", "6.4.2.1a.4.1"),
+    ("6.5A.1.0.1a Occupied bandwidth for Intra-band contiguous CA",
+     "6.5A.1.0.1a"),
     ("A.1 General", "A.1"),
     ("A.2.2.1 DFT-s-OFDM Pi/2-BPSK", "A.2.2.1"),
     ("Annex A (normative): Measurement channels", "A"),
@@ -45,6 +59,14 @@ def test_extract_anchor_residual_title():
     anchor, residual = extract_anchor("6.3.2 Transmit OFF power")
     assert anchor == "6.3.2"
     assert residual == "Transmit OFF power"
+
+
+def test_extract_anchor_escaped_underscore_residual():
+    # The escaped form must yield a CLEAN residual title (no leading "\_1.1"
+    # fragment — that was the silent-truncation symptom).
+    anchor, residual = extract_anchor(r"6.2D.1\_1.1 Test purpose")
+    assert anchor == "6.2D.1_1.1"
+    assert residual == "Test purpose"
 
 
 # --------------------------------------------------- setext disambiguation
@@ -110,6 +132,27 @@ def test_anchorless_heading_warns():
     headings, warnings = parse_headings(text)
     assert headings[0].anchor is None
     assert any("without parseable anchor" in w for w in warnings)
+
+
+def test_duplicate_anchor_warns_not_raises():
+    # Two headings collapsing to one section number (e.g. the 7.6A.4 comma
+    # typo family) must be surfaced, never silently tree-overwritten.
+    text = "### 6.2D.1 Real section\n\n### 6.2D.1 Impostor\n"
+    headings, warnings = parse_headings(text)
+    assert [h.anchor for h in headings] == ["6.2D.1", "6.2D.1"]
+    assert any("duplicate anchor" in w and "6.2D.1" in w for w in warnings)
+
+
+def test_distinct_band_combo_anchors_do_not_warn_duplicate():
+    # The fix's whole point: 6.2D.1 and 6.2D.1\_1.x are DIFFERENT sections.
+    text = (
+        "### 6.2D.1 UE maximum output power for UL MIMO\n\n"
+        "### 6.2D.1\\_1 UE maximum output power for SUL\n\n"
+        "##### 6.2D.1\\_1.1 Test purpose\n"
+    )
+    headings, warnings = parse_headings(text)
+    assert [h.anchor for h in headings] == ["6.2D.1", "6.2D.1_1", "6.2D.1_1.1"]
+    assert not any("duplicate anchor" in w for w in warnings)
 
 
 def test_pandoc_id_attached_by_line_number():

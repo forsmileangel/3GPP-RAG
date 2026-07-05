@@ -70,3 +70,6 @@ spike/extracted.json
 # TSpec-LLM spike 輸出(拋棄式,不進主線)
 spike/tspec_probe_out/
 spike/tspec_llm_*.log
+# 長跑(embed / eval)的 detached 行程日誌
+spike/*_run.log
+spike/*_run.err

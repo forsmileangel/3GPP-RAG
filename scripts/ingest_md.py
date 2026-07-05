@@ -39,6 +39,37 @@ def parse_spec_arg(spec: str) -> tuple[str, str | None]:
     return spec, None
 
 
+# On a full-spec parse the benign level-jump warnings (band-combination
+# subtrees are H3 -> H5 by design) number in the hundreds; a flat
+# `warnings[:20]` would bury the STRUCTURAL ones that demand a look
+# (duplicate anchors, unparseable anchors). Print structural in full,
+# sample the rest.
+_LEVEL_JUMP_SAMPLE = 5
+_OTHER_SAMPLE = 10
+
+
+def _print_warnings(warnings: list[str]) -> None:
+    structural = [w for w in warnings
+                  if "duplicate anchor" in w or "without parseable anchor" in w]
+    level_jumps = [w for w in warnings
+                   if "level jump" in w and w not in structural]
+    other = [w for w in warnings if w not in structural and w not in level_jumps]
+
+    print(f"[parse] warning census: structural={len(structural)} "
+          f"level-jump={len(level_jumps)} other={len(other)}")
+    for w in structural:
+        print(f"  [warn] {w}")
+    for w in level_jumps[:_LEVEL_JUMP_SAMPLE]:
+        print(f"  [warn] {w}")
+    if len(level_jumps) > _LEVEL_JUMP_SAMPLE:
+        print(f"  [warn] ... and {len(level_jumps) - _LEVEL_JUMP_SAMPLE} "
+              f"more level-jump warnings (benign by design)")
+    for w in other[:_OTHER_SAMPLE]:
+        print(f"  [warn] {w}")
+    if len(other) > _OTHER_SAMPLE:
+        print(f"  [warn] ... and {len(other) - _OTHER_SAMPLE} more")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True,
@@ -92,10 +123,7 @@ def main() -> int:
     parsed = adapter.parse(unit)
     print(f"[parse] {len(parsed.sections)} sections, "
           f"{len(parsed.warnings)} warning(s)")
-    for warning in parsed.warnings[:20]:
-        print(f"  [warn] {warning}")
-    if len(parsed.warnings) > 20:
-        print(f"  [warn] ... and {len(parsed.warnings) - 20} more")
+    _print_warnings(parsed.warnings)
 
     if args.dry_run:
         print("[dry-run] no DB writes")

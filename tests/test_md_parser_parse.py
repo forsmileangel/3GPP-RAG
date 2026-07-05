@@ -14,6 +14,7 @@ import pytest
 from src.ingestion._base import InputUnit
 from src.ingestion.md_parser import (
     MarkdownAdapter,
+    _merge_duplicate_sections,
     _parent_path_of,
     _release_from_version,
 )
@@ -37,6 +38,39 @@ def test_parent_path_of():
     assert _parent_path_of("6.3.4.2") == ["6", "6.3", "6.3.4", "6.3.4.2"]
     assert _parent_path_of("A.2") == ["A", "A.2"]
     assert _parent_path_of("6") == ["6"]
+    # band-combination: "_" stays inside its segment, so the subtree nests
+    # under 6.2D.1_1 — parallel to (not colliding with) the real 6.2D.1.
+    assert _parent_path_of("6.2D.1_1.1") == ["6", "6.2D", "6.2D.1_1", "6.2D.1_1.1"]
+    # inserted-clause lowercase variant: sibling of 6.4.2.1, child of 6.4.2.
+    assert _parent_path_of("6.4.2.1a") == ["6", "6.4", "6.4.2", "6.4.2.1a"]
+
+
+def test_merge_duplicate_sections():
+    from src.ingestion._base import Heading, Section
+
+    def _sec(anchor: str, line_no: int, body: str) -> Section:
+        return Section(
+            heading=Heading(level=3, title=f"{anchor} T", anchor=anchor,
+                            pandoc_id=None, line_no=line_no),
+            body_text=body,
+            tables=[],
+            parent_path=_parent_path_of(anchor),
+        )
+
+    first = _sec("7.6A.4", 10, "first body")
+    dup = _sec("7.6A.4", 90, "typo-family body")
+    other = _sec("7.6A.5", 200, "unrelated")
+    merged, warnings = _merge_duplicate_sections([first, dup, other])
+
+    # duplicate folded into the first occurrence; content preserved; warned
+    assert [s.heading.anchor for s in merged] == ["7.6A.4", "7.6A.5"]
+    assert "first body" in merged[0].body_text
+    assert "typo-family body" in merged[0].body_text
+    assert any("merged duplicate section" in w and "7.6A.4" in w
+               for w in warnings)
+    # no duplicates -> untouched, no warnings
+    merged2, warnings2 = _merge_duplicate_sections([other])
+    assert merged2 == [other] and warnings2 == []
 
 
 # ----------------------------------------------------------------- discover
@@ -198,6 +232,21 @@ def test_parse_real_38521_1_yields_distinct_634x_sections():
     for expected in ("6.2.1", "6.3.1", "6.3.2",
                      "6.3.4.1", "6.3.4.2", "6.3.4.3", "6.3.4.4"):
         assert expected in anchors, f"missing section {expected}"
+
+    # Band-combination clauses ("6.2D.1\_1.1") must parse as sections
+    # DISTINCT from the real 6.2D.1 (pre-fix they all collapsed onto it).
+    for expected in ("6.2D.1", "6.2D.1_1", "6.2D.1_1.1"):
+        assert expected in anchors, f"missing band-combo section {expected}"
+
+    # Inserted-clause lowercase variants must be distinct from their parent
+    # (pre-fix "6.4.2.1a" truncated to "6.4.2" — nine-way collision).
+    for expected in ("6.4.2", "6.4.2.1a", "6.4.2.1a.1"):
+        assert expected in anchors, f"missing inserted-clause section {expected}"
+
+    # After duplicate-merge, anchors are unique across the parse — the emit
+    # UNIQUE(spec_id, section_number) constraint cannot fire.
+    all_anchors = [s.heading.anchor for s in parsed.sections]
+    assert len(all_anchors) == len(set(all_anchors))
 
     # md parses DEEPER than the PDF bookmarks (which stop at level 3): the
     # prose lives in 6.3.2.x / 6.3.4.2.x subsections, the parents stay thin.

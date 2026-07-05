@@ -68,6 +68,16 @@ def strip_image_refs(text: str) -> str:
     return _IMAGE_RE.sub(r"\1", text)
 
 
+def unescape_pandoc_underscore(s: str) -> str:
+    r"""Pandoc escapes literal underscores as '\_'; the backslash is a markup
+    artifact, the real character is '_'. Underscores are LOAD-BEARING in two
+    identifier families: table caption ids ("6.2.2\_1.3-1") and
+    band-combination clause numbers ("6.2D.1\_1.1") — the shared unescape for
+    both the caption path (_table_parser._caption_above) and the anchor path
+    (_heading_parser.extract_anchor)."""
+    return s.replace("\\_", "_")
+
+
 def strip_html_comments(text: str) -> str:
     """Remove <!-- --> blocks, preserving the newlines they spanned so
     line numbers downstream stay stable."""

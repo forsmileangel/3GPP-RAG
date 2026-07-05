@@ -25,14 +25,28 @@ from __future__ import annotations
 
 import re
 
+from ._artifact_cleaner import unescape_pandoc_underscore
 from ._base import Heading
 
 # Leading-token anchor forms, tried in order:
 #   numeric dotted (+optional capital suffix per segment): 6 / 6.1 /
 #     6.3.1A / 6.2A / 6.3.1.1.1
+#   inserted-clause lowercase variant: at most ONE trailing lowercase letter
+#     per segment ("6.4.2.1a", "6.5A.1.0.1a" — 3GPP's inserted-clause
+#     numbering; 13 such headings corpus-wide). Bounded to one letter so a
+#     hypothetical glued word ("6.2General") cannot be absorbed — the regex
+#     then backtracks exactly like the pre-fix form.
+#   band-combination: one optional underscore-joined index inside the chain
+#     ("6.2D.1\_1.1" / "7.7D\_1.1" — pandoc escapes the literal '_'; the
+#     regex accepts both the escaped and plain form, extract_anchor
+#     normalises the captured group). NOTE: unescape-first would NOT work —
+#     on the plain form the old regex's \b backtracks to "6.2D".
 #   annex letter dotted: A.1 / A.2.2.1
 #   annex top marker: "Annex A (normative): ..." -> "A"
-_NUMERIC_ANCHOR_RE = re.compile(r"^(\d+[A-Z]*(?:\.\d+[A-Z]*)*)\b")
+_NUMERIC_ANCHOR_RE = re.compile(
+    r"^(\d+[A-Z]*[a-z]?(?:\.\d+[A-Z]*[a-z]?)*"
+    r"(?:\\?_\d+)?(?:\.\d+[A-Z]*[a-z]?)*)\b"
+)
 _ANNEX_DOTTED_RE = re.compile(r"^([A-Z](?:\.\d+[A-Z]*)+)\b")
 _ANNEX_TOP_RE = re.compile(r"^Annex\s+([A-Z])\b", re.IGNORECASE)
 
@@ -54,7 +68,11 @@ def extract_anchor(title: str) -> tuple[str | None, str]:
     title = title.strip()
     match = _NUMERIC_ANCHOR_RE.match(title) or _ANNEX_DOTTED_RE.match(title)
     if match:
-        return match.group(1), title[match.end():].strip()
+        # Normalise only the captured anchor ("\_" -> "_"); the residual is
+        # sliced from the ORIGINAL title so its bytes never change. Annex
+        # anchors cannot contain "_", so the unescape is a no-op there.
+        anchor = unescape_pandoc_underscore(match.group(1))
+        return anchor, title[match.end():].strip()
     match = _ANNEX_TOP_RE.match(title)
     if match:
         return match.group(1).upper(), title
@@ -96,6 +114,7 @@ def parse_headings(
     headings: list[Heading] = []
     warnings: list[str] = []
     consumed_underline: set[int] = set()
+    seen_anchors: dict[str, int] = {}  # anchor -> first line_no
 
     for line_no, line in enumerate(lines):
         if line_no in consumed_underline:
@@ -130,6 +149,16 @@ def parse_headings(
                 f"line {line_no}: heading without parseable anchor: "
                 f"{raw_title[:60]!r}"
             )
+        elif anchor in seen_anchors:
+            # Two headings resolving to one section number: downstream the
+            # section tree's by_anchor lookup silently takes the last writer,
+            # so surface the ambiguity here (warning-only, never fatal).
+            warnings.append(
+                f"line {line_no}: duplicate anchor {anchor!r} "
+                f"(first seen at line {seen_anchors[anchor]})"
+            )
+        else:
+            seen_anchors[anchor] = line_no
         if headings and level - headings[-1].level > 1:
             warnings.append(
                 f"line {line_no}: level jump "
